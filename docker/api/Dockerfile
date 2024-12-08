@@ -72,7 +72,7 @@ EXPOSE 80
 
 # Add composer
 # hadolint ignore=DL3022
-COPY --from=composer:2.6.5 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.8.3 /usr/bin/composer /usr/bin/composer
 
 # Standard production config
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
@@ -105,7 +105,7 @@ COPY ./docker/.profile /root/.bashrc
 COPY api /var/www
 
 # Install composer dependencies
-# RUN composer install --no-interaction --no-ansi --no-progress --optimize-autoloader --no-dev
+RUN composer install --no-interaction --no-ansi --no-progress --optimize-autoloader --no-dev
 
 # HEALTHCHECK --interval=5s --timeout=5s --start-period=10s --retries=10 CMD curl --fail http://localhost/healthcheck/659f105793f58 || exit 1
 

@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Project PHP Files" pattern="file:api/cli||file:api/public/index.php||file[stmarkreformed.com-2025]:api/config//*.php||file[stmarkreformed.com-2025]:api/src//*.php||file[stmarkreformed.com-2025]:api/tests//*.php" />
+</component>

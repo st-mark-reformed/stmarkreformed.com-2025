@@ -1,7 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/api/config" isTestSource="false" packagePrefix="Config\" />
+      <sourceFolder url="file://$MODULE_DIR$/api/src" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/api/tests" isTestSource="false" packagePrefix="Tests\" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/buzzingpixel/symfony-var-dumper-decorator" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/dealerdirect/phpcodesniffer-composer-installer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/coding-standard" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/filp/whoops" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/jetbrains/phpstorm-attributes" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpdoc-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-deprecation-rules" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-mockery" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-strict-rules" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/rxante/coding-standards" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/slevomat/coding-standard" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/squizlabs/php_codesniffer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/cache-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/var-exporter" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
