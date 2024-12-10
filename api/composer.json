@@ -5,7 +5,7 @@
         "php": "^8.4",
         "ext-pdo": "*",
         "ext-redis": "*",
-        "symfony/cache": "^7.0"
+        "rxante/php-app-bootstrap": "^1.0"
     },
     "require-dev": {
         "buzzingpixel/symfony-var-dumper-decorator": "^1.0",

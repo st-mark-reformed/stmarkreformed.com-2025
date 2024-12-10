@@ -26,25 +26,48 @@
       <path value="$PROJECT_DIR$/api/vendor/filp/whoops" />
       <path value="$PROJECT_DIR$/api/vendor/rxante/coding-standards" />
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpdoc-parser" />
-      <path value="$PROJECT_DIR$/api/vendor/symfony/cache" />
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpstan-mockery" />
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpstan-strict-rules" />
-      <path value="$PROJECT_DIR$/api/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/api/vendor/composer" />
-      <path value="$PROJECT_DIR$/api/vendor/symfony/var-exporter" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/var-dumper" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/deprecation-contracts" />
-      <path value="$PROJECT_DIR$/api/vendor/symfony/cache-contracts" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/api/vendor/doctrine/coding-standard" />
       <path value="$PROJECT_DIR$/api/vendor/slevomat/coding-standard" />
-      <path value="$PROJECT_DIR$/api/vendor/psr/container" />
       <path value="$PROJECT_DIR$/api/vendor/buzzingpixel/symfony-var-dumper-decorator" />
       <path value="$PROJECT_DIR$/api/vendor/psr/log" />
       <path value="$PROJECT_DIR$/api/vendor/dealerdirect/phpcodesniffer-composer-installer" />
       <path value="$PROJECT_DIR$/api/vendor/jetbrains/phpstorm-attributes" />
-      <path value="$PROJECT_DIR$/api/vendor/psr/cache" />
       <path value="$PROJECT_DIR$/api/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/api/vendor/crell/attributeutils" />
+      <path value="$PROJECT_DIR$/api/vendor/crell/ordered-collection" />
+      <path value="$PROJECT_DIR$/api/vendor/crell/tukio" />
+      <path value="$PROJECT_DIR$/api/vendor/crell/fp" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/api/vendor/laravel/serializable-closure" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/api/vendor/rxante/php-app-bootstrap" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/api/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/api/vendor/php-di/invoker" />
+      <path value="$PROJECT_DIR$/api/vendor/php-di/php-di" />
+      <path value="$PROJECT_DIR$/api/vendor/fig/http-message-util" />
+      <path value="$PROJECT_DIR$/api/vendor/fig/event-dispatcher-util" />
+      <path value="$PROJECT_DIR$/api/vendor/mnapoli/silly" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/api/vendor/slim/csrf" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/api/vendor/slim/slim" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/http-server-middleware" />
+      <path value="$PROJECT_DIR$/api/vendor/slim/psr7" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/http-server-handler" />
+      <path value="$PROJECT_DIR$/api/vendor/nikic/fast-route" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.4" />
@@ -58,6 +81,11 @@
     <option name="level" value="8" />
     <option name="memoryLimit" value="4G" />
     <option name="transferred" value="true" />
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/api/vendor/autoload.php" />
+    </phpunit_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
     <option name="transferred" value="true" />
