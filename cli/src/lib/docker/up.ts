@@ -58,7 +58,7 @@ export default async function up (
     execSync(
         `
             cd ${dockerDir};
-            docker compose -f docker-compose.dev.yml -p smrc up -d --wait;
+            docker compose -f docker-compose.dev.yml -p smrc up -d;
         `,
         { stdio: 'inherit' },
     );

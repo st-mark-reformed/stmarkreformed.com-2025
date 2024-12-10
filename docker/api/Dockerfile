@@ -107,6 +107,6 @@ COPY api /var/www
 # Install composer dependencies
 RUN composer install --no-interaction --no-ansi --no-progress --optimize-autoloader --no-dev
 
-# HEALTHCHECK --interval=5s --timeout=5s --start-period=10s --retries=10 CMD curl --fail http://localhost/healthcheck/659f105793f58 || exit 1
+HEALTHCHECK --interval=5s --timeout=5s --start-period=10s --retries=10 CMD curl --fail http://localhost/healthcheck/659f105793f58 || exit 1
 
 ENTRYPOINT ["/init"]

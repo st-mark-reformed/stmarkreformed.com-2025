@@ -9,9 +9,20 @@ export default function ensureDevFiles (
 ) {
     execSync(
         `
+            # API
             cd ${rootDir};
             touch docker/api/.bash_history;
             touch docker/api/.env.local;
+
+            # CMS
+            cd ${rootDir};
+            touch docker/cms/.bash_history;
+            touch docker/cms/.env.local;
+
+            # Web
+            cd ${rootDir};
+            touch docker/web/.bash_history;
+            touch docker/web/.env.local;
         `,
         { stdio: 'inherit' },
     );

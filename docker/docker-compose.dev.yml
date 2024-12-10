@@ -9,9 +9,9 @@ services:
       - HOSTNAME=smrc_api
       - ENABLE_XDEBUG=1
       - ENABLE_PHP_DEV_CONFIG=1
-#    healthcheck:
-#      disable: true
-#      test: '0'
+    # noinspection ComposeMissingKeys
+    healthcheck:
+      disable: true
     volumes:
       - ./api/.bash_history:/root/.bash_history:delegated
       - ../api:/var/www:delegated
@@ -39,6 +39,88 @@ services:
       - traefik.http.routers.stmarkreformed_api-secure.rule=Host(`api.stmarkreformed.localtest.me`)
     ports:
       - "49195:80"
+
+  cms:
+    stdin_open: true
+    env_file:
+      - ./web/.env.dev
+      - ./web/.env.local
+    container_name: smrc_cms
+    image: ghcr.io/st-mark-reformed/smrc-2025-cms
+    environment:
+      - HOSTNAME=smrc_cms
+      - NODE_ENV=development
+    # noinspection ComposeMissingKeys
+    healthcheck:
+      disable: true
+    command:
+      - "npm"
+      - "run"
+      - "dev"
+    volumes:
+      - ./web/.bash_history:/root/.bash_history:delegated
+      - ../web:/app:delegated
+    expose:
+      - 80
+    networks:
+      - traefik
+      - default
+    labels:
+      ## Traefik config ##
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+
+      ## Traefik Web ##
+      # Web redirect to https
+      - traefik.http.routers.stmarkreformed_cms.entrypoints=web
+      - traefik.http.routers.stmarkreformed_cms.rule=Host(`cms.stmarkreformed.localtest.me`)
+      - traefik.http.routers.stmarkreformed_cms.middlewares=https-redirect
+
+      # Web secure
+      - traefik.http.routers.stmarkreformed_cms-secure.entrypoints=websecure
+      - traefik.http.routers.stmarkreformed_cms-secure.tls=true
+      - traefik.http.routers.stmarkreformed_cms-secure.rule=Host(`cms.stmarkreformed.localtest.me`)
+
+  web:
+    stdin_open: true
+    env_file:
+      - ./web/.env.dev
+      - ./web/.env.local
+    container_name: smrc_web
+    image: ghcr.io/st-mark-reformed/smrc-2025-web
+    environment:
+      - HOSTNAME=smrc_web
+      - NODE_ENV=development
+    # noinspection ComposeMissingKeys
+    healthcheck:
+      disable: true
+    command:
+      - "npm"
+      - "run"
+      - "dev"
+    volumes:
+      - ./web/.bash_history:/root/.bash_history:delegated
+      - ../web:/app:delegated
+    expose:
+      - 80
+    networks:
+      - traefik
+      - default
+    labels:
+      ## Traefik config ##
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+
+      ## Traefik Web ##
+      # Web redirect to https
+      - traefik.http.routers.stmarkreformed_web.entrypoints=web
+      - traefik.http.routers.stmarkreformed_web.rule=Host(`stmarkreformed.localtest.me`)
+      - traefik.http.routers.stmarkreformed_web.middlewares=https-redirect
+
+      # Web secure
+      - traefik.http.routers.stmarkreformed_web-secure.entrypoints=websecure
+      - traefik.http.routers.stmarkreformed_web-secure.tls=true
+      - traefik.http.routers.stmarkreformed_web-secure.rule=Host(`stmarkreformed.localtest.me`)
 
 networks:
   traefik:

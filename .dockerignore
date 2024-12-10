@@ -1,0 +1,7 @@
+api/vendor
+cms/.next
+cms/.pnpm-store
+cms/node_modules
+web/.next
+web/.pnpm-store
+web/node_modules
