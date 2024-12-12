@@ -47,7 +47,7 @@ export default async function up (
         execSync(
             `
                 cd ${dockerDir};
-                docker compose -f docker-compose.dev.yml -p smrc up;
+                docker compose --env-file fusionauth/.env.dev -f docker-compose.dev.yml -p smrc up;
             `,
             { stdio: 'inherit' },
         );
@@ -58,7 +58,7 @@ export default async function up (
     execSync(
         `
             cd ${dockerDir};
-            docker compose -f docker-compose.dev.yml -p smrc up -d;
+            docker compose --env-file fusionauth/.env.dev -f docker-compose.dev.yml -p smrc up -d;
         `,
         { stdio: 'inherit' },
     );

@@ -19,6 +19,10 @@ export default function ensureDevFiles (
             touch docker/cms/.bash_history;
             touch docker/cms/.env.local;
 
+            # FusionAuth
+            cd ${rootDir};
+            touch docker/fusionauth/.env.local;
+
             # Web
             cd ${rootDir};
             touch docker/web/.bash_history;

@@ -122,7 +122,128 @@ services:
       - traefik.http.routers.stmarkreformed_web-secure.tls=true
       - traefik.http.routers.stmarkreformed_web-secure.rule=Host(`stmarkreformed.localtest.me`)
 
+  redis:
+    container_name: smrc_redis
+    image: redis:7.2.3
+    volumes:
+      - redis_volume:/data
+    networks:
+      default:
+        aliases:
+          - smrc_redis
+
+  fusionauth_db:
+    container_name: smrc_fusionauth_db
+    env_file:
+      - ./fusionauth/.env.dev
+      - ./fusionauth/.env.local
+    image: postgres:16.0-bookworm
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: ${FUSIONAUTH_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${FUSIONAUTH_POSTGRES_PASSWORD}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      fusionauth_db_net:
+        aliases:
+          - smrc_fusionauth_db
+    restart: unless-stopped
+    volumes:
+      - fusion_db_data_volume:/var/lib/postgresql/data
+
+  fusionauth:
+    container_name: smrc_fusionauth
+    env_file:
+      - ./fusionauth/.env.dev
+      - ./fusionauth/.env.local
+    image: fusionauth/fusionauth-app:1.49.2
+    depends_on:
+      fusionauth_db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: jdbc:postgresql://smrc_fusionauth_db:5432/fusionauth
+      DATABASE_ROOT_USERNAME: ${FUSIONAUTH_POSTGRES_USER}
+      DATABASE_ROOT_PASSWORD: ${FUSIONAUTH_POSTGRES_PASSWORD}
+      DATABASE_USERNAME: ${FUSIONAUTH_DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${FUSIONAUTH_DATABASE_PASSWORD}
+      FUSIONAUTH_APP_MEMORY: ${FUSIONAUTH_APP_MEMORY}
+      FUSIONAUTH_APP_RUNTIME_MODE: ${FUSIONAUTH_APP_RUNTIME_MODE}
+      FUSIONAUTH_APP_URL: https://auth.stmarkreformed.localtest.me
+      SEARCH_TYPE: database
+    healthcheck:
+      test: curl --silent --fail http://localhost:9011/api/status -o /dev/null -w "%{http_code}"
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
+      - traefik
+      - fusionauth_db_net
+    restart: unless-stopped
+    ports:
+      - "9011:9011"
+    volumes:
+      - fusionauth_config_volume:/usr/local/fusionauth/config
+    labels:
+      ## Traefik config ##
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.services.fusionauth.loadbalancer.server.port=9011
+
+      ## Traefik Web ##
+      # Web redirect to https
+      - traefik.http.routers.stmarkreformed_auth.entrypoints=web
+      - traefik.http.routers.stmarkreformed_auth.rule=Host(`auth.stmarkreformed.localtest.me`)
+      - traefik.http.routers.stmarkreformed_auth.middlewares=https-redirect
+
+      # Web secure
+      - traefik.http.routers.stmarkreformed_auth-secure.entrypoints=websecure
+      - traefik.http.routers.stmarkreformed_auth-secure.tls=true
+      - traefik.http.routers.stmarkreformed_auth-secure.rule=Host(`auth.stmarkreformed.localtest.me`)
+
+  mailhog:
+    container_name: smrc_mailhog
+    image: 'mailhog/mailhog:latest'
+    user: root
+    expose:
+      - 49194
+    ports:
+      - "49194:49194"
+    environment:
+      - MH_API_BIND_ADDR=0.0.0.0:49194
+      - MH_UI_BIND_ADDR=0.0.0.0:49194
+    networks:
+      default:
+        aliases:
+          - smrc_mailhog
+    command: ["-storage=maildir", "-maildir-path=/maildir"]
+    volumes:
+      - mailhog_volume:/maildir
+    labels:
+      - traefik.enable=true
+      - traefik.port=49194
+      - traefik.docker.network=mosaic-connect-bridge
+      - traefik.http.routers.mosaic_connect_mailhog.entrypoints=web
+      - traefik.http.routers.mosaic_connect_mailhog.rule=Host(`mailhog.stmarkreformed.localtest.me`)
+      - traefik.http.routers.mosaic_connect_mailhog.middlewares=https-redirect
+      - traefik.http.routers.mosaic_connect_mailhog-secure.entrypoints=websecure
+      - traefik.http.routers.mosaic_connect_mailhog-secure.tls=true
+      - traefik.http.routers.mosaic_connect_mailhog-secure.rule=Host(`mailhog.stmarkreformed.localtest.me`)
+      - traefik.http.services.mosaic_connect_mailhog-secure.loadbalancer.server.port=49194
+
 networks:
   traefik:
     name: traefik
     external: true
+  fusionauth_db_net:
+    driver: bridge
+
+volumes:
+  fusion_db_data_volume:
+  fusionauth_config_volume:
+  mailhog_volume:
+  redis_volume:

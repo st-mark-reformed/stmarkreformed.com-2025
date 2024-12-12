@@ -21,7 +21,7 @@ export default async function down (
     execSync(
         `
             cd ${dockerDir};
-            docker compose -f docker-compose.dev.yml -p smrc down;
+            docker compose -f docker-compose.dev.yml --env-file fusionauth/.env.dev -p smrc down;
         `,
         { stdio: 'inherit' },
     );
