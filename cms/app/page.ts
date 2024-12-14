@@ -1,3 +1,5 @@
+import { redirect } from 'next/navigation';
+
 export default async function Page () {
-    return 'Hello CMS World';
+    redirect('/pages');
 }
