@@ -1,3 +1,3 @@
-export default function Page () {
-    return 'Hello World';
+export default async function Page () {
+    return 'Hello CMS World';
 }

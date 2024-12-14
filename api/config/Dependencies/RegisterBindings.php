@@ -10,5 +10,10 @@ class RegisterBindings
 {
     public static function register(Bindings $bindings): void
     {
+        RegisterBindingsAuthentication::register($bindings);
+        RegisterBindingsCache::register($bindings);
+        RegisterBindingsClock::register($bindings);
+        RegisterBindingsLogging::register($bindings);
+        RegisterBindingsUuid::register($bindings);
     }
 }

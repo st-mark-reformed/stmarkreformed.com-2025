@@ -5,12 +5,16 @@
         "php": "^8.4",
         "ext-pdo": "*",
         "ext-redis": "*",
-        "rxante/php-app-bootstrap": "^1.0"
+        "lcobucci/clock": "^3.3",
+        "ramsey/uuid": "^4.7",
+        "rxante/oauth": "^1.4",
+        "rxante/php-app-bootstrap": "^1.0",
+        "symfony/cache": "^7.2"
     },
     "require-dev": {
         "buzzingpixel/symfony-var-dumper-decorator": "^1.0",
         "filp/whoops": "^2.15",
-        "rxante/coding-standards": "^1.0.1",
+        "rxante/coding-standards": "^1.1",
         "symfony/var-dumper": "^6.4"
     },
     "autoload": {

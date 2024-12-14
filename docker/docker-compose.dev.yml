@@ -22,6 +22,8 @@ services:
       default:
         aliases:
             - api.stmarkreformed.localtest.me
+    extra_hosts:
+      - "auth.stmarkreformed.localtest.me:host-gateway"
     labels:
       ## Traefik config ##
       - traefik.enable=true
@@ -39,12 +41,14 @@ services:
       - traefik.http.routers.stmarkreformed_api-secure.rule=Host(`api.stmarkreformed.localtest.me`)
     ports:
       - "49195:80"
+    secrets:
+      - FUSION_AUTH_SIGNING_CERTIFICATE
 
   cms:
     stdin_open: true
     env_file:
-      - ./web/.env.dev
-      - ./web/.env.local
+      - ./cms/.env.dev
+      - ./cms/.env.local
     container_name: smrc_cms
     image: ghcr.io/st-mark-reformed/smrc-2025-cms
     environment:
@@ -58,13 +62,15 @@ services:
       - "run"
       - "dev"
     volumes:
-      - ./web/.bash_history:/root/.bash_history:delegated
-      - ../web:/app:delegated
+      - ./cms/.bash_history:/root/.bash_history:delegated
+      - ../cms:/app:delegated
     expose:
       - 80
     networks:
       - traefik
       - default
+    extra_hosts:
+      - "auth.stmarkreformed.localtest.me:host-gateway"
     labels:
       ## Traefik config ##
       - traefik.enable=true
@@ -106,6 +112,8 @@ services:
     networks:
       - traefik
       - default
+    extra_hosts:
+      - "auth.stmarkreformed.localtest.me:host-gateway"
     labels:
       ## Traefik config ##
       - traefik.enable=true
@@ -151,6 +159,8 @@ services:
       fusionauth_db_net:
         aliases:
           - smrc_fusionauth_db
+    ports:
+      - "49191:5432"
     restart: unless-stopped
     volumes:
       - fusion_db_data_volume:/var/lib/postgresql/data
@@ -180,9 +190,8 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - default
-      - traefik
-      - fusionauth_db_net
+      traefik:
+      fusionauth_db_net:
     restart: unless-stopped
     ports:
       - "9011:9011"
@@ -247,3 +256,7 @@ volumes:
   fusionauth_config_volume:
   mailhog_volume:
   redis_volume:
+
+secrets:
+  FUSION_AUTH_SIGNING_CERTIFICATE:
+    file: ./secrets/FUSION_AUTH_SIGNING_CERTIFICATE
