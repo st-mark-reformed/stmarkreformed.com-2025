@@ -32,6 +32,9 @@ importers:
       rxante-oauth:
         specifier: ^1.4.0
         version: 1.4.0(@babel/core@7.26.0)(prop-types@15.8.1)
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
     devDependencies:
       '@tailwindcss/aspect-ratio':
         specifier: ^0.4.2
@@ -2703,8 +2706,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod@3.24.0:
-    resolution: {integrity: sha512-Hz+wiY8yD0VLA2k/+nsg2Abez674dDGTai33SwNvMPuf9uIrBC9eFgIMQxBBbHFxVXi8W+5nX9DcAh9YNSQm/w==}
+  zod@3.24.1:
+    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
 snapshots:
 
@@ -5352,7 +5355,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-loading: 2.0.3(prop-types@15.8.1)(react@18.3.1)
       sleep-promise: 9.1.0
-      zod: 3.24.0
+      zod: 3.24.1
     transitivePeerDependencies:
       - '@auth/core'
       - '@babel/core'
@@ -5762,4 +5765,4 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod@3.24.0: {}
+  zod@3.24.1: {}

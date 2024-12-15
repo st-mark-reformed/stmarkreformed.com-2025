@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Config\Events;
 
 use App\Healthcheck;
+use App\Pages\GetAllPagesAction;
+use App\Pages\PostNewPage\PostNewPageAction;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
 use RxAnte\OAuth\Routes\Route as OauthRoute;
 use RxAnte\OAuth\Routes\RoutesFactory as OauthRoutesFactory;
@@ -16,6 +18,8 @@ readonly class ApplyRoutes
     public function onDispatch(ApplyRoutesEvent $routes): void
     {
         Healthcheck::applyRoute($routes);
+        GetAllPagesAction::applyRoute($routes);
+        PostNewPageAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

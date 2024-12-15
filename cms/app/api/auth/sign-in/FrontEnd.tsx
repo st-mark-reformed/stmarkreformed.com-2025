@@ -1,13 +1,17 @@
 'use client';
 
-import { SignInPage } from 'rxante-oauth';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { signIn } from 'next-auth/react';
+import FullPageLoading from '../../../FullPageLoading';
 
 export default function FrontEnd () {
-    return (
-        <SignInPage
-            providerId="fusion-auth"
-            reactLoadingColor="#392c08"
-        />
-    );
+    useEffect(() => {
+        const url = new URL(window.location.href);
+
+        signIn('fusion-auth', {
+            callbackUrl: url.searchParams.get('authReturn')?.toString(),
+        });
+    });
+
+    return <FullPageLoading />;
 }

@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import PortalOverlay from '../layout/PortalOverlay';
 import ErrorMessage from '../Messaging/ErrorMessage';
+import PostNewPageHandler from './PostNewPageHandler';
 
 export default function NewPageOverlay (
     {
@@ -30,23 +31,21 @@ export default function NewPageOverlay (
 
         setIsSubmitting(true);
 
-        console.log('TODO: PostNewPageHandler');
+        PostNewPageHandler(pageName).then((result) => {
+            setIsSubmitting(false);
 
-        // PostNewPageHandler(pageName).then((result) => {
-        //     setIsSubmitting(false);
-        //
-        //     if (result.data.success) {
-        //         setErrors([]);
-        //
-        //         setIsVisible(false);
-        //
-        //         return;
-        //     }
-        //
-        //     setErrors(result.data.messages);
-        //
-        //     setErrorIsVisible(true);
-        // });
+            if (result.data.success) {
+                setErrors([]);
+
+                setIsVisible(false);
+
+                return;
+            }
+
+            setErrors(result.data.messages);
+
+            setErrorIsVisible(true);
+        });
     };
 
     let buttonClasses = 'rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ';
