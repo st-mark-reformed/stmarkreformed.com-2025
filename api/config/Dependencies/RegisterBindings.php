@@ -12,6 +12,7 @@ class RegisterBindings
     {
         RegisterBindingsAuthentication::register($bindings);
         RegisterBindingsCache::register($bindings);
+        RegisterBindingsCli::register($bindings);
         RegisterBindingsClock::register($bindings);
         RegisterBindingsLogging::register($bindings);
         RegisterBindingsUuid::register($bindings);
