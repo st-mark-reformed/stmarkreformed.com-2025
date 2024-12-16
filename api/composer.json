@@ -5,11 +5,14 @@
         "php": "^8.4",
         "ext-pdo": "*",
         "ext-redis": "*",
+        "beberlei/assert": "^3.3",
+        "cocur/slugify": "^4.6",
         "lcobucci/clock": "^3.3",
         "ramsey/uuid": "^4.7",
         "robmorgan/phinx": "^0.16.5",
         "rxante/oauth": "^1.4",
         "rxante/php-app-bootstrap": "^1.0",
+        "spatie/php-cloneable": "^1.0",
         "symfony/cache": "^7.2"
     },
     "require-dev": {

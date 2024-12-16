@@ -6,7 +6,9 @@ namespace App\Pages\Persistence;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
 
-class PageRecord
+use App\Persistence\Record;
+
+class PageRecord extends Record
 {
     public static function getTableName(): string
     {
@@ -31,14 +33,14 @@ class PageRecord
     /**
      * Must be the values found in
      *
-     * @see \App\Pages\PageStatus
+     * @see \App\Pages\Page\PageStatus
      */
     public string $status = '';
 
     /**
      * Must be the values found in
      *
-     * @see \App\Pages\PageType
+     * @see \App\Pages\Page\PageType
      */
     public string $type = '';
 

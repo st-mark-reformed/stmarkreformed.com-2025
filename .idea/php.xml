@@ -97,6 +97,9 @@
       <path value="$PROJECT_DIR$/api/vendor/cakephp/datasource" />
       <path value="$PROJECT_DIR$/api/vendor/cakephp/database" />
       <path value="$PROJECT_DIR$/api/vendor/cakephp/chronos" />
+      <path value="$PROJECT_DIR$/api/vendor/spatie/php-cloneable" />
+      <path value="$PROJECT_DIR$/api/vendor/beberlei/assert" />
+      <path value="$PROJECT_DIR$/api/vendor/cocur/slugify" />
     </include_path>
   </component>
   <component name="PhpProjectServersManager">

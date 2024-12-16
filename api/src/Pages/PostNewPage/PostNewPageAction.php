@@ -10,8 +10,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
 use RxAnte\OAuth\RequireOauthTokenHeaderMiddleware;
 
-use function json_encode;
-
 readonly class PostNewPageAction
 {
     public static function applyRoute(ApplyRoutesEvent $routes): void
@@ -21,17 +19,21 @@ readonly class PostNewPageAction
             ->add(RequireOauthTokenHeaderMiddleware::class);
     }
 
-    public function __invoke(
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-    ): ResponseInterface {
-        // TODO: Implement __invoke() method.
+    public function __construct(
+        private CreatePage $createPage,
+        private PageNameFactory $pageNameFactory,
+        private PostNewPageResponder $responder,
+    ) {
+    }
 
-        $response->getBody()->write((string) json_encode([
-            'success' => true,
-            'messages' => [],
-        ]));
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
+    {
+        $pageNameResult = $this->pageNameFactory->fromServerRequest(
+            $request,
+        );
 
-        return $response;
+        $result = $this->createPage->create($pageNameResult);
+
+        return $this->responder->respond($result);
     }
 }

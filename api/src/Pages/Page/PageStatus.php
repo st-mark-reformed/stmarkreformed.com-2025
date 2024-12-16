@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Pages;
+namespace App\Pages\Page;
 
 use RuntimeException;
 use Throwable;
