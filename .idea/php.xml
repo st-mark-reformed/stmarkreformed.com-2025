@@ -87,6 +87,16 @@
       <path value="$PROJECT_DIR$/api/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/api/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/api/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/api/vendor/league/container" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/api/vendor/robmorgan/phinx" />
+      <path value="$PROJECT_DIR$/api/vendor/cakephp/core" />
+      <path value="$PROJECT_DIR$/api/vendor/cakephp/utility" />
+      <path value="$PROJECT_DIR$/api/vendor/cakephp/datasource" />
+      <path value="$PROJECT_DIR$/api/vendor/cakephp/database" />
+      <path value="$PROJECT_DIR$/api/vendor/cakephp/chronos" />
     </include_path>
   </component>
   <component name="PhpProjectServersManager">

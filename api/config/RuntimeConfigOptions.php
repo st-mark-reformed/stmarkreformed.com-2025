@@ -19,4 +19,11 @@ enum RuntimeConfigOptions
     case FUSION_AUTH_CLIENT_ID;
     case FUSION_AUTH_CLIENT_SECRET;
     case FUSION_AUTH_SIGNING_CERTIFICATE;
+
+    // API Database
+    case API_DB_HOST;
+    case API_DB_NAME;
+    case API_DB_USER;
+    case API_DB_PASSWORD;
+    case API_DB_PORT;
 }

@@ -15,6 +15,7 @@ services:
     volumes:
       - ./api/.bash_history:/root/.bash_history:delegated
       - ../api:/var/www:delegated
+      - static_content_volume:/static_content
     expose:
       - 80
     networks:
@@ -44,6 +45,33 @@ services:
     secrets:
       - FUSION_AUTH_SIGNING_CERTIFICATE
 
+  api_db:
+    container_name: smrc_api_db
+    image: mariadb:10.6
+    command: [
+      'mysqld',
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+    ]
+    healthcheck:
+      test: mysql --user=root --password=$$MYSQL_ROOT_PASSWORD -e 'SHOW DATABASES;'
+      interval: 1s
+      timeout: 3s
+      start_period: 30s
+    volumes:
+      - api_db_volume:/var/lib/mysql
+    ports:
+      - "49192:3306"
+    environment:
+      HOSTNAME: smrc_api_db
+      MYSQL_ALLOW_EMPTY_PASSWORD: no
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: smrc_api
+      MYSQL_USER: smrc_api
+      MYSQL_PASSWORD: secret
+    networks:
+      - default
+
   cms:
     stdin_open: true
     env_file:
@@ -64,6 +92,7 @@ services:
     volumes:
       - ./cms/.bash_history:/root/.bash_history:delegated
       - ../cms:/app:delegated
+      - static_content_volume:/static_content
     expose:
       - 80
     networks:
@@ -107,6 +136,7 @@ services:
     volumes:
       - ./web/.bash_history:/root/.bash_history:delegated
       - ../web:/app:delegated
+      - static_content_volume:/static_content
     expose:
       - 80
     networks:
@@ -252,10 +282,12 @@ networks:
     driver: bridge
 
 volumes:
+  api_db_volume:
   fusion_db_data_volume:
   fusionauth_config_volume:
   mailhog_volume:
   redis_volume:
+  static_content_volume:
 
 secrets:
   FUSION_AUTH_SIGNING_CERTIFICATE:
