@@ -11,6 +11,7 @@ import PageHeader from '../layout/PageHeader';
 import EmptyState from '../EmptyState';
 import RenderOnMount from '../RenderOnMount';
 import NewPageOverlay from './NewPageOverlay';
+import Message from '../messaging/Message';
 
 export default function PageClientSide () {
     const [newPageIsOpen, setNewPageIsOpen] = useState(false);
@@ -61,6 +62,12 @@ export default function PageClientSide () {
                     RenderCustomButton={renderCustomButton}
                 />
             </div>
+            <Message
+                type="error"
+                heading="There is an overlap in URIs"
+                body={['TODO: Query and display error message if there are any overlapping URIs']}
+                padBottom
+            />
             <EmptyState onButtonClick={() => {
                 setNewPageIsOpen(true);
             }}
