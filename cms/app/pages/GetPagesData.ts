@@ -1,10 +1,19 @@
 import { RequestFactory } from '../api/request/RequestFactory';
+import { PageTypeFrontEndNoDataArray, PageTypeNoDataArray, PageTypeNoDataArraySchema } from './PageType';
+import { TransformPageTypeNoData } from './PageTransformer';
 
-type Response = {
-    userHasAccess: boolean;
+type ResponseNoAccess = {
+    userHasAccess: false;
 };
 
-export default async function GetPagesData (): Promise<Response> {
+type ResponseWithAccess = {
+    userHasAccess: true;
+    data: PageTypeFrontEndNoDataArray;
+};
+
+export default async function GetPagesData (): Promise<
+ResponseNoAccess | ResponseWithAccess
+> {
     const response = await RequestFactory().makeWithSignInRedirect({
         uri: '/pages/all-pages',
         cacheSeconds: 0,
@@ -14,5 +23,12 @@ export default async function GetPagesData (): Promise<Response> {
         return { userHasAccess: false };
     }
 
-    return { userHasAccess: true };
+    const pages = response.json as PageTypeNoDataArray;
+
+    PageTypeNoDataArraySchema.parse(pages);
+
+    return {
+        userHasAccess: true,
+        data: pages.map((page) => TransformPageTypeNoData(page)),
+    };
 }

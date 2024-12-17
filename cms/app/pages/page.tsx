@@ -23,7 +23,7 @@ export default async function Page () {
                 currentBreadcrumb: { value: 'Pages' },
             }}
         >
-            <PageClientSide />
+            <PageClientSide pages={result.data} />
         </Layout>
     );
 }
