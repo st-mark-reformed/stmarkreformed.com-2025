@@ -65,7 +65,7 @@ export default function PageClientSide (
         return (
             <>
                 <Link
-                    href="/cms/pages/reorder"
+                    href="/pages/reorder"
                     className="inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
                 >
                     <BarsArrowUpIcon className="h-5 w-5 mr-1" />

@@ -101,7 +101,7 @@ export default function PageItem (
                                     return (
                                         <Link
                                             data-prevent-select
-                                            href={`/cms/entries/${page.id}`}
+                                            href={`/blog-entries/${page.id}`}
                                             className="rounded bg-saddle-brown-lightened-1 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-saddle-brown focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 ml-4"
                                         >
                                             <ListBulletIcon className="h-3 w-3 text-white inline -mt-0.5" />

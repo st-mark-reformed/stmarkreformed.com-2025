@@ -13,7 +13,7 @@ export function TransformPageTypeNoData (
     return {
         ...page,
         href: `/${page.path}`,
-        cmsHref: `/cms/pages/edit/${page.id}`,
+        cmsHref: `/pages/edit/${page.id}`,
         children: page.children.map((child) => TransformPageTypeNoData(child)),
     };
 }
@@ -24,7 +24,7 @@ export function TransformPageTypeWithDataNoChildren (
     return {
         ...page,
         href: `/${page.path}`,
-        cmsHref: `/cms/pages/edit/${page.id}`,
+        cmsHref: `/pages/edit/${page.id}`,
     };
 }
 
@@ -34,6 +34,6 @@ export function TransformPageTypeWithNoDataNoChildren (
     return {
         ...page,
         href: `/${page.path}`,
-        cmsHref: `/cms/pages/edit/${page.id}`,
+        cmsHref: `/pages/edit/${page.id}`,
     };
 }
