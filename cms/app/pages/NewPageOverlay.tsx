@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import PortalOverlay from '../layout/PortalOverlay';
-import ErrorMessage from '../Messaging/ErrorMessage';
 import PostNewPageHandler from './PostNewPageHandler';
+import Message from '../messaging/Message';
 
 export default function NewPageOverlay (
     {
@@ -74,11 +74,12 @@ export default function NewPageOverlay (
                 }}
             >
                 <div className="px-4 py-5 sm:p-6 min-w-96">
-                    <ErrorMessage
+                    <Message
                         isVisible={errorIsVisible}
                         setIsVisible={setErrorIsVisible}
                         heading="Something went wrong"
                         body={errors}
+                        type="error"
                     />
                     <h3 className={`${headingTopPadding} text-base font-semibold leading-6 text-gray-900`}>Page Name</h3>
                     <div className="mt-2 text-right">
