@@ -13,15 +13,16 @@ import PageHeader from '../layout/PageHeader';
 import EmptyState from '../EmptyState';
 import RenderOnMount from '../RenderOnMount';
 import NewPageOverlay from './NewPageOverlay';
-import Message from '../messaging/Message';
 import { PageTypeFrontEndNoDataArray } from './PageType';
 import PageItem from './PageItem';
 
 export default function PageClientSide (
     {
         pages,
+        children,
     }: {
         pages: PageTypeFrontEndNoDataArray;
+        children: React.ReactNode;
     },
 ) {
     const [newPageIsOpen, setNewPageIsOpen] = useState(false);
@@ -109,12 +110,8 @@ export default function PageClientSide (
                     RenderCustomButton={renderCustomButton}
                 />
             </div>
-            <Message
-                type="error"
-                heading="There is an overlap in URIs"
-                body={['TODO: Query and display error message if there are any overlapping URIs']}
-                padBottom
-            />
+            {children}
+            {/* <OverlappingUrisReport /> */}
             {(() => {
                 if (pages.length < 1) {
                     return (

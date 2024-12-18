@@ -35,8 +35,10 @@ TreeItemComponentProps<SortableItem>
 export default function Reorder (
     {
         pages,
+        children,
     }: {
         pages: PageTypeFrontEndNoDataArray;
+        children: React.ReactNode;
     },
 ) {
     const [items, setItems] = useState<SortableItems>(
@@ -91,6 +93,7 @@ export default function Reorder (
                     RenderCustomButton={renderCustomButton}
                 />
             </div>
+            {children}
             <Message
                 type="success"
                 isVisible={success}

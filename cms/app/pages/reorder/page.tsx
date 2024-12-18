@@ -3,6 +3,7 @@ import Reorder from './Reorder';
 import GetPagesData from '../GetPagesData';
 import AccessDenied from '../../AccessDenied';
 import Layout from '../../layout/Layout';
+import { OverlappingUrisReportSuspense } from '../OverlappingUrisReport/OverlappingUrisReportSuspense';
 
 export default async function Page () {
     const result = await GetPagesData();
@@ -27,7 +28,9 @@ export default async function Page () {
                 currentBreadcrumb: { value: 'Reorder' },
             }}
         >
-            <Reorder pages={result.data} />
+            <Reorder pages={result.data}>
+                <OverlappingUrisReportSuspense />
+            </Reorder>
         </Layout>
     );
 }

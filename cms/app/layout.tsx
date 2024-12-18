@@ -1,6 +1,7 @@
 import './layout/base.css';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Metadata } from 'next';
+import FullPageLoading from './FullPageLoading';
 
 export const metadata: Metadata = {
     title: 'CMS | St. Mark Reformed Church',
@@ -22,7 +23,9 @@ export default async function RootLayout ({ children }: { children: React.ReactN
     return (
         <html lang="en" className="h-full">
             <body className="h-full">
-                {children}
+                <Suspense fallback={<FullPageLoading />}>
+                    {children}
+                </Suspense>
             </body>
         </html>
     );

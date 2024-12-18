@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Sidebar from './Sidebar';
 import Breadcrumbs, { BreadcrumbItems, CurrentBreadcrumbItem } from './Breadcrumbs';
+import PartialPageLoading from '../PartialPageLoading';
 
 export default async function Layout (
     {
@@ -32,7 +33,9 @@ export default async function Layout (
                 })()}
                 <main className="">
                     <div className="p-4 sm:p-6 md:p-8">
-                        {children}
+                        <Suspense fallback={<PartialPageLoading />}>
+                            {children}
+                        </Suspense>
                     </div>
                 </main>
             </div>

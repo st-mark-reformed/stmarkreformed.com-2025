@@ -3,6 +3,7 @@ import Layout from '../layout/Layout';
 import PageClientSide from './PageClientSide';
 import AccessDenied from '../AccessDenied';
 import GetPagesData from './GetPagesData';
+import { OverlappingUrisReportSuspense } from './OverlappingUrisReport/OverlappingUrisReportSuspense';
 
 export default async function Page () {
     const result = await GetPagesData();
@@ -23,7 +24,9 @@ export default async function Page () {
                 currentBreadcrumb: { value: 'Pages' },
             }}
         >
-            <PageClientSide pages={result.data} />
+            <PageClientSide pages={result.data}>
+                <OverlappingUrisReportSuspense />
+            </PageClientSide>
         </Layout>
     );
 }

@@ -6,6 +6,7 @@ namespace Config\Events;
 
 use App\Healthcheck;
 use App\Pages\GetAllPagesAction;
+use App\Pages\OverlappingUrisReport\GetOverlappingUriReportAction;
 use App\Pages\PatchPagesPosition\PatchPagesPositionAction;
 use App\Pages\PostNewPage\PostNewPageAction;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
@@ -22,6 +23,7 @@ readonly class ApplyRoutes
         GetAllPagesAction::applyRoute($routes);
         PostNewPageAction::applyRoute($routes);
         PatchPagesPositionAction::applyRoute($routes);
+        GetOverlappingUriReportAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

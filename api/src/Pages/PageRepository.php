@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Pages;
 
+use App\Pages\OverlappingUrisReport\OverlappingUri;
+use App\Pages\OverlappingUrisReport\OverlappingUrisReport;
+use App\Pages\Page\Page;
 use App\Pages\Page\PageCollection;
 use App\Pages\Page\PageName;
 use App\Pages\Persistence\CreateNewPageRecord;
@@ -11,6 +14,9 @@ use App\Pages\Persistence\FindAllPages;
 use App\Pages\Persistence\PageRecordToEntity;
 use App\Persistence\PersistNewRecord;
 use App\Persistence\Result;
+
+use function array_filter;
+use function array_key_exists;
 
 readonly class PageRepository
 {
@@ -27,6 +33,36 @@ readonly class PageRepository
         return $this->pageRecordToEntity->transformCollectionFromRoot(
             $this->findAllPages->find(),
         );
+    }
+
+    public function createOverlappingUriReport(): OverlappingUrisReport
+    {
+        $uriCounts = [];
+
+        $this->findAllPages()->walkAll(
+            static function (Page $page) use (&$uriCounts): void {
+                $uri = $page->path->value;
+
+                if (! array_key_exists($uri, $uriCounts)) {
+                    $uriCounts[$uri] = 0;
+                }
+
+                $uriCounts[$uri] += 1;
+            },
+        );
+
+        $uriCounts = array_filter(
+            $uriCounts,
+            static fn (int $count) => $count > 1,
+        );
+
+        $items = [];
+
+        foreach ($uriCounts as $uri => $count) {
+            $items[] = new OverlappingUri($uri, $count);
+        }
+
+        return new OverlappingUrisReport($items);
     }
 
     public function createNewPage(PageName $pageName): Result
