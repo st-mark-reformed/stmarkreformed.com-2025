@@ -6,6 +6,7 @@ import fs from 'fs';
 export enum ConfigOptions {
     DEV_MODE = 'DEV_MODE',
     APP_URL = 'APP_URL',
+    FRONT_END_URL = 'FRONT_END_URL',
 
     // Authentication
     NEXTAUTH_SECRET = 'NEXTAUTH_SECRET',
