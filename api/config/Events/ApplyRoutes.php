@@ -6,6 +6,7 @@ namespace Config\Events;
 
 use App\Healthcheck;
 use App\Pages\GetAllPagesAction;
+use App\Pages\PatchPagesPosition\PatchPagesPositionAction;
 use App\Pages\PostNewPage\PostNewPageAction;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
 use RxAnte\OAuth\Routes\Route as OauthRoute;
@@ -20,6 +21,7 @@ readonly class ApplyRoutes
         Healthcheck::applyRoute($routes);
         GetAllPagesAction::applyRoute($routes);
         PostNewPageAction::applyRoute($routes);
+        PatchPagesPositionAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }
