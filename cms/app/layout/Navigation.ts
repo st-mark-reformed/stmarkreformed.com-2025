@@ -50,7 +50,7 @@ function createItem (
     };
 }
 
-export default function Navigation (): Promise<Array<NavigationItem>> {
+export default function Navigation (): Array<NavigationItem> {
     const currentPathname = usePathname();
 
     return [

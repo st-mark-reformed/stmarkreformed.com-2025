@@ -9,7 +9,7 @@ import { RequestFactory } from '../../api/request/RequestFactory';
 export default async function PatchPagesOrder (
     items: SortableItems,
 ): Promise<ApiResponseResult> {
-    const response = await RequestFactory().makeWithToken({
+    const response = await RequestFactory().makeWithSignInRedirect({
         uri: '/pages/all-pages',
         method: RequestMethods.PATCH,
         payload: items,

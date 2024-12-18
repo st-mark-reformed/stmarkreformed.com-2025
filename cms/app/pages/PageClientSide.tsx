@@ -15,6 +15,8 @@ import RenderOnMount from '../RenderOnMount';
 import NewPageOverlay from './NewPageOverlay';
 import { PageTypeFrontEndNoDataArray } from './PageType';
 import PageItem from './PageItem';
+import DeletePages from './DeletePages';
+import Message from '../messaging/Message';
 
 export default function PageClientSide (
     {
@@ -30,6 +32,8 @@ export default function PageClientSide (
     const [selectedIds, setSelectedIds] = useState<Array<string>>([]);
 
     const hasSelected = selectedIds.length > 0;
+
+    const [errorMessages, setErrorMessages] = useState<Array<string>>([]);
 
     const renderCustomButton = () => {
         if (hasSelected) {
@@ -49,11 +53,15 @@ export default function PageClientSide (
                         type="button"
                         className="ml-3 inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
                         onClick={() => {
-                            console.log('TODO: DeletePages');
+                            DeletePages(selectedIds).then((response) => {
+                                if (response.data.success) {
+                                    setSelectedIds([]);
 
-                            // DeletePages(selectedIds).then(() => {
-                            //     setSelectedIds([]);
-                            // });
+                                    return;
+                                }
+
+                                setErrorMessages(response.data.messages);
+                            });
                         }}
                     >
                         <TrashIcon className="h-5 w-5 mr-1" />
@@ -111,7 +119,20 @@ export default function PageClientSide (
                 />
             </div>
             {children}
-            {/* <OverlappingUrisReport /> */}
+            <Message
+                isVisible={errorMessages.length > 0}
+                setIsVisible={(state) => {
+                    if (state !== false) {
+                        return;
+                    }
+
+                    setErrorMessages([]);
+                }}
+                type="error"
+                heading="There was an error"
+                body={errorMessages}
+                padBottom
+            />
             {(() => {
                 if (pages.length < 1) {
                     return (

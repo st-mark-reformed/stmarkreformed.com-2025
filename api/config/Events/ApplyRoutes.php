@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Config\Events;
 
 use App\Healthcheck;
+use App\Pages\DeletePagesAction;
 use App\Pages\GetAllPagesAction;
 use App\Pages\OverlappingUrisReport\GetOverlappingUriReportAction;
 use App\Pages\PatchPagesPosition\PatchPagesPositionAction;
@@ -24,6 +25,7 @@ readonly class ApplyRoutes
         PostNewPageAction::applyRoute($routes);
         PatchPagesPositionAction::applyRoute($routes);
         GetOverlappingUriReportAction::applyRoute($routes);
+        DeletePagesAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

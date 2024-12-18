@@ -10,10 +10,12 @@ use App\Pages\Page\Page;
 use App\Pages\Page\PageCollection;
 use App\Pages\Page\PageName;
 use App\Pages\Persistence\CreateNewPageRecord;
+use App\Pages\Persistence\DeletePages;
 use App\Pages\Persistence\FindAllPages;
 use App\Pages\Persistence\PageRecordToEntity;
 use App\Persistence\PersistNewRecord;
 use App\Persistence\Result;
+use App\Persistence\UuidCollection;
 
 use function array_filter;
 use function array_key_exists;
@@ -21,6 +23,7 @@ use function array_key_exists;
 readonly class PageRepository
 {
     public function __construct(
+        private DeletePages $deletePages,
         private FindAllPages $findAllPages,
         private PersistNewRecord $persistNewRecord,
         private PageRecordToEntity $pageRecordToEntity,
@@ -75,5 +78,22 @@ readonly class PageRepository
                 $existingPages->lastPagePosition(),
             ),
         );
+    }
+
+    public function deletePages(UuidCollection $ids): Result
+    {
+        $allPages = $this->findAllPages();
+
+        $allPages->walkAll(
+            static function (Page $page) use (&$ids): void {
+                if (! $ids->has($page->parentId)) {
+                    return;
+                }
+
+                $ids = $ids->withId($page->id);
+            },
+        );
+
+        return $this->deletePages->delete($ids);
     }
 }

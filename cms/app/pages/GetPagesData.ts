@@ -17,6 +17,7 @@ ResponseNoAccess | ResponseWithAccess
     const response = await RequestFactory().makeWithSignInRedirect({
         uri: '/pages/all-pages',
         cacheSeconds: 0,
+        cacheTags: ['pageData'],
     });
 
     if (response.status === 401 || response.status === 403) {

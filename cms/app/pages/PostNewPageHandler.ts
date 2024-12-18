@@ -8,7 +8,7 @@ import { ApiResponseResult, ApiResponseSchema, ApiResponseType } from '../Persis
 export default async function PostNewPageHandler (
     pageName: string,
 ): Promise<ApiResponseResult> {
-    const response = await RequestFactory().makeWithToken({
+    const response = await RequestFactory().makeWithSignInRedirect({
         uri: '/pages/all-pages',
         method: RequestMethods.POST,
         payload: { pageName },
