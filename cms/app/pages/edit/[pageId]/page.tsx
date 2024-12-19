@@ -3,6 +3,8 @@ import Layout from '../../../layout/Layout';
 import AccessDenied from '../../../AccessDenied';
 import { GetPageData } from './GetPageData';
 import NotFound from '../../../not-found';
+import PageClientSide from './PageClientSide';
+import { ConfigOptions, getConfigString } from '../../../serverSideRunTimeConfig';
 
 export default async function Page (
     {
@@ -21,6 +23,8 @@ export default async function Page (
         return <NotFound />;
     }
 
+    console.log(data.data);
+
     return (
         <Layout
             breadcrumbs={{
@@ -33,7 +37,10 @@ export default async function Page (
                 currentBreadcrumb: { value: 'Edit' },
             }}
         >
-            TODO
+            <PageClientSide
+                apiFeUrl={getConfigString(ConfigOptions.API_FE_URL)}
+                initialData={data.data}
+            />
         </Layout>
     );
 }

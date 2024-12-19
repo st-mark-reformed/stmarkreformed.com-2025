@@ -1,5 +1,9 @@
 import { RequestFactory } from '../../../api/request/RequestFactory';
-import { PageTypeWithDataNoChildren, PageTypeWithDataNoChildrenSchema } from '../../PageType';
+import {
+    PageTypeWithDataNoChildren,
+    PageTypeWithDataNoChildrenFrontEnd,
+    PageTypeWithDataNoChildrenSchema,
+} from '../../PageType';
 import { TransformPageTypeWithDataNoChildren } from '../../PageTransformer';
 
 type ResponseNoAccess = {
@@ -15,7 +19,7 @@ type ResponseWith404 = {
 type ResponseWithAccess = {
     userHasAccess: true;
     notFound: false;
-    data: PageTypeWithDataNoChildren;
+    data: PageTypeWithDataNoChildrenFrontEnd;
 };
 
 export async function GetPageData (

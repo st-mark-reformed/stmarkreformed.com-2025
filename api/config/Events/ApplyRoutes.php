@@ -8,6 +8,7 @@ use App\Healthcheck;
 use App\Pages\DeletePagesAction;
 use App\Pages\GetAllPagesAction;
 use App\Pages\GetPage\GetPageAction;
+use App\Pages\GetPageTypesAction;
 use App\Pages\OverlappingUrisReport\GetOverlappingUriReportAction;
 use App\Pages\PatchPagesPosition\PatchPagesPositionAction;
 use App\Pages\PostNewPage\PostNewPageAction;
@@ -27,6 +28,7 @@ readonly class ApplyRoutes
         PatchPagesPositionAction::applyRoute($routes);
         GetOverlappingUriReportAction::applyRoute($routes);
         DeletePagesAction::applyRoute($routes);
+        GetPageTypesAction::applyRoute($routes);
         GetPageAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
