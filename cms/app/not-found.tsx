@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     title: createPageTitle('Page Not Found'),
 };
 
-export default function Error () {
+export default function NotFound () {
     return (
         <FullPageError
             statusCode={404}

@@ -17,10 +17,6 @@ export default async function Page () {
             breadcrumbs={{
                 breadcrumbs: [
                     {
-                        value: 'CMS',
-                        href: '/',
-                    },
-                    {
                         value: 'Pages',
                         href: '/pages',
                     },

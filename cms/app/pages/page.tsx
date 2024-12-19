@@ -15,12 +15,7 @@ export default async function Page () {
     return (
         <Layout
             breadcrumbs={{
-                breadcrumbs: [
-                    {
-                        value: 'CMS',
-                        href: '/cms',
-                    },
-                ],
+                breadcrumbs: [],
                 currentBreadcrumb: { value: 'Pages' },
             }}
         >

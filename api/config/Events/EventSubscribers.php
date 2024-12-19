@@ -12,5 +12,6 @@ class EventSubscribers
     {
         $provider->addSubscriber(ApplyRoutes::class);
         $provider->addSubscriber(ApplyCommands::class);
+        $provider->addSubscriber(RequestResponseEventSubscriber::class);
     }
 }
