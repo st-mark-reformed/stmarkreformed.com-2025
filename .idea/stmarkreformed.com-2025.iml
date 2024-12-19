@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/api/config" isTestSource="false" packagePrefix="Config\" />
       <sourceFolder url="file://$MODULE_DIR$/api/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests" isTestSource="false" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/api/public" isTestSource="false" packagePrefix="public\" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/bnf/phpstan-psr-container" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/buzzingpixel/symfony-var-dumper-decorator" />
@@ -84,6 +85,8 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/spatie/php-cloneable" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/config" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/filesystem" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/melihovv/base64-image-decoder" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/finder" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

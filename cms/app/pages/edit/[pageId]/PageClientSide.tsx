@@ -11,6 +11,7 @@ import PageType from './inputs/PageType';
 import TextInput from '../../../inputs/TextInput';
 import Toggle from '../../../inputs/Toggle';
 import PageTypeFactory from './page-types/PageTypeFactory';
+import PatchPage from './PatchPage';
 
 export default function PageClientSide (
     {
@@ -34,25 +35,25 @@ export default function PageClientSide (
             type="button"
             className="inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
             onClick={() => {
-                console.log('TODO: PatchPage');
+                setSuccess(false);
 
-                // PatchPage(data).then((result) => {
-                //     if (result.data.success) {
-                //         setSuccess(true);
-                //
-                //         setErrorIsVisible(false);
-                //
-                //         setErrors([]);
-                //
-                //         return;
-                //     }
-                //
-                //     setSuccess(false);
-                //
-                //     setErrors(result.data.messages);
-                //
-                //     setErrorIsVisible(true);
-                // });
+                PatchPage(data).then((result) => {
+                    if (result.data.success) {
+                        setSuccess(true);
+
+                        setErrorIsVisible(false);
+
+                        setErrors([]);
+
+                        return;
+                    }
+
+                    setSuccess(false);
+
+                    setErrors(result.data.messages);
+
+                    setErrorIsVisible(true);
+                });
             }}
         >
             <CheckIcon className="h-5 w-5 mr-1" />

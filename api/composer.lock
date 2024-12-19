@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c0c5c95f50976d99126b6efa75d9f0f",
+    "content-hash": "27c593cfbcf554a11fe8b04d7463f04d",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1686,6 +1686,56 @@
             "time": "2024-12-11T05:05:52+00:00"
         },
         {
+            "name": "melihovv/base64-image-decoder",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/melihovv/base64-image-decoder.git",
+                "reference": "3c4bdc11f8d4e932a0d9fad48f5fe86cd534daf6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/melihovv/base64-image-decoder/zipball/3c4bdc11f8d4e932a0d9fad48f5fe86cd534daf6",
+                "reference": "3c4bdc11f8d4e932a0d9fad48f5fe86cd534daf6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "ext-gd": "*",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Melihovv\\Base64ImageDecoder\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Melihov",
+                    "email": "amelihovv@ya.ru"
+                }
+            ],
+            "description": "A base64 image decoder",
+            "keywords": [
+                "base64",
+                "decoder",
+                "image"
+            ],
+            "support": {
+                "issues": "https://github.com/melihovv/base64-image-decoder/issues",
+                "source": "https://github.com/melihovv/base64-image-decoder/tree/master"
+            },
+            "time": "2018-09-08T08:35:25+00:00"
+        },
+        {
             "name": "mnapoli/silly",
             "version": "1.9.1",
             "source": {
@@ -2811,16 +2861,16 @@
         },
         {
             "name": "rxante/oauth",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RxAnte/oauth.git",
-                "reference": "993b023b591f3eddb973a05c47ef9e77bc80555e"
+                "reference": "38b5ecbcc0d5c4fcb342e6de18371baeea201373"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RxAnte/oauth/zipball/993b023b591f3eddb973a05c47ef9e77bc80555e",
-                "reference": "993b023b591f3eddb973a05c47ef9e77bc80555e",
+                "url": "https://api.github.com/repos/RxAnte/oauth/zipball/38b5ecbcc0d5c4fcb342e6de18371baeea201373",
+                "reference": "38b5ecbcc0d5c4fcb342e6de18371baeea201373",
                 "shasum": ""
             },
             "require": {
@@ -2865,9 +2915,9 @@
             "description": "A collection of OAuth related things for the RxAnte Web Services team",
             "support": {
                 "issues": "https://github.com/RxAnte/oauth/issues",
-                "source": "https://github.com/RxAnte/oauth/tree/1.4.0"
+                "source": "https://github.com/RxAnte/oauth/tree/1.4.1"
             },
-            "time": "2024-12-14T19:05:35+00:00"
+            "time": "2024-12-16T20:28:28+00:00"
         },
         {
             "name": "rxante/php-app-bootstrap",
@@ -3494,16 +3544,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v7.2.0",
+            "version": "v7.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "23c8aae6d764e2bae02d2a99f7532a7f6ed619cf"
+                "reference": "fefcc18c0f5d0efe3ab3152f15857298868dc2c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/23c8aae6d764e2bae02d2a99f7532a7f6ed619cf",
-                "reference": "23c8aae6d764e2bae02d2a99f7532a7f6ed619cf",
+                "url": "https://api.github.com/repos/symfony/console/zipball/fefcc18c0f5d0efe3ab3152f15857298868dc2c3",
+                "reference": "fefcc18c0f5d0efe3ab3152f15857298868dc2c3",
                 "shasum": ""
             },
             "require": {
@@ -3567,7 +3617,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v7.2.0"
+                "source": "https://github.com/symfony/console/tree/v7.2.1"
             },
             "funding": [
                 {
@@ -3583,7 +3633,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-06T14:24:19+00:00"
+            "time": "2024-12-11T03:49:26+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -3719,6 +3769,70 @@
             "time": "2024-10-25T15:15:23+00:00"
         },
         {
+            "name": "symfony/finder",
+            "version": "v7.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/finder.git",
+                "reference": "6de263e5868b9a137602dd1e33e4d48bfae99c49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/6de263e5868b9a137602dd1e33e4d48bfae99c49",
+                "reference": "6de263e5868b9a137602dd1e33e4d48bfae99c49",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "symfony/filesystem": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Finder\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Finds files and directories via an intuitive fluent interface",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/finder/tree/v7.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-10-23T06:56:12+00:00"
+        },
+        {
             "name": "symfony/polyfill-ctype",
             "version": "v1.31.0",
             "source": {
@@ -3744,8 +3858,8 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
@@ -3820,8 +3934,8 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
@@ -3898,8 +4012,8 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
@@ -3982,8 +4096,8 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
@@ -4056,8 +4170,8 @@
             "type": "library",
             "extra": {
                 "thanks": {
-                    "name": "symfony/polyfill",
-                    "url": "https://github.com/symfony/polyfill"
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
                 }
             },
             "autoload": {
@@ -4761,16 +4875,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.12",
+            "version": "1.12.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "b5ae1b88f471d3fd4ba1aa0046234b5ca3776dd0"
+                "reference": "9b469068840cfa031e1deaf2fa1886d00e20680f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b5ae1b88f471d3fd4ba1aa0046234b5ca3776dd0",
-                "reference": "b5ae1b88f471d3fd4ba1aa0046234b5ca3776dd0",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9b469068840cfa031e1deaf2fa1886d00e20680f",
+                "reference": "9b469068840cfa031e1deaf2fa1886d00e20680f",
                 "shasum": ""
             },
             "require": {
@@ -4815,7 +4929,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-28T22:13:23+00:00"
+            "time": "2024-12-17T17:00:20+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -4965,16 +5079,16 @@
         },
         {
             "name": "rxante/coding-standards",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RxAnte/coding-standards.git",
-                "reference": "cc3c7514feeb005aebdd4ca2376c6a4d89808d57"
+                "reference": "1f271d4421a23a31ad4aa6a182113cee8d92083d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RxAnte/coding-standards/zipball/cc3c7514feeb005aebdd4ca2376c6a4d89808d57",
-                "reference": "cc3c7514feeb005aebdd4ca2376c6a4d89808d57",
+                "url": "https://api.github.com/repos/RxAnte/coding-standards/zipball/1f271d4421a23a31ad4aa6a182113cee8d92083d",
+                "reference": "1f271d4421a23a31ad4aa6a182113cee8d92083d",
                 "shasum": ""
             },
             "require": {
@@ -5002,9 +5116,9 @@
             "description": "RxAnte Coding Standards",
             "support": {
                 "issues": "https://github.com/RxAnte/coding-standards/issues",
-                "source": "https://github.com/RxAnte/coding-standards/tree/1.1.0"
+                "source": "https://github.com/RxAnte/coding-standards/tree/1.1.2"
             },
-            "time": "2024-12-10T20:42:19+00:00"
+            "time": "2024-12-12T20:13:41+00:00"
         },
         {
             "name": "slevomat/coding-standard",
@@ -5073,16 +5187,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.11.1",
+            "version": "3.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "19473c30efe4f7b3cd42522d0b2e6e7f243c6f87"
+                "reference": "1368f4a58c3c52114b86b1abe8f4098869cb0079"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/19473c30efe4f7b3cd42522d0b2e6e7f243c6f87",
-                "reference": "19473c30efe4f7b3cd42522d0b2e6e7f243c6f87",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/1368f4a58c3c52114b86b1abe8f4098869cb0079",
+                "reference": "1368f4a58c3c52114b86b1abe8f4098869cb0079",
                 "shasum": ""
             },
             "require": {
@@ -5149,7 +5263,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-11-16T12:02:36+00:00"
+            "time": "2024-12-11T16:04:26+00:00"
         },
         {
             "name": "symfony/var-dumper",

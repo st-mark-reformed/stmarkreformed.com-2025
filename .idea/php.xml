@@ -100,6 +100,8 @@
       <path value="$PROJECT_DIR$/api/vendor/spatie/php-cloneable" />
       <path value="$PROJECT_DIR$/api/vendor/beberlei/assert" />
       <path value="$PROJECT_DIR$/api/vendor/cocur/slugify" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/api/vendor/melihovv/base64-image-decoder" />
     </include_path>
   </component>
   <component name="PhpProjectServersManager">

@@ -12,8 +12,10 @@ use App\Pages\Page\PageName;
 use App\Pages\Persistence\CreateNewPageRecord;
 use App\Pages\Persistence\DeletePages;
 use App\Pages\Persistence\FindAllPages;
+use App\Pages\Persistence\PageEntityToRecord;
 use App\Pages\Persistence\PageRecordToEntity;
 use App\Persistence\PersistNewRecord;
+use App\Persistence\PersistRecord;
 use App\Persistence\Result;
 use App\Persistence\UuidCollection;
 
@@ -25,8 +27,10 @@ readonly class PageRepository
     public function __construct(
         private DeletePages $deletePages,
         private FindAllPages $findAllPages,
+        private PersistRecord $persistRecord,
         private PersistNewRecord $persistNewRecord,
         private PageRecordToEntity $pageRecordToEntity,
+        private PageEntityToRecord $pageEntityToRecord,
         private CreateNewPageRecord $createNewPageRecord,
     ) {
     }
@@ -95,5 +99,12 @@ readonly class PageRepository
         );
 
         return $this->deletePages->delete($ids);
+    }
+
+    public function persistPage(Page $page): Result
+    {
+        return $this->persistRecord->persist(
+            $this->pageEntityToRecord->processPageEntity($page),
+        );
     }
 }

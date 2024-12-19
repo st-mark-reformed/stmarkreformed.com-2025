@@ -10,6 +10,7 @@ use App\Pages\GetAllPagesAction;
 use App\Pages\GetPage\GetPageAction;
 use App\Pages\GetPageTypesAction;
 use App\Pages\OverlappingUrisReport\GetOverlappingUriReportAction;
+use App\Pages\PatchPage\PatchPageAction;
 use App\Pages\PatchPagesPosition\PatchPagesPositionAction;
 use App\Pages\PostNewPage\PostNewPageAction;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
@@ -30,6 +31,7 @@ readonly class ApplyRoutes
         DeletePagesAction::applyRoute($routes);
         GetPageTypesAction::applyRoute($routes);
         GetPageAction::applyRoute($routes);
+        PatchPageAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

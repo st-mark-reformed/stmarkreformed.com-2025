@@ -8,12 +8,15 @@
         "beberlei/assert": "^3.3",
         "cocur/slugify": "^4.6",
         "lcobucci/clock": "^3.3",
+        "melihovv/base64-image-decoder": "^0.2.0",
         "ramsey/uuid": "^4.7",
         "robmorgan/phinx": "^0.16.5",
         "rxante/oauth": "^1.4",
         "rxante/php-app-bootstrap": "^1.0",
         "spatie/php-cloneable": "^1.0",
-        "symfony/cache": "^7.2"
+        "symfony/cache": "^7.2",
+        "symfony/filesystem": "^7.2",
+        "symfony/finder": "^7.2"
     },
     "require-dev": {
         "buzzingpixel/symfony-var-dumper-decorator": "^1.0",
@@ -25,7 +28,8 @@
         "psr-4": {
             "Config\\": "config",
             "App\\": "src",
-            "Tests\\": "tests"
+            "Tests\\": "tests",
+            "public\\": "public"
         }
     },
     "config": {
