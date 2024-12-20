@@ -1,7 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { DocumentDuplicateIcon, UsersIcon } from '@heroicons/react/24/outline';
+import {
+    DocumentDuplicateIcon,
+    GlobeAltIcon,
+} from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
 
 type NavigationSubItem = {
@@ -39,13 +42,13 @@ function createItem (
 ): NavigationItem {
     const trimmedPath = currentPathname.split('/').filter(Boolean).join('/');
 
-    const firstTwoSegments = trimmedPath.split('/').slice(0, 2).join('/');
+    const firstSegment = trimmedPath.split('/').slice(0, 1).join('/');
 
     return {
         name,
         href,
         icon,
-        current: `/${firstTwoSegments}` === href,
+        current: `/${firstSegment}` === href,
         children,
     };
 }
@@ -58,6 +61,12 @@ export default function Navigation (): Array<NavigationItem> {
             name: 'Pages',
             href: '/pages',
             icon: DocumentDuplicateIcon,
+            currentPathname,
+        }),
+        createItem({
+            name: 'Globals',
+            href: '/globals',
+            icon: GlobeAltIcon,
             currentPathname,
         }),
     ];

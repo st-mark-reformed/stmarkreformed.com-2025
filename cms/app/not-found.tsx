@@ -4,7 +4,7 @@ import FullPageError from './FullPageError';
 import { createPageTitle } from './createPageTitle';
 
 export const metadata: Metadata = {
-    title: createPageTitle('Page Not Found'),
+    title: createPageTitle('asdfPage Not Found'),
 };
 
 export default function NotFound () {

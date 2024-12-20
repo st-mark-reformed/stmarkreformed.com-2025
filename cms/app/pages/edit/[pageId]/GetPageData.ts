@@ -27,7 +27,7 @@ export async function GetPageData (
 ): Promise<ResponseNoAccess | ResponseWith404 | ResponseWithAccess> {
     const response = await RequestFactory().makeWithSignInRedirect({
         uri: `/pages/${pageId}`,
-        cacheSeconds: 0,
+        cacheSeconds: 5,
         cacheTags: ['pageData'],
     });
 

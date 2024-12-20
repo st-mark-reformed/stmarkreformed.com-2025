@@ -2,9 +2,10 @@ import './layout/base.css';
 import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import FullPageLoading from './FullPageLoading';
+import { createPageTitle } from './createPageTitle';
 
 export const metadata: Metadata = {
-    title: 'CMS | St. Mark Reformed Church',
+    title: createPageTitle(''),
     icons: {
         icon: '/images/favicon.ico',
         shortcut: '/images/favicon.ico',
