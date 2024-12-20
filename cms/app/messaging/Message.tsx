@@ -1,5 +1,10 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { CheckCircleIcon } from '@heroicons/react/20/solid';
+import {
+    CheckCircleIcon,
+    ExclamationCircleIcon,
+    InformationCircleIcon,
+    XCircleIcon,
+} from '@heroicons/react/20/solid';
 
 type ClassesType = {
     backgroundClass: string;
@@ -39,9 +44,9 @@ export default function Message (
             headingClass: 'text-green-800',
             bodyClass: 'text-green-700',
             buttonClass: [
-                'bg-green-50',
+                'bg-green-100',
                 'text-green-800',
-                'hover:bg-green-100',
+                'hover:bg-green-200',
                 'focus:ring-green-600',
                 'focus:ring-offset-green-50',
             ].join(' '),
@@ -95,10 +100,45 @@ export default function Message (
             <div className={`rounded-md p-4 ${classes.backgroundClass}`}>
                 <div className="flex">
                     <div className="flex-shrink-0">
-                        <CheckCircleIcon
-                            className={`h-5 w-5 ${classes.iconClass}`}
-                            aria-hidden="true"
-                        />
+                        {(() => {
+                            if (type === 'success') {
+                                return (
+                                    <CheckCircleIcon
+                                        className={`h-5 w-5 ${classes.iconClass}`}
+                                        aria-hidden="true"
+                                    />
+                                );
+                            }
+
+                            if (type === 'error') {
+                                return (
+                                    <XCircleIcon
+                                        className={`h-5 w-5 ${classes.iconClass}`}
+                                        aria-hidden="true"
+                                    />
+                                );
+                            }
+
+                            if (type === 'note') {
+                                return (
+                                    <InformationCircleIcon
+                                        className={`h-5 w-5 ${classes.iconClass}`}
+                                        aria-hidden="true"
+                                    />
+                                );
+                            }
+
+                            if (type === 'warning') {
+                                return (
+                                    <ExclamationCircleIcon
+                                        className={`h-5 w-5 ${classes.iconClass}`}
+                                        aria-hidden="true"
+                                    />
+                                );
+                            }
+
+                            return null;
+                        })()}
                     </div>
                     <div className="ml-3">
                         {(() => {
