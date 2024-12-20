@@ -42,7 +42,7 @@ export default function PageType (
 
     return (
         <div>
-            <label htmlFor={label} className="block text-sm font-medium leading-6 text-gray-900">
+            <label htmlFor={label} className="block text-sm font-semibold leading-6 text-gray-900">
                 {label}
             </label>
             <div className="mt-2">
