@@ -17,10 +17,14 @@
         "ioredis": "^5.4.1",
         "next": "^14",
         "next-auth": "^4.24.11",
+        "quill-html-edit-button": "^3.0.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
+        "react-drag-drop-files": "^2.4.0",
+        "react-quill": "^2.0.0",
         "rxante-oauth": "^1.4.0",
         "sleep-promise": "^9.1.0",
+        "uuid": "^11.0.3",
         "zod": "^3.24.1"
     },
     "devDependencies": {
@@ -30,6 +34,7 @@
         "@types/node": "^20.14.10",
         "@types/react": "^19.0.1",
         "@types/react-dom": "^19.0.2",
+        "@types/uuid": "^10.0.0",
         "autoprefixer": "^10.4.19",
         "eslint-config-rxante-coding-standards": "^1.0.0",
         "postcss": "^8.4.39",

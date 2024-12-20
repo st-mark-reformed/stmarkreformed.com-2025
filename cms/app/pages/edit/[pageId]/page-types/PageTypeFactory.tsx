@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { PageType } from '../../../PageType';
+import Page from './Page';
+import PageBuilder from './PageBuilder/PageBuilder';
 
 export default function PageTypeFactory (
     {
@@ -22,13 +24,11 @@ export default function PageTypeFactory (
     const pageType = PageType[type];
 
     if (pageType === PageType.page) {
-        return <>TODO: Page</>;
-        // return <Page data={data} setData={setData} />;
+        return <Page data={data} setData={setData} />;
     }
 
     if (pageType === PageType.page_builder) {
-        return <>TODO: Page Builder</>;
-        // return <PageBuilder blocks={json} setBlocks={setJson} />;
+        return <PageBuilder blocks={json} setBlocks={setJson} />;
     }
 
     if (pageType === PageType.calendar) {

@@ -1,0 +1,54 @@
+.ql-tooltip {
+    z-index: 999;
+}
+
+.ql-source-button {
+    margin-top: -4px;
+}
+
+.ql-html-popupContainer button {
+    @apply inline-flex
+        items-center
+        rounded-md
+        bg-gray-100
+        px-3
+        py-2
+        text-sm
+        font-semibold
+        text-gray-700
+        shadow-sm;
+}
+
+.ql-html-popupContainer button:hover {
+    @apply bg-gray-200;
+}
+
+button.ql-html-buttonOk {
+    @apply text-white bg-cyan-600;
+}
+
+button.ql-html-buttonOk:hover {
+    @apply bg-cyan-700;
+}
+
+div.ql-html-buttonGroup {
+    bottom: -16px;
+}
+
+.ql-editor {
+    @apply prose max-w-none;
+}
+
+.ql-editor p {
+    margin-bottom: 12px;
+}
+
+.ql-editor li {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.ql-syntax {
+    background-color: transparent;
+    @apply text-gray-800;
+}
