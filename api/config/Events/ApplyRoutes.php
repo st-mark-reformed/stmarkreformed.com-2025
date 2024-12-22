@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Config\Events;
 
+use App\Globals\GetAllGlobalsAction;
 use App\Healthcheck;
 use App\Pages\DeletePagesAction;
 use App\Pages\GetAllPagesAction;
@@ -32,6 +33,7 @@ readonly class ApplyRoutes
         GetPageTypesAction::applyRoute($routes);
         GetPageAction::applyRoute($routes);
         PatchPageAction::applyRoute($routes);
+        GetAllGlobalsAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

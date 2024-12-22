@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import Layout from '../layout/Layout';
+import Layout, { InnerMaxWidth } from '../layout/Layout';
 import PageClientSide from './PageClientSide';
 import AccessDenied from '../AccessDenied';
 import GetPagesData from './GetPagesData';
@@ -24,6 +24,7 @@ export default async function Page () {
                 breadcrumbs: [],
                 currentBreadcrumb: { value: 'Pages' },
             }}
+            innerMaxWidth={InnerMaxWidth.small}
         >
             <PageClientSide pages={result.data}>
                 <OverlappingUrisReportSuspense />

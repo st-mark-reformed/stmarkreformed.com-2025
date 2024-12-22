@@ -3,16 +3,26 @@ import Sidebar from './Sidebar';
 import Breadcrumbs, { BreadcrumbItems, CurrentBreadcrumbItem } from './Breadcrumbs';
 import PartialPageLoading from '../PartialPageLoading';
 
+export enum InnerMaxWidth {
+    xsmall = 'max-w-3xl',
+    small = 'max-w-4xl',
+    medium = 'max-w-5xl',
+    large = 'max-w-6xl',
+    xlarge = 'max-w-7-xl',
+}
+
 export default async function Layout (
     {
         children,
         breadcrumbs,
+        innerMaxWidth = InnerMaxWidth.medium,
     }: {
         children: React.ReactNode;
         breadcrumbs?: {
             breadcrumbs: BreadcrumbItems;
             currentBreadcrumb: CurrentBreadcrumbItem;
         };
+        innerMaxWidth?: InnerMaxWidth;
     },
 ) {
     return (
@@ -34,7 +44,9 @@ export default async function Layout (
                 <main className="">
                     <div className="p-4 sm:p-6 md:p-8">
                         <Suspense fallback={<PartialPageLoading />}>
-                            {children}
+                            <div className={innerMaxWidth}>
+                                {children}
+                            </div>
                         </Suspense>
                     </div>
                 </main>
