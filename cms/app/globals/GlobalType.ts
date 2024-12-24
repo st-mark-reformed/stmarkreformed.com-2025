@@ -4,7 +4,10 @@ export const GlobalTypeSchema = z.object({
     id: z.string(),
     name: z.string(),
     slug: z.string(),
-    json: z.array(z.any()),
+    json: z.union([
+        z.array(z.any()),
+        z.object({}).passthrough(),
+    ]),
 });
 
 export type GlobalType = z.infer<typeof GlobalTypeSchema>;

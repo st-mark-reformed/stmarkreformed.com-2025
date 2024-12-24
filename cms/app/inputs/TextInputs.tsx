@@ -38,7 +38,8 @@ TreeItemComponentProps<TextInputsType>
 
         const newValues = [...values];
 
-        newValues[valueIndex] = updatedValue;
+        newValues[valueIndex].id = updatedValue.id;
+        newValues[valueIndex].value = updatedValue.value;
 
         setValues(name, newValues);
     };

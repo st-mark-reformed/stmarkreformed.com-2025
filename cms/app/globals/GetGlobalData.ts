@@ -1,3 +1,4 @@
+import { v4 as randomUUID } from 'uuid';
 import { GlobalsSchema, GlobalsType, GlobalType } from './GlobalType';
 import { RequestFactory } from '../api/request/RequestFactory';
 
@@ -31,7 +32,7 @@ ResponseNoAccess | ResponseWithAccess
     GlobalsSchema.parse(data);
 
     const heroDefaults: GlobalType = data.filter(
-        (global) => global.slug === 'contactForm',
+        (global) => global.slug === 'heroDefaults',
     )[0] || {
         id: '',
         name: 'Hero Defaults',
@@ -40,7 +41,7 @@ ResponseNoAccess | ResponseWithAccess
     };
 
     const contactForm: GlobalType = data.filter(
-        (global) => global.slug === 'heroDefaults',
+        (global) => global.slug === 'contactForm',
     )[0] || {
         id: '',
         name: 'Contact Form',

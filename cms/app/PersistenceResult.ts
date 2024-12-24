@@ -15,6 +15,7 @@ export type ApiResponseResult = {
 };
 
 export function ParseApiResponse (response: RequestResponse): ApiResponseResult {
+    console.log(response);
     if (response.status === 401 || response.status === 403) {
         return {
             userHasAccess: false,

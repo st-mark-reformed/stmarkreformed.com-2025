@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Globals\Global;
 
 use App\EmptyUuid;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use RuntimeException;
 use Spatie\Cloneable\Cloneable;
 
+use function is_string;
 use function json_encode;
 use function json_last_error_msg;
 
@@ -35,6 +37,15 @@ readonly class GlobalItem
             'slug' => $this->slug->value,
             'json' => $this->json->data,
         ];
+    }
+
+    public function withId(string|UuidInterface $id): GlobalItem
+    {
+        if (is_string($id)) {
+            return $this->with(id: Uuid::fromString($id));
+        }
+
+        return $this->with(id: $id);
     }
 
     public function withName(string $name): GlobalItem
