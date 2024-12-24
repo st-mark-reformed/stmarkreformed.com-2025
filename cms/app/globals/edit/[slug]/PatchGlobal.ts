@@ -1,20 +1,20 @@
 'use server';
 
 import RequestMethods from 'rxante-oauth/dist/Request/RequestMethods';
+import { GlobalType } from '../../GlobalType';
 import {
     ApiResponseResult,
     ParseApiResponse,
 } from '../../../PersistenceResult';
-import { PageTypeWithDataNoChildren } from '../../PageType';
 import { RequestFactory } from '../../../api/request/RequestFactory';
 
-export default async function PatchPage (
-    page: PageTypeWithDataNoChildren,
+export default async function PatchGlobal (
+    payload: GlobalType,
 ): Promise<ApiResponseResult> {
     return ParseApiResponse(await RequestFactory().makeWithToken({
-        uri: `/pages/${page.id}`,
+        uri: '/globals/all',
         method: RequestMethods.PATCH,
-        payload: page,
         cacheSeconds: 0,
+        payload,
     }));
 }

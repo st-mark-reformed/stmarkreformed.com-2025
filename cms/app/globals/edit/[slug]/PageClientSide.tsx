@@ -9,6 +9,7 @@ import PageHeader from '../../../layout/PageHeader';
 import ContactForm from './forms/ContactForm';
 import HeroDefaults from './forms/HeroDefaults';
 import Message from '../../../messaging/Message';
+import PatchGlobal from './PatchGlobal';
 
 export default function PageClientSide (
     {
@@ -34,23 +35,23 @@ export default function PageClientSide (
             onClick={() => {
                 setSuccess(false);
 
-                // PatchGlobal(data).then((result) => {
-                //     if (result.data.success) {
-                //         setSuccess(true);
-                //
-                //         setErrorIsVisible(false);
-                //
-                //         setErrors([]);
-                //
-                //         return;
-                //     }
-                //
-                //     setSuccess(false);
-                //
-                //     setErrors(result.data.messages);
-                //
-                //     setErrorIsVisible(true);
-                // });
+                PatchGlobal(data).then((result) => {
+                    if (result.data.success) {
+                        setSuccess(true);
+
+                        setErrorIsVisible(false);
+
+                        setErrors([]);
+
+                        return;
+                    }
+
+                    setSuccess(false);
+
+                    setErrors(result.data.messages);
+
+                    setErrorIsVisible(true);
+                });
             }}
         >
             <CheckIcon className="h-5 w-5 mr-1" />
