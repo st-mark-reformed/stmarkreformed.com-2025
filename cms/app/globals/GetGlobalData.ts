@@ -18,7 +18,7 @@ ResponseNoAccess | ResponseWithAccess
 > {
     const response = await RequestFactory().makeWithSignInRedirect({
         uri: '/globals/all',
-        cacheSeconds: 0,
+        cacheSeconds: 5,
         cacheTags: ['pageData'],
     });
 

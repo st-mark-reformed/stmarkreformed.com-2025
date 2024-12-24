@@ -5,48 +5,51 @@ import {
     TreeItemComponentProps,
 } from 'dnd-kit-sortable-tree';
 import { v4 as uuid } from 'uuid';
-import { UrlFieldType, UrlFieldTypeValues } from './UrlFieldType';
-import UrlItemWrapper from './UrlItemWrapper';
-import Url from './Url';
+import { TextInputsType } from './TextInputsType';
+import TextInputsItemWrapper from './TextInputsItemWrapper';
+import TextInputsValue from './TextInputsValue';
 
 const TreeItemComponent = React.forwardRef<
 HTMLDivElement,
-TreeItemComponentProps<UrlFieldType>
+TreeItemComponentProps<TextInputsType>
 >((props, ref) => {
-    const value = props.item as UrlFieldType;
+    const value = props.item as TextInputsType;
 
     // @ts-expect-error TS2339
     const name = props.name as string;
 
     // @ts-expect-error TS2339
-    const urls = props.urls as Array<UrlFieldType>;
+    const individualLabels = props.individualLabels as string;
+
+    // @ts-expect-error TS2339
+    const values = props.values as Array<TextInputsType>;
 
     // @ts-expect-error TS2339
     const {
-        setValue,
+        setValues,
     }: {
-        setValue: (key: string, val: Array<UrlFieldType>) => void;
+        setValues: (key: string, val: Array<TextInputsType>) => void;
     } = props;
 
-    const updateUrls = (updatedUrl: UrlFieldType) => {
+    const updateValues = (updatedValue: TextInputsType) => {
         // noinspection JSUnusedLocalSymbols
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const urlIndex = urls.findIndex((url) => url.id === value.id);
+        const valueIndex = values.findIndex((val) => val.id === value.id);
 
-        const newUrls = [...urls];
+        const newValues = [...values];
 
-        newUrls[urlIndex] = updatedUrl;
+        newValues[valueIndex] = updatedValue;
 
-        setValue(name, newUrls);
+        setValues(name, newValues);
     };
 
     const trimmedProps = { ...props };
     // @ts-expect-error TS2339
     delete trimmedProps.name;
     // @ts-expect-error TS2339
-    delete trimmedProps.urls;
+    delete trimmedProps.values;
     // @ts-expect-error TS2339
-    delete trimmedProps.setValue;
+    delete trimmedProps.setValues;
 
     return (
         <SimpleTreeItemWrapper
@@ -54,30 +57,36 @@ TreeItemComponentProps<UrlFieldType>
             ref={ref}
             className="w-full"
         >
-            <UrlItemWrapper
-                url={value}
-                urls={urls}
-                setUrls={(val: Array<UrlFieldType>) => {
-                    setValue(name, val);
+            <TextInputsItemWrapper
+                value={value}
+                values={values}
+                setValues={(val: Array<TextInputsType>) => {
+                    setValues(name, val);
                 }}
             >
-                <Url value={value} setValue={updateUrls} />
-            </UrlItemWrapper>
+                <TextInputsValue
+                    value={value}
+                    setValue={updateValues}
+                    individualLabels={individualLabels}
+                />
+            </TextInputsItemWrapper>
         </SimpleTreeItemWrapper>
     );
 });
 
-export default function Urls (
+export default function TextInputs (
     {
         label,
         name,
-        value,
-        setValue,
+        individualLabels,
+        values,
+        setValues,
     }: {
         label: string;
         name: string;
-        value: Array<UrlFieldType>;
-        setValue: (key: string, val: Array<UrlFieldType>) => void;
+        individualLabels: string;
+        values: Array<TextInputsType>;
+        setValues: (key: string, val: Array<TextInputsType>) => void;
     },
 ) {
     return (
@@ -90,7 +99,7 @@ export default function Urls (
             </label>
             <ul className="mt-2">
                 <SortableTree
-                    items={value.map((block) => ({
+                    items={values.map((block) => ({
                         ...block,
                         canHaveChildren: false,
                     }))}
@@ -99,21 +108,22 @@ export default function Urls (
                     }}
                     dropAnimation={null}
                     onItemsChanged={(changed) => {
-                        const newUrls = [] as Array<UrlFieldType>;
+                        const newUrls = [] as Array<TextInputsType>;
 
                         changed.forEach((item) => {
-                            const blockIndex = value.findIndex((block) => block.id === item.id);
+                            const blockIndex = values.findIndex((block) => block.id === item.id);
 
-                            newUrls.push(value[blockIndex]);
+                            newUrls.push(values[blockIndex]);
                         });
 
-                        setValue(name, newUrls);
+                        setValues(name, newUrls);
                     }}
                     TreeItemComponent={TreeItemComponent}
                     // @ts-expect-error TS2322
                     name={name}
-                    urls={value}
-                    setValue={setValue}
+                    individualLabels={individualLabels}
+                    values={values}
+                    setValues={setValues}
                     manualDrag
                 />
             </ul>
@@ -122,20 +132,17 @@ export default function Urls (
                     type="button"
                     className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     onClick={() => {
-                        const newValue = [...value];
+                        const newValue = [...values];
 
                         newValue.push({
                             id: uuid(),
-                            type: UrlFieldTypeValues.Custom,
-                            linkText: '',
-                            linkData: '',
-                            newWindow: false,
+                            value: '',
                         });
 
-                        setValue(name, newValue);
+                        setValues(name, newValue);
                     }}
                 >
-                    Add CTA
+                    Add Value
                 </button>
             </div>
         </div>

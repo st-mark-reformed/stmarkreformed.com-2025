@@ -1,19 +1,19 @@
-import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Layout from '../../../layout/Layout';
+import React from 'react';
+import { createPageTitle } from '../../../createPageTitle';
+import { GetData } from './GetData';
 import AccessDenied from '../../../AccessDenied';
-import { GetPageData } from './GetPageData';
+import Layout from '../../../layout/Layout';
 import PageClientSide from './PageClientSide';
 import { ConfigOptions, getConfigString } from '../../../serverSideRunTimeConfig';
-import { createPageTitle } from '../../../createPageTitle';
 
 type Params = {
-    params: { pageId: string };
+    params: { slug: 'heroDefaults' | 'contactForm' };
 };
 
 export async function generateMetadata ({ params }: Params): Promise<Metadata> {
-    const data = await GetPageData(params.pageId);
+    const data = await GetData(params.slug);
 
     if (!data.userHasAccess) {
         return { title: createPageTitle('Access Denied') };
@@ -26,13 +26,13 @@ export async function generateMetadata ({ params }: Params): Promise<Metadata> {
     return {
         title: createPageTitle([
             `Edit “${data.data.name}”`,
-            'Site Pages',
+            'Globals',
         ]),
     };
 }
 
 export default async function Page ({ params }: Params) {
-    const data = await GetPageData(params.pageId);
+    const data = await GetData(params.slug);
 
     if (!data.userHasAccess) {
         return <AccessDenied />;
@@ -47,8 +47,8 @@ export default async function Page ({ params }: Params) {
             breadcrumbs={{
                 breadcrumbs: [
                     {
-                        value: 'Pages',
-                        href: '/pages',
+                        value: 'Globals',
+                        href: '/globals',
                     },
                 ],
                 currentBreadcrumb: { value: 'Edit' },

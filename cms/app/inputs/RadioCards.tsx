@@ -35,6 +35,10 @@ export default function RadioCards (
         gridColumnsBaseClass = 'grid-cols-3';
     } else if (gridColumnsBase === 4) {
         gridColumnsBaseClass = 'grid-cols-4';
+    } else if (gridColumnsBase === 5) {
+        gridColumnsBaseClass = 'grid-cols-5';
+    } else if (gridColumnsBase === 6) {
+        gridColumnsBaseClass = 'grid-cols-6';
     }
 
     let gridColumnsAtSmClass = '';
@@ -49,6 +53,14 @@ export default function RadioCards (
         gridColumnsAtSmClass = 'sm:grid-cols-5';
     } else if (gridColumnsAtSm === 6) {
         gridColumnsAtSmClass = 'sm:grid-cols-6';
+    } else if (gridColumnsAtSm === 7) {
+        gridColumnsAtSmClass = 'sm:grid-cols-7';
+    } else if (gridColumnsAtSm === 8) {
+        gridColumnsAtSmClass = 'sm:grid-cols-8';
+    } else if (gridColumnsAtSm === 9) {
+        gridColumnsAtSmClass = 'sm:grid-cols-9';
+    } else if (gridColumnsAtSm === 10) {
+        gridColumnsAtSmClass = 'sm:grid-cols-10';
     }
 
     return (
