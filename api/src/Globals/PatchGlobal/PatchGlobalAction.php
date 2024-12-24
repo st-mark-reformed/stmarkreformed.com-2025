@@ -24,6 +24,7 @@ readonly class PatchGlobalAction
         private ResultResponder $responder,
         private GlobalFactory $globalFactory,
         private PersistGlobal $persistGlobal,
+        private ParseImageUploads $parseImageUploads,
     ) {
     }
 
@@ -32,6 +33,8 @@ readonly class PatchGlobalAction
         $global = $this->globalFactory->createFromServerRequest(
             $request,
         );
+
+        $global = $this->parseImageUploads->fromGlobal($global);
 
         $result = $this->persistGlobal->persist($global);
 

@@ -9,6 +9,9 @@ module.exports = {
     serverRuntimeConfig: {
     },
     experimental: {
+        serverActions: {
+            bodySizeLimit: '500mb',
+        },
     },
     eslint: {
         ignoreDuringBuilds: true,
