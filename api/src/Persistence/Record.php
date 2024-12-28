@@ -18,7 +18,7 @@ use const ARRAY_FILTER_USE_KEY;
 
 abstract class Record
 {
-    protected const UNIQUE_IDENTIFIER = 'id';
+    protected const string UNIQUE_IDENTIFIER = 'id';
 
     abstract public static function getTableName(): string;
 

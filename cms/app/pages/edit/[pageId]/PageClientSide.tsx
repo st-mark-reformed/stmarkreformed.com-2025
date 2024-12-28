@@ -12,6 +12,7 @@ import TextInput from '../../../inputs/TextInput';
 import Toggle from '../../../inputs/Toggle';
 import PageTypeFactory from './page-types/PageTypeFactory';
 import PatchPage from './PatchPage';
+import { CustomHero } from './CustomHero';
 
 export default function PageClientSide (
     {
@@ -98,37 +99,54 @@ export default function PageClientSide (
                             setData('type', val);
                         }}
                     />
-                    <TextInput
-                        label="Page Name"
-                        name="name"
-                        value={data.name}
-                        setValue={setData}
-                    />
-                    <TextInput
-                        label="Slug"
-                        name="slug"
-                        value={data.slug}
-                        setValue={(key: string, val: string) => {
-                            setSlug(val);
-                        }}
-                    />
-                    <Toggle
-                        label="Publish Status"
-                        name="status"
-                        value={data.status === PageStatus.published}
-                        setValue={(key: string, val: boolean) => {
-                            setData(
-                                'status',
-                                val ? PageStatus.published : PageStatus.unpublished,
-                            );
-                        }}
-                    />
-                    <Toggle
-                        label="Show In Menu?"
-                        name="showInMenu"
-                        value={data.showInMenu}
-                        setValue={setData}
-                    />
+                    <div className="align-top grid gap-4 sm:grid-cols-2">
+                        <TextInput
+                            label="Page Name"
+                            name="name"
+                            value={data.name}
+                            setValue={setData}
+                        />
+                        <TextInput
+                            label="Slug"
+                            name="slug"
+                            value={data.slug}
+                            setValue={(key: string, val: string) => {
+                                setSlug(val);
+                            }}
+                        />
+                    </div>
+                    <div className="align-top grid gap-4 sm:grid-cols-4">
+                        <Toggle
+                            label="Publish Status"
+                            name="status"
+                            value={data.status === PageStatus.published}
+                            setValue={(key: string, val: boolean) => {
+                                setData(
+                                    'status',
+                                    val ? PageStatus.published : PageStatus.unpublished,
+                                );
+                            }}
+                        />
+                        <Toggle
+                            label="Show In Menu?"
+                            name="showInMenu"
+                            value={data.showInMenu}
+                            setValue={setData}
+                        />
+                        <Toggle
+                            label="Show Sub-Page Sidebar?"
+                            name="showSubPageSidebar"
+                            value={data.showSubPageSidebar}
+                            setValue={setData}
+                        />
+                        <Toggle
+                            label="Use Short Hero?"
+                            name="useShortHero"
+                            value={data.useShortHero}
+                            setValue={setData}
+                        />
+                    </div>
+                    <CustomHero data={data} setData={setData} />
                     <PageTypeFactory
                         type={data.type}
                         data={data.data}

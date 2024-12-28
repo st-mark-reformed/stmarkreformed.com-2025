@@ -63,6 +63,26 @@ readonly class PagesTable
             'show_in_menu',
             AdapterInterface::PHINX_TYPE_BOOLEAN,
             ['null' => false, 'default' => true],
+        )->addColumn(
+            'show_sub_page_sidebar',
+            AdapterInterface::PHINX_TYPE_BOOLEAN,
+            ['null' => false, 'default' => true],
+        )->addColumn(
+            'use_short_hero',
+            AdapterInterface::PHINX_TYPE_BOOLEAN,
+            ['null' => false, 'default' => true],
+        )->addColumn(
+            'use_custom_hero',
+            AdapterInterface::PHINX_TYPE_BOOLEAN,
+            ['null' => false, 'default' => false],
+        )->addColumn(
+            'hero_darkening_overlay_opacity',
+            AdapterInterface::PHINX_TYPE_TINY_INTEGER,
+            ['null' => false],
+        )->addColumn(
+            'hero_image',
+            AdapterInterface::PHINX_TYPE_STRING,
+            ['null' => false, 'default' => ''],
         )
             ->addIndex(['parent_id'])
             ->addIndex(['name'])

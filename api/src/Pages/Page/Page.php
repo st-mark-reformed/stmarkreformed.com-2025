@@ -30,6 +30,11 @@ readonly class Page
         public PageJson $json = new PageJson('{}'),
         public int $position = 0,
         public bool $showInMenu = true,
+        public bool $showSubPageSidebar = true,
+        public bool $useShortHero = true,
+        public bool $useCustomHero = true,
+        public int $heroDarkeningOverlayOpacity = 0,
+        public string $heroImage = '',
         public PageCollection $children = new PageCollection(),
     ) {
     }
@@ -50,6 +55,11 @@ readonly class Page
             'json' => $this->json->data,
             'position' => $this->position,
             'showInMenu' => $this->showInMenu,
+            'showSubPageSidebar' => $this->showSubPageSidebar,
+            'useShortHero' => $this->useShortHero,
+            'useCustomHero' => $this->useCustomHero,
+            'heroDarkeningOverlayOpacity' => $this->heroDarkeningOverlayOpacity,
+            'heroImage' => $this->heroImage,
             'children' => $this->children->asScalarArray($omit),
         ];
 
@@ -109,5 +119,33 @@ readonly class Page
     public function withShowInMenu(bool $showInMenu): Page
     {
         return $this->with(showInMenu: $showInMenu);
+    }
+
+    public function withShowSubPageSidebar(bool $showSubPageSidebar): Page
+    {
+        return $this->with(showSubPageSidebar: $showSubPageSidebar);
+    }
+
+    public function withUseShortHero(bool $useShortHero): Page
+    {
+        return $this->with(useShortHero: $useShortHero);
+    }
+
+    public function withUseCustomHero(bool $useCustomHero): Page
+    {
+        return $this->with(useCustomHero: $useCustomHero);
+    }
+
+    public function withHeroDarkeningOverlayOpacity(
+        int $heroDarkeningOverlayOpacity,
+    ): Page {
+        return $this->with(
+            heroDarkeningOverlayOpacity: $heroDarkeningOverlayOpacity,
+        );
+    }
+
+    public function withHeroImage(mixed $heroImage): Page
+    {
+        return $this->with(heroImage: $heroImage);
     }
 }

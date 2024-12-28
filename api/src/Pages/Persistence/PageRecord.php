@@ -51,4 +51,14 @@ class PageRecord extends Record
     public int $position = 0;
 
     public bool $show_in_menu = true;
+
+    public bool $show_sub_page_sidebar = true;
+
+    public bool $use_short_hero = true;
+
+    public bool $use_custom_hero = false;
+
+    public int $hero_darkening_overlay_opacity = 0;
+
+    public string $hero_image = '';
 }

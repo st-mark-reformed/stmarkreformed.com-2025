@@ -26,8 +26,6 @@ ResponseNoAccess | ResponseWithAccess
 
     const pages = response.json as PageTypeNoDataArray;
 
-    PageTypeNoDataArraySchema.parse(pages);
-
     return {
         userHasAccess: true,
         data: pages.map((page) => TransformPageTypeNoData(page)),

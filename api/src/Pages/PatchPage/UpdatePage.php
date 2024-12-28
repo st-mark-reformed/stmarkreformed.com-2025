@@ -90,6 +90,46 @@ readonly class UpdatePage
             $errors[] = $e->getMessage();
         }
 
+        try {
+            $page = $page->withShowSubPageSidebar(
+                $body['showSubPageSidebar'],
+            );
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $page = $page->withUseShortHero(
+                $body['useShortHero'],
+            );
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $page = $page->withUseCustomHero(
+                $body['useCustomHero'],
+            );
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $page = $page->withHeroDarkeningOverlayOpacity(
+                $body['heroDarkeningOverlayOpacity'],
+            );
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $page = $page->withHeroImage(
+                $body['heroImage'],
+            );
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+
         if (count($errors) > 0) {
             return new Result(
                 false,
@@ -97,7 +137,9 @@ readonly class UpdatePage
             );
         }
 
-        $page = $this->parseImageUploads->fromPage($page);
+        $page = $this->parseImageUploads->fromPageFields($page);
+
+        $page = $this->parseImageUploads->fromPageJson($page);
 
         return $this->pageRepository->persistPage($page);
     }

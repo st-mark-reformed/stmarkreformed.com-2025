@@ -74,6 +74,11 @@ readonly class PageRecordToEntity
             new PageJson($record->json),
             $record->position,
             $record->show_in_menu,
+            $record->show_sub_page_sidebar,
+            $record->use_short_hero,
+            $record->use_custom_hero,
+            $record->hero_darkening_overlay_opacity,
+            $record->hero_image,
             $children,
         );
     }

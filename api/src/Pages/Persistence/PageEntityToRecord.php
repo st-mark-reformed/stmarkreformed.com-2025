@@ -36,6 +36,16 @@ readonly class PageEntityToRecord
 
         $record->show_in_menu = $page->showInMenu;
 
+        $record->show_sub_page_sidebar = $page->showSubPageSidebar;
+
+        $record->use_short_hero = $page->useShortHero;
+
+        $record->use_custom_hero = $page->useCustomHero;
+
+        $record->hero_darkening_overlay_opacity = $page->heroDarkeningOverlayOpacity;
+
+        $record->hero_image = $page->heroImage;
+
         return $record;
     }
 }

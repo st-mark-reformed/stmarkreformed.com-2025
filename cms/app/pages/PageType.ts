@@ -27,6 +27,11 @@ const pageTypeNoDataBaseSchema = z.object({
     type: z.enum(Object.values(PageType)),
     position: z.number(),
     showInMenu: z.boolean(),
+    showSubPageSidebar: z.boolean(),
+    useShortHero: z.boolean(),
+    useCustomHero: z.boolean(),
+    heroDarkeningOverlayOpacity: z.number(),
+    heroImage: z.string(),
 });
 
 /**

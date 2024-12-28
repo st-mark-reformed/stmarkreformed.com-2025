@@ -45,8 +45,6 @@ export async function GetPageData (
         };
     }
 
-    PageTypeWithDataNoChildrenSchema.parse(response.json);
-
     const page = response.json as PageTypeWithDataNoChildren;
 
     return {
