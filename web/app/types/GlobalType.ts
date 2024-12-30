@@ -17,3 +17,8 @@ export type GlobalContactForm = GlobalBaseType & {
         value: string;
     }>;
 };
+
+export type AllGlobals = {
+    heroDefaults: GlobalHeroDefaults;
+    contactForm: GlobalContactForm;
+};

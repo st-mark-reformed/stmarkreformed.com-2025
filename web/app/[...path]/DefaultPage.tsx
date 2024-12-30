@@ -1,10 +1,10 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { GetPageData } from './GetPageData';
+import { GetAllPageData } from './GetPageData/GetAllPageData';
 import { DefaultPageParams } from './DefaultPageParams';
 
 export default async function DefaultPage ({ params }: DefaultPageParams) {
-    const data = await GetPageData(params.path.join('/'));
+    const data = await GetAllPageData(params.path.join('/'));
 
     if (data.notFound) {
         notFound();
