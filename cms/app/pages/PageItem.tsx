@@ -50,6 +50,16 @@ export default function PageItem (
         liClasses += ' bg-cyan-600/5';
     }
 
+    let hasPage = true;
+
+    if (
+        page.status !== PageStatus.published
+        || page.type === PageType.menu_link
+        || page.type === PageType.menu_parent_only
+    ) {
+        hasPage = false;
+    }
+
     return (
         <>
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
@@ -113,16 +123,24 @@ export default function PageItem (
 
                                 return null;
                             })()}
-                            <Link
-                                data-prevent-select
-                                href={page.href}
-                                target="_blank"
-                                className="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 ml-4"
-                            >
-                                <EyeIcon className="h-3 w-3 text-gray-900 inline -mt-0.5" />
-                                {' '}
-                                Go To Page &raquo;
-                            </Link>
+                            {(() => {
+                                if (!hasPage) {
+                                    return null;
+                                }
+
+                                return (
+                                    <Link
+                                        data-prevent-select
+                                        href={page.href}
+                                        target="_blank"
+                                        className="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 ml-4"
+                                    >
+                                        <EyeIcon className="h-3 w-3 text-gray-900 inline -mt-0.5" />
+                                        {' '}
+                                        Go To Page &raquo;
+                                    </Link>
+                                );
+                            })()}
                             <Link
                                 data-prevent-select
                                 href={page.cmsHref}
