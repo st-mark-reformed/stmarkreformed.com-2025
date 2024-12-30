@@ -55,6 +55,69 @@ readonly class PageCollection
         return max($allPositions);
     }
 
+    public function filter(callable $callback): PageCollection
+    {
+        return new PageCollection(
+            $this->filterInterior($callback, $this->pages),
+        );
+    }
+
+    /**
+     * @param Page[] $pages
+     *
+     * @return Page[]
+     */
+    private function filterInterior(callable $callback, array $pages): array
+    {
+        $return = [];
+
+        foreach ($pages as $page) {
+            $results = $callback($page);
+
+            if (! $results) {
+                continue;
+            }
+
+            $page = $page->withChildren($this->filterInterior(
+                $callback,
+                $page->children->pages,
+            ));
+
+            $return[] = $page;
+        }
+
+        return $return;
+    }
+
+    /** @return mixed[] */
+    public function mapAll(callable $callback): array
+    {
+        return $this->mapAllInterior($callback, $this->pages);
+    }
+
+    /**
+     * @param Page[] $pages
+     *
+     * @return mixed[]
+     */
+    private function mapAllInterior(callable $callback, array $pages): array
+    {
+        $return = [];
+
+        foreach ($pages as $page) {
+            $results = $callback($page);
+
+            $results['children'] = $this->mapAllInterior(
+                $callback,
+                $page->children->pages,
+            );
+
+            $return[] = $results;
+        }
+
+        return $return;
+    }
+
     public function walkAll(callable $callback): void
     {
         $this->walkAllInterior($callback, $this->pages);

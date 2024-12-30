@@ -183,4 +183,10 @@ readonly class Page
     {
         return $this->with(heroParagraph: $heroParagraph);
     }
+
+    /** @param Page[] $children */
+    public function withChildren(array $children): Page
+    {
+        return $this->with(children: new PageCollection($children));
+    }
 }
