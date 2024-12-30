@@ -15,6 +15,7 @@ export const upcomingEventsDefaultData: UpcomingEventsType = {
     id: '',
     type: PageBuilderType.Content_ContactForm,
     typeName: 'Upcoming Events',
+    isDisabled: false,
     internalName: '',
     heading: '',
     subHeading: '',

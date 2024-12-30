@@ -18,6 +18,7 @@ export const PageBuilderBaseTypeSchema = z.object({
     // @ts-expect-error TS2769
     type: z.enum(Object.values(PageBuilderType)),
     typeName: z.string(),
+    isDisabled: z.boolean(),
     internalName: z.string(),
 });
 

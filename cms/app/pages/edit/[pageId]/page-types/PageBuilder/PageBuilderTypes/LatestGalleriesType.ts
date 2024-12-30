@@ -15,6 +15,7 @@ export const latestGalleriesDefaultData: LatestGalleriesType = {
     id: '',
     type: PageBuilderType.Content_ContactForm,
     typeName: 'Latest Galleries',
+    isDisabled: false,
     internalName: '',
     heading: '',
     subHeading: '',

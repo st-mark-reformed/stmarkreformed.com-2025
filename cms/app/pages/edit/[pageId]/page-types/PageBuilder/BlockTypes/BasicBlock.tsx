@@ -8,6 +8,7 @@ import Alignment from '../../../../../../inputs/Alignment';
 import RichTextEditor from '../../../../../../inputs/RichTextEditor';
 import Urls from '../../../../../../inputs/Urls';
 import ColorChooser from '../../../../../../inputs/ColorChooser';
+import Toggle from '../../../../../../inputs/Toggle';
 
 export default function BasicBlock (
     {
@@ -27,6 +28,12 @@ export default function BasicBlock (
 
     return (
         <div className="space-y-6">
+            <Toggle
+                label="Disble Block?"
+                name="isDisabled"
+                value={block.isDisabled}
+                setValue={setValue}
+            />
             <TextInput
                 label="Block Name (internal)"
                 name="internalName"

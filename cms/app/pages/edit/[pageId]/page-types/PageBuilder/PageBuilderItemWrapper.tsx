@@ -31,6 +31,12 @@ export default function PageBuilderItemWrapper (
         setBlocks(newBlocks);
     };
 
+    let blockEnabledClass = 'bg-orange-700';
+
+    if (block.isDisabled) {
+        blockEnabledClass = 'bg-gray-400';
+    }
+
     return (
         <div className="w-full relative z-10">
             <div
@@ -49,7 +55,7 @@ export default function PageBuilderItemWrapper (
                 </button>
             </div>
             <div className="rounded-md bg-white shadow border border-gray-200 mr-11 ml-2 my-2 text-left overflow-hidden">
-                <div className="bg-orange-700 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+                <div className={`${blockEnabledClass} px-6 py-2.5 sm:px-3.5 sm:before:flex-1`}>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                         {(() => {
                             if (!block.internalName) {

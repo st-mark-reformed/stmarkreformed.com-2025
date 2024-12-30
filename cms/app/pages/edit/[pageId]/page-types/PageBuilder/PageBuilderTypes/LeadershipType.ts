@@ -12,5 +12,6 @@ export const leadershipDefaultData: LeadershipType = {
     id: '',
     type: PageBuilderType.Content_ContactForm,
     typeName: 'Upcoming Events',
+    isDisabled: false,
     internalName: '',
 };

@@ -15,6 +15,7 @@ export const contactFormDefaultData: ContactFormType = {
     id: '',
     type: PageBuilderType.Content_ContactForm,
     typeName: 'Contact Form',
+    isDisabled: false,
     internalName: '',
     content: '',
     successRedirect: '',

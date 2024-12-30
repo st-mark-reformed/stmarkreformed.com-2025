@@ -16,6 +16,7 @@ export const stripePaymentFormDefaultData: StripePaymentFormType = {
     id: '',
     type: PageBuilderType.Content_ContactForm,
     typeName: 'Stripe Payment Form',
+    isDisabled: false,
     internalName: '',
     noTopSpace: false,
     heading: '',

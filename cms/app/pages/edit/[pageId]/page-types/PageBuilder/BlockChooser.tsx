@@ -103,6 +103,7 @@ export default function BlockChooser (
             id: randomUUID(),
             type,
             typeName,
+            isDisabled: false,
             internalName: '',
         });
 

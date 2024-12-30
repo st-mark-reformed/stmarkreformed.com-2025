@@ -24,6 +24,7 @@ export const basicBlockDefaultData: BasicBlockType = {
     id: '',
     type: PageBuilderType.Content_BasicBlock,
     typeName: 'Basic Block',
+    isDisabled: false,
     internalName: '',
     backgroundColor: BackgroundColorOptions.White,
     alignment: AlignmentOptions.Left,

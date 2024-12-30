@@ -2,7 +2,6 @@ import { RequestFactory } from '../../../api/request/RequestFactory';
 import {
     PageTypeWithDataNoChildren,
     PageTypeWithDataNoChildrenFrontEnd,
-    PageTypeWithDataNoChildrenSchema,
 } from '../../PageType';
 import { TransformPageTypeWithDataNoChildren } from '../../PageTransformer';
 

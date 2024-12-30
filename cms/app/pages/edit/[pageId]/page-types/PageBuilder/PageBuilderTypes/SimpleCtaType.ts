@@ -21,6 +21,7 @@ export const simpleCtaDefaultData: SimpleCtaType = {
     id: '',
     type: PageBuilderType.Content_BasicBlock,
     typeName: 'Simple CTA',
+    isDisabled: false,
     internalName: '',
     backgroundColor: BackgroundColorOptions.White,
     preHeadline: '',

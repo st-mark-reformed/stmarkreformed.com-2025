@@ -26,6 +26,7 @@ export const imageContentCtaDefaultData: ImageContentCtaType = {
     id: '',
     type: PageBuilderType.Content_BasicBlock,
     typeName: 'Image / Content / CTA',
+    isDisabled: false,
     internalName: '',
     backgroundColor: BackgroundColorOptionsNoWhite.CrimsonDark,
     contentDisposition: DualContentDispositionOptions.ImageLeftContentRight,

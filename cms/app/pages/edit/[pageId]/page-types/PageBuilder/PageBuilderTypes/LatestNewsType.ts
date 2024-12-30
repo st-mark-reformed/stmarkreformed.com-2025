@@ -15,6 +15,7 @@ export const latestNewsDefaultData: LatestNewsType = {
     id: '',
     type: PageBuilderType.Content_ContactForm,
     typeName: 'Latest News',
+    isDisabled: false,
     internalName: '',
     heading: '',
     subHeading: '',
