@@ -61,4 +61,12 @@ class PageRecord extends Record
     public int $hero_darkening_overlay_opacity = 0;
 
     public string $hero_image = '';
+
+    public string $hero_upper_cta = '';
+
+    public string $hero_heading = '';
+
+    public string $hero_subheading = '';
+
+    public string $hero_paragraph = '';
 }

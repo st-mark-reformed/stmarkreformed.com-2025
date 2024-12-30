@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid';
+import { v4 as uuid } from 'uuid';
 import { PageStatus, PageTypeWithDataNoChildrenFrontEnd } from '../../PageType';
 import useDataManager from './useDataManager';
 import { FrontEndPageContext } from '../../../FrontEndPageContext';
@@ -13,6 +14,9 @@ import Toggle from '../../../inputs/Toggle';
 import PageTypeFactory from './page-types/PageTypeFactory';
 import PatchPage from './PatchPage';
 import { CustomHero } from './CustomHero';
+import Url from '../../../inputs/Url';
+import { UrlFieldTypeValues } from '../../../inputs/UrlFieldType';
+import TextArea from '../../../inputs/TextArea';
 
 export default function PageClientSide (
     {
@@ -66,6 +70,16 @@ export default function PageClientSide (
     const contextValue = useMemo(() => ({
         apiFeUrl,
     }), [apiFeUrl]);
+
+    if (!data.heroUpperCta.id) {
+        data.heroUpperCta = {
+            id: uuid(),
+            type: UrlFieldTypeValues.Custom,
+            linkText: '',
+            linkData: '',
+            newWindow: false,
+        };
+    }
 
     return (
         <FrontEndPageContext.Provider value={contextValue}>
@@ -147,6 +161,40 @@ export default function PageClientSide (
                         />
                     </div>
                     <CustomHero data={data} setData={setData} />
+                    <div>
+                        <div className="block text-sm font-semibold leading-6 text-gray-900 pb-2">
+                            Hero Upper CTA
+                        </div>
+                        <div className="p-4 border">
+                            <Url
+                                value={data.heroUpperCta}
+                                setValue={(val) => {
+                                    // @ts-expect-error TS2345
+                                    setData('heroUpperCta', val);
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div className="align-top grid gap-4 sm:grid-cols-2">
+                        <TextInput
+                            label="Hero Heading"
+                            name="heroHeading"
+                            value={data.heroHeading}
+                            setValue={setData}
+                        />
+                        <TextInput
+                            label="Hero Sub-heading"
+                            name="heroSubheading"
+                            value={data.heroSubheading}
+                            setValue={setData}
+                        />
+                    </div>
+                    <TextArea
+                        label="Hero Paragraph"
+                        name="heroParagraph"
+                        value={data.heroParagraph}
+                        setValue={setData}
+                    />
                     <PageTypeFactory
                         type={data.type}
                         data={data.data}

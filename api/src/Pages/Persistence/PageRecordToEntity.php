@@ -79,6 +79,10 @@ readonly class PageRecordToEntity
             $record->use_custom_hero,
             $record->hero_darkening_overlay_opacity,
             $record->hero_image,
+            new PageJson($record->hero_upper_cta),
+            $record->hero_heading,
+            $record->hero_subheading,
+            $record->hero_paragraph,
             $children,
         );
     }

@@ -46,6 +46,14 @@ readonly class PageEntityToRecord
 
         $record->hero_image = $page->heroImage;
 
+        $record->hero_upper_cta = $page->heroUpperCta->toString();
+
+        $record->hero_heading = $page->heroHeading;
+
+        $record->hero_subheading = $page->heroSubheading;
+
+        $record->hero_paragraph = $page->heroParagraph;
+
         return $record;
     }
 }

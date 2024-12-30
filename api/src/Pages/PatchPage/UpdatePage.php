@@ -130,6 +130,36 @@ readonly class UpdatePage
             $errors[] = $e->getMessage();
         }
 
+        try {
+            $page = $page->withHeroUpperCta($body['heroUpperCta']);
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $page = $page->withHeroHeading(
+                $body['heroHeading'],
+            );
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $page = $page->withHeroSubHeading(
+                $body['heroSubheading'],
+            );
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+
+        try {
+            $page = $page->withHeroParagraph(
+                $body['heroParagraph'],
+            );
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+
         if (count($errors) > 0) {
             return new Result(
                 false,

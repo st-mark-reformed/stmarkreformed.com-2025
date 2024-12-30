@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { UrlFieldTypeSchema } from '../inputs/UrlFieldType';
 
 export enum PageStatus {
     published = 'published',
@@ -32,6 +33,10 @@ const pageTypeNoDataBaseSchema = z.object({
     useCustomHero: z.boolean(),
     heroDarkeningOverlayOpacity: z.number(),
     heroImage: z.string(),
+    heroUpperCta: UrlFieldTypeSchema,
+    heroHeading: z.string(),
+    heroSubheading: z.string(),
+    heroParagraph: z.string(),
 });
 
 /**

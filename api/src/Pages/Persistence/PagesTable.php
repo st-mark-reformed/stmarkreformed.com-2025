@@ -83,6 +83,22 @@ readonly class PagesTable
             'hero_image',
             AdapterInterface::PHINX_TYPE_STRING,
             ['null' => false, 'default' => ''],
+        )->addColumn(
+            'hero_upper_cta',
+            AdapterInterface::PHINX_TYPE_JSON,
+            ['null' => false, 'default' => '{}'],
+        )->addColumn(
+            'hero_heading',
+            AdapterInterface::PHINX_TYPE_STRING,
+            ['null' => false, 'default' => ''],
+        )->addColumn(
+            'hero_subheading',
+            AdapterInterface::PHINX_TYPE_STRING,
+            ['null' => false, 'default' => ''],
+        )->addColumn(
+            'hero_paragraph',
+            AdapterInterface::PHINX_TYPE_TEXT,
+            ['null' => false, 'default' => ''],
         )
             ->addIndex(['parent_id'])
             ->addIndex(['name'])

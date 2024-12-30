@@ -35,6 +35,10 @@ readonly class Page
         public bool $useCustomHero = true,
         public int $heroDarkeningOverlayOpacity = 0,
         public string $heroImage = '',
+        public PageJson $heroUpperCta = new PageJson('{}'),
+        public string $heroHeading = '',
+        public string $heroSubheading = '',
+        public string $heroParagraph = '',
         public PageCollection $children = new PageCollection(),
     ) {
     }
@@ -60,6 +64,10 @@ readonly class Page
             'useCustomHero' => $this->useCustomHero,
             'heroDarkeningOverlayOpacity' => $this->heroDarkeningOverlayOpacity,
             'heroImage' => $this->heroImage,
+            'heroUpperCta' => $this->heroUpperCta->data,
+            'heroHeading' => $this->heroHeading,
+            'heroSubheading' => $this->heroSubheading,
+            'heroParagraph' => $this->heroParagraph,
             'children' => $this->children->asScalarArray($omit),
         ];
 
@@ -147,5 +155,32 @@ readonly class Page
     public function withHeroImage(mixed $heroImage): Page
     {
         return $this->with(heroImage: $heroImage);
+    }
+
+    /** @phpstan-ignore-next-line */
+    public function withHeroUpperCta(array $json): Page
+    {
+        $jsonString = json_encode($json);
+
+        if ($jsonString === false) {
+            throw new RuntimeException(json_last_error_msg());
+        }
+
+        return $this->with(heroUpperCta: new PageJson($jsonString));
+    }
+
+    public function withHeroHeading(mixed $heroHeading): Page
+    {
+        return $this->with(heroHeading: $heroHeading);
+    }
+
+    public function withHeroSubHeading(mixed $heroSubheading): Page
+    {
+        return $this->with(heroSubheading: $heroSubheading);
+    }
+
+    public function withHeroParagraph(mixed $heroParagraph): Page
+    {
+        return $this->with(heroParagraph: $heroParagraph);
     }
 }

@@ -7,15 +7,17 @@ export default function Url (
     {
         value,
         setValue,
+        linkTextLabel = 'Link Text',
     }: {
         value: UrlFieldType;
         setValue: (val: UrlFieldType) => void;
+        linkTextLabel?: string;
     },
 ) {
     return (
         <div className="space-y-4">
             <TextInput
-                label="Link Text"
+                label={linkTextLabel}
                 name={`${value.id}-link-text`}
                 value={value.linkText}
                 setValue={(key, val) => {
