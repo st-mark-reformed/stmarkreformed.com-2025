@@ -13,6 +13,7 @@ export enum PageType {
     blog_entries = 'blog_entries',
     podcast_entries = 'podcast_entries',
     photo_galleries = 'photo_galleries',
+    publications = 'publications',
     menu_link = 'menu_link',
     menu_parent_only = 'menu_parent_only',
 }

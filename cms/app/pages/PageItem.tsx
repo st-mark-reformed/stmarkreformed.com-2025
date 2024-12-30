@@ -121,6 +121,20 @@ export default function PageItem (
                                     );
                                 }
 
+                                if (page.type === PageType.publications) {
+                                    return (
+                                        <Link
+                                            data-prevent-select
+                                            href={`/publications/${page.id}`}
+                                            className="rounded bg-orange-800 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-orange-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 ml-4"
+                                        >
+                                            <ListBulletIcon className="h-3 w-3 text-white inline -mt-0.5" />
+                                            {' '}
+                                            Publications List
+                                        </Link>
+                                    );
+                                }
+
                                 return null;
                             })()}
                             {(() => {
