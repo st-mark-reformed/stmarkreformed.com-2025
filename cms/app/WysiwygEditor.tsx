@@ -1,10 +1,21 @@
-import React from 'react';
-import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import htmlEditButton from 'quill-html-edit-button';
+import React, { useRef } from 'react';
 import './WysiwygStyles.css';
-
-Quill.register('modules/htmlEditButton', htmlEditButton);
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import {
+    ClassicEditor,
+    Essentials,
+    Paragraph,
+    Bold,
+    Italic,
+    Underline,
+    Strikethrough,
+    BlockQuote,
+    List,
+    Indent,
+    Link,
+    SourceEditing,
+} from 'ckeditor5';
+import 'ckeditor5/ckeditor5.css';
 
 export default function WysiwygEditor (
     {
@@ -15,29 +26,49 @@ export default function WysiwygEditor (
         setData: (val: string) => void;
     },
 ) {
+    const editorRef = useRef<ClassicEditor>(null);
+
     return (
-        <ReactQuill
-            theme="snow"
-            value={data}
-            onChange={setData}
-            modules={{
-                toolbar: [
-                    [{ header: [1, 2, 3, false] }],
-                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-                    ['link', 'image'],
-                ],
-                htmlEditButton: {
-                    msg: ' ',
-                    okText: 'Submit',
-                    cancelText: 'Cancel',
-                    buttonHTML: '<div class="ql-source-button"><></div>',
-                    buttonTitle: 'Show HTML source',
-                    syntax: false,
-                    prependSelector: 'div#myelement',
-                    editorModules: {},
-                },
-            }}
-        />
+        <div className="prose max-w-none">
+            <CKEditor
+                editor={ClassicEditor}
+                config={{
+                    licenseKey: 'GPL', // Or 'GPL'.
+                    plugins: [
+                        SourceEditing,
+                        Essentials,
+                        Paragraph,
+                        Bold,
+                        Italic,
+                        Underline,
+                        Strikethrough,
+                        BlockQuote,
+                        List,
+                        Indent,
+                        Link,
+                    ],
+                    toolbar: [
+                        'sourceEditing',
+                        'bold',
+                        'italic',
+                        'underline',
+                        'strikethrough',
+                        'blockquote',
+                        'numberedList',
+                        'bulletedList',
+                        'indent',
+                        'outdent',
+                        'link',
+                    ],
+                    initialData: data,
+                }}
+                onReady={(editor) => {
+                    editorRef.current = editor;
+                }}
+                onChange={() => {
+                    setData(editorRef.current?.getData() ?? '');
+                }}
+            />
+        </div>
     );
 }
