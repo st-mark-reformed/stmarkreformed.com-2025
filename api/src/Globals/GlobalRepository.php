@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Globals;
 
+use App\Generator\EnqueueGenerateSiteData;
 use App\Globals\Global\GlobalCollection;
 use App\Globals\Global\GlobalItem;
 use App\Globals\Persistence\FindAllGlobals;
 use App\Globals\Persistence\GlobalEntityToRecord;
 use App\Globals\Persistence\GlobalRecordToEntity;
-use App\Pages\Generator\EnqueueGenerateSiteData;
 use App\Persistence\PersistNewRecord;
 use App\Persistence\PersistRecord;
 use App\Persistence\Result;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Pages;
 
-use App\Pages\Generator\EnqueueGenerateSiteData;
+use App\Generator\EnqueueGenerateSiteData;
 use App\Pages\OverlappingUrisReport\OverlappingUri;
 use App\Pages\OverlappingUrisReport\OverlappingUrisReport;
 use App\Pages\Page\Page;

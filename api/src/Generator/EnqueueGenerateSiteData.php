@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Pages\Generator;
+namespace App\Generator;
 
 use BuzzingPixel\Queue\QueueHandler;
 

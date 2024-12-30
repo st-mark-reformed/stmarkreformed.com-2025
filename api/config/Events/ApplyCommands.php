@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Config\Events;
 
-use App\Pages\Generator\GenerateSiteDataCommand;
+use App\Generator\GenerateSiteDataCommand;
 use App\Persistence\Migrate\MigrateCreateCommand;
 use App\Persistence\Migrate\MigrateDownCommand;
 use App\Persistence\Migrate\MigrateStatusCommand;

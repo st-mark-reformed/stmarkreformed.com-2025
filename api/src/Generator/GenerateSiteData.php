@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Pages\Generator;
+namespace App\Generator;
 
 use App\Globals\Global\GlobalItem;
 use App\Globals\GlobalRepository;
@@ -17,6 +17,7 @@ use function array_filter;
 use function array_map;
 use function count;
 use function in_array;
+use function json_encode;
 use function mb_strlen;
 use function mb_substr;
 
@@ -68,11 +69,11 @@ class GenerateSiteData
 
         $this->redis->set(
             'static_page_data:' . $page->path->value,
-            $page->asScalarArray(
+            json_encode($page->asScalarArray(
                 new PagePropertyCollection([
                     PageProperty::children,
                 ]),
-            ),
+            ),),
         );
     }
 
@@ -117,7 +118,7 @@ class GenerateSiteData
 
         $this->redis->set(
             'static_global_data:' . $global->slug->value,
-            $global->asScalarArray(),
+            json_encode($global->asScalarArray()),
         );
     }
 
