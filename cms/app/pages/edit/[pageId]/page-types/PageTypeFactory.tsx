@@ -4,6 +4,7 @@ import React from 'react';
 import { PageType } from '../../../PageType';
 import Page from './Page';
 import PageBuilder from './PageBuilder/PageBuilder';
+import TextInput from '../../../../inputs/TextInput';
 
 export default function PageTypeFactory (
     {
@@ -44,7 +45,16 @@ export default function PageTypeFactory (
     }
 
     if (pageType === PageType.menu_link) {
-        return null;
+        return (
+            <TextInput
+                label="Link"
+                name="link"
+                value={data}
+                setValue={(key, val) => {
+                    setData(val);
+                }}
+            />
+        );
     }
 
     if (pageType === PageType.menu_parent_only) {

@@ -164,12 +164,23 @@ export default function PageClientSide (
                                         value={data.showInMenu}
                                         setValue={setData}
                                     />
-                                    <Toggle
-                                        label="Show Sub-Page Sidebar?"
-                                        name="showSubPageSidebar"
-                                        value={data.showSubPageSidebar}
-                                        setValue={setData}
-                                    />
+                                    {(() => {
+                                        if (
+                                            data.type !== PageTypeType.page
+                                            && data.type !== PageTypeType.page_builder
+                                        ) {
+                                            return null;
+                                        }
+
+                                        return (
+                                            <Toggle
+                                                label="Show Sub-Page Sidebar?"
+                                                name="showSubPageSidebar"
+                                                value={data.showSubPageSidebar}
+                                                setValue={setData}
+                                            />
+                                        );
+                                    })()}
                                     <Toggle
                                         label="Use Short Hero?"
                                         name="useShortHero"
