@@ -6,6 +6,7 @@
         "ext-pdo": "*",
         "ext-redis": "*",
         "beberlei/assert": "^3.3",
+        "buzzingpixel/php-queue": "^2.0",
         "cocur/slugify": "^4.6",
         "lcobucci/clock": "^3.3",
         "melihovv/base64-image-decoder": "^0.2.0",

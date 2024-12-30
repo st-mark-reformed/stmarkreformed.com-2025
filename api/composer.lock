@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27c593cfbcf554a11fe8b04d7463f04d",
+    "content-hash": "d882bf25aa12d554b1859503bd808479",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -132,6 +132,107 @@
                 }
             ],
             "time": "2023-11-29T23:19:16+00:00"
+        },
+        {
+            "name": "buzzingpixel/php-queue",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/php-queue.git",
+                "reference": "98e964f0c4fda3945de7485662a44245a3c63608"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/php-queue/zipball/98e964f0c4fda3945de7485662a44245a3c63608",
+                "reference": "98e964f0c4fda3945de7485662a44245a3c63608",
+                "shasum": ""
+            },
+            "require": {
+                "buzzingpixel/php-template-engine": "^1.0",
+                "lcobucci/clock": "^3.1",
+                "php": "^8.2",
+                "psr/cache": "^3.0",
+                "psr/clock": "^1.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0",
+                "ramsey/uuid": "^4.7",
+                "spatie/php-cloneable": "^1.0",
+                "symfony/cache": "^6.2 || ^7"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^11.0.0",
+                "mnapoli/silly": "^1.8",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "psr/http-message": "^2.0",
+                "squizlabs/php_codesniffer": "^3.6",
+                "symfony/console": "^6.2",
+                "symfony/var-dumper": "^6.2"
+            },
+            "suggest": {
+                "ext-redis": "Required to use the Redis queue driver",
+                "mnapoli/silly": "If you're using the Silly Console app, a buzzingpixel-queue:consume-next command is supplied",
+                "symfony/console": "If you're using Symfony Console, a buzzingpixel-queue:consume-next command is supplied"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BuzzingPixel\\Queue\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "support": {
+                "issues": "https://github.com/buzzingpixel/php-queue/issues",
+                "source": "https://github.com/buzzingpixel/php-queue/tree/2.0.2"
+            },
+            "time": "2024-12-30T03:50:47+00:00"
+        },
+        {
+            "name": "buzzingpixel/php-template-engine",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/php-template-engine.git",
+                "reference": "93d1327a2305f50a7e05cbefc2d70d3d121d9415"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/php-template-engine/zipball/93d1327a2305f50a7e05cbefc2d70d3d121d9415",
+                "reference": "93d1327a2305f50a7e05cbefc2d70d3d121d9415",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-escaper": "^2.12",
+                "php": ">=8.2",
+                "spatie/php-cloneable": "^1.0"
+            },
+            "require-dev": {
+                "buzzingpixel/symfony-var-dumper-decorator": "^1.0",
+                "doctrine/coding-standard": "^11.0.0",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "squizlabs/php_codesniffer": "^3.6",
+                "symfony/var-dumper": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BuzzingPixel\\Templating\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "support": {
+                "issues": "https://github.com/buzzingpixel/php-template-engine/issues",
+                "source": "https://github.com/buzzingpixel/php-template-engine/tree/1.0.0"
+            },
+            "time": "2023-03-28T04:21:50+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -1412,6 +1513,68 @@
                 }
             ],
             "time": "2024-09-25T02:54:12+00:00"
+        },
+        {
+            "name": "laminas/laminas-escaper",
+            "version": "2.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-escaper.git",
+                "reference": "c612b0488ae486284c39885efca494c180f16351"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/c612b0488ae486284c39885efca494c180f16351",
+                "reference": "c612b0488ae486284c39885efca494c180f16351",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-mbstring": "*",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "conflict": {
+                "zendframework/zend-escaper": "*"
+            },
+            "require-dev": {
+                "infection/infection": "^0.27.11",
+                "laminas/laminas-coding-standard": "~3.0.1",
+                "maglnet/composer-require-checker": "^3.8.0",
+                "phpunit/phpunit": "^9.6.22",
+                "psalm/plugin-phpunit": "^0.19.0",
+                "vimeo/psalm": "^5.26.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Escaper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Securely and safely escape HTML, HTML attributes, JavaScript, CSS, and URLs",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "escaper",
+                "laminas"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-escaper/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-escaper/issues",
+                "rss": "https://github.com/laminas/laminas-escaper/releases.atom",
+                "source": "https://github.com/laminas/laminas-escaper"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2024-12-17T19:39:54+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -3411,12 +3574,12 @@
             },
             "type": "library",
             "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
                 "branch-alias": {
                     "dev-main": "3.5-dev"
-                },
-                "thanks": {
-                    "name": "symfony/contracts",
-                    "url": "https://github.com/symfony/contracts"
                 }
             },
             "autoload": {
@@ -3654,12 +3817,12 @@
             },
             "type": "library",
             "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
                 "branch-alias": {
                     "dev-main": "3.5-dev"
-                },
-                "thanks": {
-                    "name": "symfony/contracts",
-                    "url": "https://github.com/symfony/contracts"
                 }
             },
             "autoload": {
@@ -4254,12 +4417,12 @@
             },
             "type": "library",
             "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
                 "branch-alias": {
                     "dev-main": "3.5-dev"
-                },
-                "thanks": {
-                    "name": "symfony/contracts",
-                    "url": "https://github.com/symfony/contracts"
                 }
             },
             "autoload": {

@@ -15,7 +15,6 @@ services:
     volumes:
       - ./api/.bash_history:/root/.bash_history:delegated
       - ../api:/var/www:delegated
-      - static_content_volume:/static_content
     expose:
       - 80
     networks:
@@ -42,6 +41,24 @@ services:
       - traefik.http.routers.stmarkreformed_api-secure.rule=Host(`api.stmarkreformed.localtest.me`)
     ports:
       - "49195:80"
+    secrets:
+      - FUSION_AUTH_SIGNING_CERTIFICATE
+
+  api-queue-consumer:
+    env_file:
+      - ./api/.env.dev
+      - ./api/.env.local
+    container_name: smrc_api-queue-consumer
+    image: ghcr.io/st-mark-reformed/smrc-2025-api-queue-consumer
+    environment:
+      - HOSTNAME=smrc_api-queue-consumer
+      - ENABLE_XDEBUG=0
+      - ENABLE_PHP_DEV_CONFIG=0
+    volumes:
+      - ../api:/var/www:delegated
+    networks:
+      traefik:
+      default:
     secrets:
       - FUSION_AUTH_SIGNING_CERTIFICATE
 
@@ -92,7 +109,6 @@ services:
     volumes:
       - ./cms/.bash_history:/root/.bash_history:delegated
       - ../cms:/app:delegated
-      - static_content_volume:/static_content
     expose:
       - 80
     networks:
@@ -136,7 +152,6 @@ services:
     volumes:
       - ./web/.bash_history:/root/.bash_history:delegated
       - ../web:/app:delegated
-      - static_content_volume:/static_content
     expose:
       - 80
     networks:
@@ -287,7 +302,6 @@ volumes:
   fusionauth_config_volume:
   mailhog_volume:
   redis_volume:
-  static_content_volume:
 
 secrets:
   FUSION_AUTH_SIGNING_CERTIFICATE:

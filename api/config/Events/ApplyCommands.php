@@ -11,6 +11,7 @@ use App\Persistence\Migrate\MigrateStatusCommand;
 use App\Persistence\Migrate\MigrateUpCommand;
 use App\Persistence\Seed\SeedCreateCommand;
 use App\Persistence\Seed\SeedRunCommand;
+use BuzzingPixel\Queue\Framework\QueueConsumeNextSymfonyCommand;
 use RxAnte\AppBootstrap\Cli\ApplyCliCommandsEvent;
 
 readonly class ApplyCommands
@@ -24,5 +25,9 @@ readonly class ApplyCommands
         SeedCreateCommand::register($commands);
         SeedRunCommand::register($commands);
         GenerateSiteDataCommand::register($commands);
+
+        $commands->addSymfonyCommand(
+            QueueConsumeNextSymfonyCommand::class,
+        );
     }
 }

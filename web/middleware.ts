@@ -4,6 +4,7 @@ import { NextMiddlewareHeadersFactory } from 'rxante-oauth/dist/NextMiddlewareHe
 
 export async function middleware (req: NextRequest) {
     return NextResponse.next({
+        // @ts-expect-error TS2345
         request: { headers: NextMiddlewareHeadersFactory(req) },
     });
 }

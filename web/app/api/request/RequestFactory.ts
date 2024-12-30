@@ -24,7 +24,7 @@ export function RequestFactory () {
                 redis: getRedisClient(),
             }),
             wellKnownUrl: getConfigString(
-                ConfigOptions.FUSION_AUTH_WELL_KNOWN,
+                ConfigOptions.FUSION_AUTH_WELL_KNOWN_URL,
             ),
             clientId: getConfigString(
                 ConfigOptions.FUSION_AUTH_CLIENT_ID,

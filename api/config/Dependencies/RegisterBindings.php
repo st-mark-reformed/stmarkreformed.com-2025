@@ -16,6 +16,7 @@ class RegisterBindings
         RegisterBindingsClock::register($bindings);
         RegisterBindingsDatabase::register($bindings);
         RegisterBindingsLogging::register($bindings);
+        RegisterBindingsQueue::register($bindings);
         RegisterBindingsUuid::register($bindings);
     }
 }
