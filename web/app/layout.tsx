@@ -1,9 +1,10 @@
 import './layout/base.css';
 import React from 'react';
 import { Metadata } from 'next';
+import { createPageTitle } from './createPageTitle';
 
 export const metadata: Metadata = {
-    title: 'St. Mark Reformed Church',
+    title: createPageTitle(''),
     icons: {
         icon: '/images/favicon.ico',
         shortcut: '/images/favicon.ico',

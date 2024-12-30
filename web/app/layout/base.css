@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@supports (font-variation-settings: normal) {
-    html { font-family: "Inter var", sans-serif; }
-}
-
 .loader {
     border-top-color: #4CA8CB;
     -webkit-animation: spinner 1.5s linear infinite;

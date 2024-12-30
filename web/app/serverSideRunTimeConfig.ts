@@ -15,6 +15,7 @@ export enum ConfigOptions {
 
     // API
     API_BASE_URL = 'API_BASE_URL',
+    API_FE_URL = 'API_FE_URL',
 
     // Cache
     REDIS_HOST = 'REDIS_HOST',

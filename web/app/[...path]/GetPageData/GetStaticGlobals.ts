@@ -1,9 +1,6 @@
 import getRedisClient from '../../cache/RedisClient';
-import {
-    AllGlobals,
-    GlobalContactForm,
-    GlobalHeroDefaults,
-} from '../../types/GlobalType';
+import { AllGlobals, GlobalContactForm, GlobalHeroDefaults } from '../../types/GlobalType';
+import { ConfigOptions, getConfigString } from '../../serverSideRunTimeConfig';
 
 export async function GetStaticGlobals (): Promise<AllGlobals> {
     const redis = getRedisClient();
@@ -16,6 +13,10 @@ export async function GetStaticGlobals (): Promise<AllGlobals> {
         heroDefaults.json.heroDarkeningOverlayOpacity.toString(),
         10,
     );
+
+    heroDefaults.json.heroImage = getConfigString(
+        ConfigOptions.API_FE_URL,
+    ) + heroDefaults.json.heroImage;
 
     const contactForm = JSON.parse(
         await redis.get('static_global_data:contactForm') ?? '{}',
