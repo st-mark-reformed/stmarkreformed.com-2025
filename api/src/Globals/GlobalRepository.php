@@ -9,6 +9,7 @@ use App\Globals\Global\GlobalItem;
 use App\Globals\Persistence\FindAllGlobals;
 use App\Globals\Persistence\GlobalEntityToRecord;
 use App\Globals\Persistence\GlobalRecordToEntity;
+use App\Pages\Generator\EnqueueGenerateSiteData;
 use App\Persistence\PersistNewRecord;
 use App\Persistence\PersistRecord;
 use App\Persistence\Result;
@@ -23,6 +24,7 @@ readonly class GlobalRepository
         private GlobalRecordToEntity $recordToEntity,
         private GlobalEntityToRecord $entityToRecord,
         private UuidFactoryWithOrderedTimeCodec $uuidFactory,
+        private EnqueueGenerateSiteData $enqueueGenerateSiteData,
     ) {
     }
 
@@ -37,15 +39,23 @@ readonly class GlobalRepository
     {
         $global = $global->withId($this->uuidFactory->uuid1());
 
-        return $this->persistNewRecord->persist(
+        $result = $this->persistNewRecord->persist(
             $this->entityToRecord->processEntity($global),
         );
+
+        $this->enqueueGenerateSiteData->enqueue();
+
+        return $result;
     }
 
     public function persist(GlobalItem $global): Result
     {
-        return $this->persistRecord->persist(
+        $result = $this->persistRecord->persist(
             $this->entityToRecord->processEntity($global),
         );
+
+        $this->enqueueGenerateSiteData->enqueue();
+
+        return $result;
     }
 }

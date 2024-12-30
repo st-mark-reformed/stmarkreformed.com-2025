@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Pages;
 
+use App\Pages\Generator\EnqueueGenerateSiteData;
 use App\Pages\OverlappingUrisReport\OverlappingUri;
 use App\Pages\OverlappingUrisReport\OverlappingUrisReport;
 use App\Pages\Page\Page;
@@ -32,6 +33,7 @@ readonly class PageRepository
         private PageRecordToEntity $pageRecordToEntity,
         private PageEntityToRecord $pageEntityToRecord,
         private CreateNewPageRecord $createNewPageRecord,
+        private EnqueueGenerateSiteData $enqueueGenerateSiteData,
     ) {
     }
 
@@ -76,12 +78,16 @@ readonly class PageRepository
     {
         $existingPages = $this->findAllPages();
 
-        return $this->persistNewRecord->persist(
+        $result = $this->persistNewRecord->persist(
             $this->createNewPageRecord->fromName(
                 $pageName,
                 $existingPages->lastPagePosition(),
             ),
         );
+
+        $this->enqueueGenerateSiteData->enqueue();
+
+        return $result;
     }
 
     public function deletePages(UuidCollection $ids): Result
@@ -98,13 +104,21 @@ readonly class PageRepository
             },
         );
 
-        return $this->deletePages->delete($ids);
+        $result = $this->deletePages->delete($ids);
+
+        $this->enqueueGenerateSiteData->enqueue();
+
+        return $result;
     }
 
     public function persistPage(Page $page): Result
     {
-        return $this->persistRecord->persist(
+        $result = $this->persistRecord->persist(
             $this->pageEntityToRecord->processPageEntity($page),
         );
+
+        $this->enqueueGenerateSiteData->enqueue();
+
+        return $result;
     }
 }

@@ -6,6 +6,7 @@ namespace App\Globals\Global;
 
 use function array_map;
 use function array_values;
+use function array_walk;
 
 readonly class GlobalCollection
 {
@@ -28,5 +29,12 @@ readonly class GlobalCollection
             static fn (GlobalItem $g) => $g->asScalarArray(),
             $this->globals,
         );
+    }
+
+    public function walkAll(callable $callback): void
+    {
+        $globals = $this->globals;
+
+        array_walk($globals, $callback);
     }
 }

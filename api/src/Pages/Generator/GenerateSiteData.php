@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Pages\Generator;
 
+use App\Globals\Global\GlobalItem;
+use App\Globals\GlobalRepository;
 use App\Pages\Page\Page;
 use App\Pages\Page\PageProperty;
 use App\Pages\Page\PagePropertyCollection;
@@ -20,14 +22,19 @@ use function mb_substr;
 
 class GenerateSiteData
 {
+    public const string JOB_HANDLE = 'generate-site-data';
+
+    public const string JOB_NAME = 'Generate Site Data';
+
     public function __construct(
         private readonly Redis $redis,
-        private readonly PageRepository $repository,
+        private readonly PageRepository $pageRepository,
+        private readonly GlobalRepository $globalRepository,
     ) {
     }
 
     /** @var string[] */
-    private array $pagePaths = [];
+    private array $paths = [];
 
     public function __invoke(): void
     {
@@ -36,13 +43,17 @@ class GenerateSiteData
 
     public function generate(): void
     {
-        $this->pagePaths = [];
+        $this->paths = [];
 
-        $pages = $this->repository->findAllPages();
-
+        $pages = $this->pageRepository->findAllPages();
         $pages->walkAll(fn (Page $p) => $this->handlePage($p));
+        $this->cleanUnusedPages();
 
-        $this->cleanUnused();
+        $globals = $this->globalRepository->findAllGlobals();
+        $globals->walkAll(
+            fn (GlobalItem $g) => $this->handleGlobal($g),
+        );
+        $this->cleanUnusedGlobals();
     }
 
     private function handlePage(Page $page): void
@@ -51,7 +62,7 @@ class GenerateSiteData
             return;
         }
 
-        $this->pagePaths[] = $page->path->value;
+        $this->paths[] = $page->path->value;
 
         // TODO handle page types, blogs/entries/podcasts/pagination etc.
 
@@ -65,22 +76,70 @@ class GenerateSiteData
         );
     }
 
-    private function cleanUnused(): void
+    private function cleanUnusedPages(): void
     {
         $keyPrefix = 'static_page_data:';
 
-        $redisPageKeys = $this->redis->keys($keyPrefix . '*');
+        $redisKeys = $this->redis->keys($keyPrefix . '*');
 
         $existingKeys = array_map(
-            static fn (string $key) => mb_substr($key, mb_strlen($keyPrefix)),
-            $redisPageKeys,
+            static fn (string $key) => mb_substr(
+                $key,
+                mb_strlen($keyPrefix),
+            ),
+            $redisKeys,
         );
 
         $removeKeys = array_filter(
             $existingKeys,
             fn (string $key) => ! in_array(
                 $key,
-                $this->pagePaths,
+                $this->paths,
+                true,
+            ),
+        );
+
+        if (count($removeKeys) < 1) {
+            return;
+        }
+
+        array_map(
+            function (string $key) use ($keyPrefix): void {
+                $this->redis->del($keyPrefix . $key);
+            },
+            $removeKeys,
+        );
+    }
+
+    private function handleGlobal(GlobalItem $global): void
+    {
+        $this->paths[] = $global->slug->value;
+
+        $this->redis->set(
+            'static_global_data:' . $global->slug->value,
+            $global->asScalarArray(),
+        );
+    }
+
+    private function cleanUnusedGlobals(): void
+    {
+        $keyPrefix = 'static_global_data:';
+
+        $redisKeys = $this->redis->keys($keyPrefix . '*');
+
+        $existingKeys = array_map(
+            static fn (string $key) => mb_substr(
+                $key,
+                mb_strlen($keyPrefix),
+            ),
+            $redisKeys,
+        );
+
+        $removeKeys = array_filter(
+            $existingKeys,
+            fn (string $key) => ! in_array(
+                $key,
+                $this->paths,
                 true,
             ),
         );
