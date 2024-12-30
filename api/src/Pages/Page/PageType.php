@@ -17,6 +17,7 @@ enum PageType
     case calendar;
     case blog_entries;
     case podcast_entries;
+    case photo_galleries;
     case menu_link;
     case menu_parent_only;
 
@@ -44,6 +45,7 @@ enum PageType
             PageType::calendar => 'Calendar',
             PageType::blog_entries => 'Blog Entries',
             PageType::podcast_entries => 'Podcast Entries',
+            PageType::photo_galleries => 'Photo Galleries',
             PageType::menu_link => 'Menu Link',
             PageType::menu_parent_only => 'Menu Parent Only',
         };
