@@ -62,7 +62,7 @@ class PageRecord extends Record
 
     public string $hero_image = '';
 
-    public string $hero_upper_cta = '';
+    public string $hero_upper_cta = '{}';
 
     public string $hero_heading = '';
 
