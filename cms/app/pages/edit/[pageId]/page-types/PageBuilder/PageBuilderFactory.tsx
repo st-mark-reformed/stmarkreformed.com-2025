@@ -81,70 +81,60 @@ TreeItemComponentProps<PageBuilderBaseType>
             >
                 {(() => {
                     if (block.type === PageBuilderType.Content_BasicBlock) {
-                        BasicBlockTypeSchema.parse(block);
                         const typedBlock = block as BasicBlockType;
 
                         return <BasicBlock block={typedBlock} updateBlock={updateBlock} />;
                     }
 
                     if (block.type === PageBuilderType.Content_ContactForm) {
-                        ContactFormTypeSchema.parse(block);
                         const typedBlock = block as ContactFormType;
 
                         return <ContactForm block={typedBlock} updateBlock={updateBlock} />;
                     }
 
                     if (block.type === PageBuilderType.Content_StripePaymentForm) {
-                        StripePaymentFormTypeSchema.parse(block);
                         const typedBlock = block as StripePaymentFormType;
 
                         return <StripePaymentForm block={typedBlock} updateBlock={updateBlock} />;
                     }
 
                     if (block.type === PageBuilderType.CTAs_SimpleCta) {
-                        SimpleCtaTypeSchema.parse(block);
                         const typedBlock = block as SimpleCtaType;
 
                         return <SimpleCta block={typedBlock} updateBlock={updateBlock} />;
                     }
 
                     if (block.type === PageBuilderType.CTAs_ImageContentCta) {
-                        ImageContentCtaTypeSchema.parse(block);
                         const typedBlock = block as ImageContentCtaType;
 
                         return <ImageContentCta block={typedBlock} updateBlock={updateBlock} />;
                     }
 
                     if (block.type === PageBuilderType.Features_UpcomingEvents) {
-                        UpcomingEventsTypeSchema.parse(block);
                         const typedBlock = block as UpcomingEventsType;
 
                         return <UpcomingEvents block={typedBlock} updateBlock={updateBlock} />;
                     }
 
                     if (block.type === PageBuilderType.Features_LatestGalleries) {
-                        LatestGalleriesTypeSchema.parse(block);
                         const typedBlock = block as LatestGalleriesType;
 
                         return <LatestGalleries block={typedBlock} updateBlock={updateBlock} />;
                     }
 
                     if (block.type === PageBuilderType.Features_LatestNews) {
-                        LatestNewsTypeSchema.parse(block);
                         const typedBlock = block as LatestNewsType;
 
                         return <LatestNews block={typedBlock} updateBlock={updateBlock} />;
                     }
 
                     if (block.type === PageBuilderType['Pre-defined_FeaturedSermonSeries']) {
-                        FeaturedSermonSeriesTypeSchema.parse(block);
                         const typedBlock = block as FeaturedSermonSeriesType;
 
                         return <FeaturedSermonSeries block={typedBlock} updateBlock={updateBlock} />;
                     }
 
                     if (block.type === PageBuilderType['Pre-defined_Leadership']) {
-                        LeadershipTypeSchema.parse(block);
                         const typedBlock = block as LeadershipType;
 
                         return <Leadership block={typedBlock} updateBlock={updateBlock} />;

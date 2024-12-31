@@ -51,6 +51,12 @@ export default function BasicBlock (
                     name: key,
                 }))}
             />
+            <Toggle
+                label="No Top Space?"
+                name="noTopSpace"
+                value={block.noTopSpace}
+                setValue={setValue}
+            />
             <Alignment
                 label="Alignment"
                 name="alignment"

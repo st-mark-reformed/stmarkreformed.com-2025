@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { GetAllPageData } from './GetPageData/GetAllPageData';
 import { DefaultPageParams } from './DefaultPageParams';
 import Layout from '../layout/Layout';
-import PageTypeFactory from './PageTypeFactory';
+import PageTypeFactory from './PageTypes/PageTypeFactory';
 import PageTypeWrapper from './PageTypeWrapper';
 
 export default async function DefaultPage ({ params }: DefaultPageParams) {

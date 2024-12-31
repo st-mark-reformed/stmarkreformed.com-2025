@@ -10,6 +10,7 @@ import { BackgroundColorOptions } from './BackgroundColorOptions';
 export const BasicBlockTypeSchema = PageBuilderBaseTypeSchema.and(z.object({
     // @ts-expect-error TS2769
     backgroundColor: z.enum(Object.values(BackgroundColorOptions)),
+    noTopSpace: z.boolean(),
     // @ts-expect-error TS2769
     alignment: z.enum(Object.values(AlignmentOptions)),
     preHeadline: z.string(),
@@ -27,6 +28,7 @@ export const basicBlockDefaultData: BasicBlockType = {
     isDisabled: false,
     internalName: '',
     backgroundColor: BackgroundColorOptions.White,
+    noTopSpace: false,
     alignment: AlignmentOptions.Left,
     preHeadline: '',
     headline: '',
