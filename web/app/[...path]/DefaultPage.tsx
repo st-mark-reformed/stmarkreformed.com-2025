@@ -3,9 +3,15 @@ import { notFound } from 'next/navigation';
 import { GetAllPageData } from './GetPageData/GetAllPageData';
 import { DefaultPageParams } from './DefaultPageParams';
 import Layout from '../layout/Layout';
+import PageTypeFactory from './PageTypeFactory';
+import PageTypeWrapper from './PageTypeWrapper';
 
 export default async function DefaultPage ({ params }: DefaultPageParams) {
-    const data = await GetAllPageData(params.path.join('/'));
+    const segment1 = params.path[0] ?? '';
+
+    const path = params.path.join('/');
+
+    const data = await GetAllPageData(path);
 
     if (data.notFound) {
         notFound();
@@ -28,7 +34,13 @@ export default async function DefaultPage ({ params }: DefaultPageParams) {
                 heroParagraph: data.pageData.heroParagraph,
             }}
         >
-            {data.pageData.name}
+            <PageTypeWrapper
+                data={data}
+                segment1={segment1}
+                path={path}
+            >
+                <PageTypeFactory pageData={data.pageData} />
+            </PageTypeWrapper>
         </Layout>
     );
 }

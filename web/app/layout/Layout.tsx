@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { GetStaticMenuData } from '../[...path]/GetPageData/GetStaticMenuData';
 import { MenuItems } from '../types/MenuType';
 import { AllGlobals } from '../types/GlobalType';
@@ -16,7 +16,7 @@ export default async function Layout (
         hero = null,
         heroControls,
     }: {
-        children: React.ReactNode;
+        children: ReactNode;
         menu?: MenuItems | null;
         globals?: AllGlobals | null;
         hero?: null | {
