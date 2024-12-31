@@ -15,7 +15,10 @@
         "next-auth": "^4.24.11",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
-        "rxante-oauth": "^1.4.0"
+        "rxante-oauth": "^1.4.0",
+        "smartypants": "^0.2.2",
+        "string-remove-widows": "^4.0.22",
+        "string-strip-html": "^13.4.8"
     },
     "devDependencies": {
         "@tailwindcss/aspect-ratio": "^0.4.2",
