@@ -13,7 +13,7 @@
         "ramsey/uuid": "^4.7",
         "robmorgan/phinx": "^0.16.5",
         "rxante/oauth": "^1.4",
-        "rxante/php-app-bootstrap": "^1.0",
+        "rxante/php-app-bootstrap": "^1.0.1",
         "spatie/php-cloneable": "^1.0",
         "symfony/cache": "^7.2",
         "symfony/filesystem": "^7.2",
@@ -22,7 +22,7 @@
     "require-dev": {
         "buzzingpixel/symfony-var-dumper-decorator": "^1.0",
         "filp/whoops": "^2.15",
-        "rxante/coding-standards": "^1.1",
+        "rxante/coding-standards": "^1.1.2",
         "symfony/var-dumper": "^6.4"
     },
     "autoload": {

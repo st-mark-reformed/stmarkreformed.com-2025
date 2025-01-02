@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 .loader {
-    border-top-color: #4CA8CB;
     -webkit-animation: spinner 1.5s linear infinite;
     animation: spinner 1.5s linear infinite;
 }
+
 
 @-webkit-keyframes spinner {
     0% {

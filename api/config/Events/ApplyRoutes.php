@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Config\Events;
 
+use App\ContactForm\PostContactForm;
 use App\Globals\GetAllGlobalsAction;
 use App\Globals\PatchGlobal\PatchGlobalAction;
 use App\Healthcheck;
@@ -36,6 +37,7 @@ readonly class ApplyRoutes
         PatchPageAction::applyRoute($routes);
         GetAllGlobalsAction::applyRoute($routes);
         PatchGlobalAction::applyRoute($routes);
+        PostContactForm::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

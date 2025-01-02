@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="LaravelPint">
+    <laravel_pint_settings>
+      <laravel_pint_by_interpreter asDefaultInterpreter="true" interpreter_id="d8261d97-1042-4b20-8a61-eb189b246d81">
+        <option name="timeout" value="30000" />
+      </laravel_pint_by_interpreter>
+    </laravel_pint_settings>
+  </component>
+  <component name="MessDetector">
+    <phpmd_settings>
+      <phpmd_by_interpreter asDefaultInterpreter="true" interpreter_id="d8261d97-1042-4b20-8a61-eb189b246d81" timeout="30000" />
+    </phpmd_settings>
+  </component>
   <component name="MessDetectorOptionsConfiguration">
     <option name="transferred" value="true" />
   </component>
@@ -14,9 +26,15 @@
     <option name="showSniffs" value="true" />
     <option name="transferred" value="true" />
   </component>
+  <component name="PhpCSFixer">
+    <phpcsfixer_settings>
+      <phpcs_fixer_by_interpreter asDefaultInterpreter="true" interpreter_id="d8261d97-1042-4b20-8a61-eb189b246d81" timeout="30000" />
+    </phpcsfixer_settings>
+  </component>
   <component name="PhpCodeSniffer">
     <phpcs_settings>
       <PhpCSConfiguration beautifier_path="$PROJECT_DIR$/api/vendor/bin/phpcbf" standards="Doctrine;MySource;PEAR;PSR1;PSR12;PSR2;RxAnteCodingStandards;SlevomatCodingStandard;Squiz;Zend" tool_path="$PROJECT_DIR$/api/vendor/bin/phpcs" />
+      <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="d8261d97-1042-4b20-8a61-eb189b246d81" beautifier_path="$PROJECT_DIR$/api/vendor/bin/phpcbf" standards="Doctrine;MySource;PEAR;PSR1;PSR12;PSR2;RxAnteCodingStandards;SlevomatCodingStandard;Squiz;Zend" tool_path="/Volumes/Promenade/git/stmarkreformed.com-2025/api/vendor/bin/phpcs" timeout="30000" />
     </phpcs_settings>
   </component>
   <component name="PhpIncludePathManager">
@@ -120,6 +138,7 @@
   <component name="PhpStan">
     <PhpStan_settings>
       <PhpStanConfiguration tool_path="$PROJECT_DIR$/api/vendor/bin/phpstan" />
+      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="d8261d97-1042-4b20-8a61-eb189b246d81" tool_path="$PROJECT_DIR$/api/vendor/bin/phpstan" timeout="60000" />
     </PhpStan_settings>
   </component>
   <component name="PhpStanOptionsConfiguration">
@@ -132,6 +151,11 @@
     <phpunit_settings>
       <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/api/vendor/autoload.php" />
     </phpunit_settings>
+  </component>
+  <component name="Psalm">
+    <Psalm_settings>
+      <psalm_fixer_by_interpreter asDefaultInterpreter="true" interpreter_id="d8261d97-1042-4b20-8a61-eb189b246d81" timeout="60000" />
+    </Psalm_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
     <option name="transferred" value="true" />

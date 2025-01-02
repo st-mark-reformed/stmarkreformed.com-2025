@@ -205,7 +205,7 @@ export default function ContentBasicBlock (
                                 }
 
                                 return (
-                                    <div>
+                                    <div key={cta.linkData}>
                                         <div className={wrapperClasses.join(' ')}>
                                             <Link
                                                 href={cta.linkData}

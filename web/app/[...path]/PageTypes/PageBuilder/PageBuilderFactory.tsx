@@ -2,6 +2,7 @@ import React from 'react';
 import { PageBaseType } from '../../../types/PageType';
 import { PageBuilderBlockBase } from '../../../types/PageBuilder';
 import ContentBasicBlock from './ContentBasicBlock/ContentBasicBlock';
+import ContentContactForm from './ContentContactForm/ContentContactForm';
 
 export default function PageBuilderFactory (
     {
@@ -18,11 +19,16 @@ export default function PageBuilderFactory (
         }
 
         if (block.type === 'Content_BasicBlock') {
-            return <ContentBasicBlock blockBase={block} />;
+            return <ContentBasicBlock key={block.id} blockBase={block} />;
         }
 
         if (block.type === 'Content_ContactForm') {
-            return 'TODO';
+            return (
+                <ContentContactForm
+                    key={block.id}
+                    blockBase={block}
+                />
+            );
         }
 
         return <>{block.type}</>;
