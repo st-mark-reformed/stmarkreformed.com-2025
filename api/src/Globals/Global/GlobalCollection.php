@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Globals\Global;
 
+use function array_filter;
 use function array_map;
 use function array_values;
 use function array_walk;
@@ -36,5 +37,25 @@ readonly class GlobalCollection
         $globals = $this->globals;
 
         array_walk($globals, $callback);
+    }
+
+    public function filter(callable $callback): GlobalCollection
+    {
+        return new GlobalCollection(array_filter(
+            $this->globals,
+            $callback,
+        ));
+    }
+
+    public function first(): GlobalItem
+    {
+        return $this->globals[0];
+    }
+
+    public function getBySlug(string $slug): GlobalItem
+    {
+        return $this->filter(
+            static fn (GlobalItem $i) => $i->slug->value === $slug,
+        )->first();
     }
 }

@@ -26,4 +26,12 @@ enum RuntimeConfigOptions
     case API_DB_USER;
     case API_DB_PASSWORD;
     case API_DB_PORT;
+
+    // Email
+    case SMTP_USER;
+    case SMTP_PASSWORD;
+    case SMTP_HOST;
+    case SMTP_PORT;
+    case SYSTEM_EMAIL_FROM_ADDRESS;
+    case SYSTEM_EMAIL_FROM_NAME;
 }

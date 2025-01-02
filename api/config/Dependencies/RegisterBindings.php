@@ -15,6 +15,7 @@ class RegisterBindings
         RegisterBindingsCli::register($bindings);
         RegisterBindingsClock::register($bindings);
         RegisterBindingsDatabase::register($bindings);
+        RegisterBindingsEmail::register($bindings);
         RegisterBindingsLogging::register($bindings);
         RegisterBindingsQueue::register($bindings);
         RegisterBindingsUuid::register($bindings);

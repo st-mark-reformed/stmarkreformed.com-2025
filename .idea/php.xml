@@ -123,6 +123,14 @@
       <path value="$PROJECT_DIR$/api/vendor/laminas/laminas-escaper" />
       <path value="$PROJECT_DIR$/api/vendor/buzzingpixel/php-template-engine" />
       <path value="$PROJECT_DIR$/api/vendor/buzzingpixel/php-queue" />
+      <path value="$PROJECT_DIR$/api/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/api/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/api/vendor/soundasleep/html2text" />
     </include_path>
   </component>
   <component name="PhpProjectServersManager">

@@ -15,6 +15,7 @@ export default async function PostContactForm (
     const response = await RequestFactory().makeWithoutToken({
         uri: '/contact-form',
         method: RequestMethods.POST,
+        cacheSeconds: 1,
         payload,
     });
 

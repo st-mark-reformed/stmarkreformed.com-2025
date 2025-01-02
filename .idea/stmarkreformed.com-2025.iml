@@ -90,6 +90,14 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/buzzingpixel/php-queue" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/buzzingpixel/php-template-engine" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/laminas/laminas-escaper" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/soundasleep/html2text" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/event-dispatcher-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-intl-idn" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
