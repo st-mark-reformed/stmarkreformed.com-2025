@@ -4,6 +4,7 @@ import { PageBuilderBlockBase } from '../../../types/PageBuilder';
 import ContentBasicBlock from './ContentBasicBlock/ContentBasicBlock';
 import ContentContactForm from './ContentContactForm/ContentContactForm';
 import SimpleCta from './SimpleCTA/SimpleCta';
+import ImageContentCta from './ImageContentCta/ImageContentCta';
 
 export default function PageBuilderFactory (
     {
@@ -35,6 +36,15 @@ export default function PageBuilderFactory (
         if (block.type === 'CTAs_SimpleCta') {
             return (
                 <SimpleCta
+                    key={block.id}
+                    blockBase={block}
+                />
+            );
+        }
+
+        if (block.type === 'CTAs_ImageContentCta') {
+            return (
+                <ImageContentCta
                     key={block.id}
                     blockBase={block}
                 />
