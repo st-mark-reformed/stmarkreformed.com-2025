@@ -25,6 +25,8 @@ export default async function DefaultPage ({ params }: DefaultPageParams) {
                 useCustomHero: data.pageData.useCustomHero,
                 heroDarkeningOverlayOpacity: data.pageData.heroDarkeningOverlayOpacity,
                 heroImage: data.pageData.heroImage,
+                heroImage1x: data.pageData.heroImage1x,
+                heroImage2x: data.pageData.heroImage2x,
             }}
             heroControls={{
                 useShortHero: data.pageData.useShortHero,

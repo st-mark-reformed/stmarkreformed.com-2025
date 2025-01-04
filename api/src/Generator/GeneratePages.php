@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Generator;
 
+use App\Generator\ImageHandling\HandlePageCustomHero;
 use App\Pages\Page\Page;
 use App\Pages\Page\PageProperty;
 use App\Pages\Page\PagePropertyCollection;
@@ -27,6 +28,7 @@ class GeneratePages
     public function __construct(
         private readonly Redis $redis,
         private readonly PageRepository $pageRepository,
+        private readonly HandlePageCustomHero $handlePageCustomHero,
     ) {
     }
 
@@ -56,13 +58,17 @@ class GeneratePages
 
         // TODO handle page types, blogs/entries/podcasts/pagination etc.
 
+        $pageData = $page->asScalarArray(
+            new PagePropertyCollection([
+                PageProperty::children,
+            ]),
+        );
+
+        $pageData = $this->handlePageCustomHero->handle($pageData);
+
         $this->redis->set(
             'static_page_data:' . $page->path->value,
-            json_encode($page->asScalarArray(
-                new PagePropertyCollection([
-                    PageProperty::children,
-                ]),
-            ),),
+            json_encode($pageData),
         );
     }
 

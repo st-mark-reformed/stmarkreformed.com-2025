@@ -7,7 +7,9 @@ namespace App\ImageHandling\Resizing;
 use App\Files\ImageCacheFileSystem;
 use App\ImageHandling\Resizing\Internal\FileNameCompiler;
 use App\ImageHandling\Resizing\Internal\PushToQueueIfNotInQueue;
+use App\ImageHandling\Resizing\Internal\ResizeByHeight\ResizeImageByHeight;
 use App\ImageHandling\Resizing\Internal\ResizeByHeight\ResizeImageByHeightQueueJob;
+use App\ImageHandling\Resizing\Internal\ResizeByWidth\ResizeImageByWidth;
 use App\ImageHandling\Resizing\Internal\ResizeByWidth\ResizeImageByWidthQueueJob;
 use App\UrlGenerator;
 
@@ -16,6 +18,8 @@ readonly class ImageResizeHandler
     public function __construct(
         private UrlGenerator $urlGenerator,
         private FileNameCompiler $fileNameCompiler,
+        private ResizeImageByWidth $resizeImageByWidth,
+        private ResizeImageByHeight $resizeImageByHeight,
         private ImageCacheFileSystem $imageCacheFileSystem,
         private PushToQueueIfNotInQueue $pushToQueueIfNotInQueue,
     ) {
@@ -64,6 +68,27 @@ readonly class ImageResizeHandler
         );
     }
 
+    public function resizeToWidth(
+        string $pathOrUrl,
+        int $pixelWidth,
+    ): string {
+        $fileName = $this->fileNameCompiler->forResizeToWidth(
+            pathOrUrl: $pathOrUrl,
+            pixelWidth: $pixelWidth,
+        );
+
+        if (! $this->imageCacheFileSystem->has($fileName)) {
+            $this->resizeImageByWidth->resize(
+                pathOrUrl: $pathOrUrl,
+                pixelWidth: $pixelWidth,
+            );
+        }
+
+        return $this->urlGenerator->generateIfNotFullyQualified(
+            'imagecache/' . $fileName,
+        );
+    }
+
     public function resizeToHeightExists(
         string $pathOrUrl,
         int $pixelHeight,
@@ -99,6 +124,27 @@ readonly class ImageResizeHandler
 
             return $this->urlGenerator->generateIfNotFullyQualified(
                 $pathOrUrl,
+            );
+        }
+
+        return $this->urlGenerator->generateIfNotFullyQualified(
+            'imagecache/' . $fileName,
+        );
+    }
+
+    public function resizeToHeight(
+        string $pathOrUrl,
+        int $pixelHeight,
+    ): string {
+        $fileName = $this->fileNameCompiler->forResizeToHeight(
+            pathOrUrl: $pathOrUrl,
+            pixelHeight: $pixelHeight,
+        );
+
+        if (! $this->imageCacheFileSystem->has($fileName)) {
+            $this->resizeImageByHeight->resize(
+                pathOrUrl: $pathOrUrl,
+                pixelHeight: $pixelHeight,
             );
         }
 

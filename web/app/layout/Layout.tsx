@@ -23,6 +23,8 @@ export default async function Layout (
             useCustomHero: boolean;
             heroDarkeningOverlayOpacity: number;
             heroImage: string;
+            heroImage1x: string;
+            heroImage2x: string;
         };
         heroControls?: {
             useShortHero?: boolean;
@@ -54,43 +56,67 @@ export default async function Layout (
     };
 
     return (
-        <div className="h-full bg-bronze">
-            <div className="bg-white">
-                <div className="relative overflow-hidden">
-                    <div
-                        className="bg-bronze bg-cover bg-no-repeat bg-center relative z-50"
-                        style={{
-                            backgroundImage: `url(${hero.heroImage})`,
-                            backgroundAttachment: 'fixed',
-                        }}
-                    >
-                        {(() => {
-                            const opacity = hero.heroDarkeningOverlayOpacity;
+        <>
+            {(() => {
+                if (!hero.heroImage1x || !hero.heroImage2x) {
+                    return null;
+                }
 
-                            if (opacity < 0) {
-                                return null;
+                return (
+                    <style>
+                        {`
+                            .hero-background-image {
+                                background-image: url('${hero.heroImage1x}');
+                                background-attachment: fixed;
                             }
 
-                            return (
-                                <div
-                                    className="absolute w-full h-full inset-0 z-10 bg-black"
-                                    style={{
-                                        opacity: opacity / 100,
-                                    }}
-                                />
-                            );
-                        })()}
-                        <header className="relative z-50">
-                            <Nav menu={menu} />
-                        </header>
-                        <Hero hero={heroProps} />
+                            @media (-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+                                .hero-background-image {
+                                    background-image: url('${hero.heroImage2x}');
+                                }
+                            }
+
+                            @media (hover: none) {
+                                .hero-background-image {
+                                    background-attachment: initial;
+                                }
+                            }
+                        `}
+                    </style>
+                );
+            })()}
+            <div className="h-full bg-bronze">
+                <div className="bg-white">
+                    <div className="relative overflow-hidden">
+                        <div className="hero-background-image bg-bronze bg-cover bg-no-repeat bg-center relative z-50">
+                            {(() => {
+                                const opacity = hero.heroDarkeningOverlayOpacity;
+
+                                if (opacity < 0) {
+                                    return null;
+                                }
+
+                                return (
+                                    <div
+                                        className="absolute w-full h-full inset-0 z-10 bg-black"
+                                        style={{
+                                            opacity: opacity / 100,
+                                        }}
+                                    />
+                                );
+                            })()}
+                            <header className="relative z-50">
+                                <Nav menu={menu} />
+                            </header>
+                            <Hero hero={heroProps} />
+                        </div>
+                        <main className="relative z-10">
+                            {children}
+                        </main>
+                        <Footer menu={menu} />
                     </div>
-                    <main className="relative z-10">
-                        {children}
-                    </main>
-                    <Footer menu={menu} />
                 </div>
             </div>
-        </div>
+        </>
     );
 }

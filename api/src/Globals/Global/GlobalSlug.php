@@ -33,4 +33,9 @@ readonly class GlobalSlug
             $split,
         );
     }
+
+    public function valueIs(string $value): bool
+    {
+        return $this->value === $value;
+    }
 }

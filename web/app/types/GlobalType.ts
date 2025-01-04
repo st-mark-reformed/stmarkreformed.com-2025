@@ -8,6 +8,8 @@ export type GlobalHeroDefaults = GlobalBaseType & {
     json: {
         heroDarkeningOverlayOpacity: number;
         heroImage: string;
+        heroImage1x: string;
+        heroImage2x: string;
     };
 };
 

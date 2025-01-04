@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Generator;
 
+use App\Generator\ImageHandling\HandleGlobalHeroDefaults;
 use App\Globals\Global\GlobalItem;
 use App\Globals\GlobalRepository;
 use Redis;
@@ -24,6 +25,7 @@ class GenerateGlobals
     public function __construct(
         private readonly Redis $redis,
         private readonly GlobalRepository $globalRepository,
+        private readonly HandleGlobalHeroDefaults $handleGlobalHeroDefaults,
     ) {
     }
 
@@ -47,9 +49,17 @@ class GenerateGlobals
     {
         $this->paths[] = $global->slug->value;
 
+        $globalData = $global->asScalarArray();
+
+        if ($global->slug->valueIs('heroDefaults')) {
+            $globalData = $this->handleGlobalHeroDefaults->handle(
+                $globalData,
+            );
+        }
+
         $this->redis->set(
             'static_global_data:' . $global->slug->value,
-            json_encode($global->asScalarArray()),
+            json_encode($globalData),
         );
     }
 

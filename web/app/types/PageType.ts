@@ -32,6 +32,8 @@ export type PageBaseType = {
     useCustomHero: boolean;
     heroDarkeningOverlayOpacity: number;
     heroImage: string;
+    heroImage1x: string;
+    heroImage2x: string;
     heroUpperCta: Url;
     heroHeading: string;
     heroSubheading: string;

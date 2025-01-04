@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\ImageHandling\Resizing\Internal\ResizeByHeight;
 
 use App\Files\ImageCacheFileSystem;
-use App\Generator\EnqueueGenerateSiteData;
 use App\ImageHandling\Resizing\Internal\FileNameCompiler;
 use App\ImageHandling\Resizing\Internal\SourceFileRetriever;
 use Spatie\ImageOptimizer\OptimizerChain;
@@ -20,7 +19,6 @@ readonly class ResizeImageByHeight
         private SourceFileRetriever $sourceFileRetriever,
         private ImageCacheFileSystem $imageCacheFileSystem,
         private ResizeByHeightFactory $resizeByHeightFactory,
-        private EnqueueGenerateSiteData $enqueueGenerateSiteData,
     ) {
     }
 
@@ -62,7 +60,5 @@ readonly class ResizeImageByHeight
         );
 
         $this->optimizerChain->optimize($finalTarget);
-
-        $this->enqueueGenerateSiteData->enqueue();
     }
 }
