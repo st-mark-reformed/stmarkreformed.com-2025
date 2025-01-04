@@ -27,11 +27,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4 \
     libcurl4-openssl-dev \
     vim \
+    libfreetype6-dev \
+    libjpeg-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    libwebp-dev \
+    libxpm-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Additional PHP extensions and configuration
-RUN docker-php-ext-install mbstring \
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype --with-xpm --with-webp \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install mbstring \
     && docker-php-ext-install opcache \
     && docker-php-ext-install zip \
     && docker-php-ext-install pcntl \

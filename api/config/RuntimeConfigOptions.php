@@ -9,6 +9,9 @@ enum RuntimeConfigOptions
     case USE_WHOOPS_ERROR_HANDLING;
     case USE_PRODUCTION_ERROR_MIDDLEWARE;
 
+    // URL
+    case URL;
+
     // Cache
     case REDIS_HOST;
 

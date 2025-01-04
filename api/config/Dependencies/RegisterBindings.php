@@ -18,6 +18,7 @@ class RegisterBindings
         RegisterBindingsEmail::register($bindings);
         RegisterBindingsLogging::register($bindings);
         RegisterBindingsQueue::register($bindings);
+        RegisterBindingsUrl::register($bindings);
         RegisterBindingsUuid::register($bindings);
     }
 }

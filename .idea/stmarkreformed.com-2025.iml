@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/api/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests" isTestSource="false" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/api/public" isTestSource="false" packagePrefix="public\" />
+      <sourceFolder url="file://$MODULE_DIR$/api/storage" isTestSource="false" packagePrefix="storage\" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/bnf/phpstan-psr-container" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/buzzingpixel/symfony-var-dumper-decorator" />
@@ -98,6 +99,12 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/mailer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/mime" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/gumlet/php-image-resize" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/flysystem-local" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/spatie/image-optimizer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/process" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
