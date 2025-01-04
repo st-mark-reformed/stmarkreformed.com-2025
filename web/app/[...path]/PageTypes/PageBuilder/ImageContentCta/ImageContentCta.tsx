@@ -7,7 +7,6 @@ import smartypants from 'smartypants';
 import typography from '../../../../typography/typography';
 import { ImageContentCtaType } from './ImageContentCtaType';
 import { PageBuilderBlockBase } from '../../../../types/PageBuilder';
-import { ConfigOptions, getConfigString } from '../../../../serverSideRunTimeConfig';
 
 export default function ImageContentCta (
     {
@@ -17,10 +16,6 @@ export default function ImageContentCta (
     },
 ) {
     const block = blockBase as ImageContentCtaType;
-
-    block.image = getConfigString(
-        ConfigOptions.API_FE_URL,
-    ) + block.image;
 
     return (
         <div
@@ -41,19 +36,11 @@ export default function ImageContentCta (
             >
                 <img
                     className="w-full h-full object-cover"
-                    src={block.image}
-                    // src="{{ image1x }}"
-                    // {% if image2x %}*/}
-                    // srcSet="{{ image1x }} 1x, {{ image2x }} 2x"
-                    // {% endif %}
+                    src={block.image1x}
+                    srcSet={`${block.image1x} 1x, ${block.image2x} 2x`}
                     alt=""
                     loading="lazy"
                 />
-                {/* <Image
-                    src={block.image}
-                    alt="TODO"
-                    loading="lazy"
-                /> */}
                 {(() => {
                     if (!block.showTealOverlayOnImages) {
                         return null;

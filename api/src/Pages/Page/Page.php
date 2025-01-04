@@ -124,6 +124,11 @@ readonly class Page
         return $this->with(json: new PageJson($jsonString));
     }
 
+    public function withJsonObject(PageJson $json): Page
+    {
+        return $this->with(json: $json);
+    }
+
     public function withShowInMenu(bool $showInMenu): Page
     {
         return $this->with(showInMenu: $showInMenu);

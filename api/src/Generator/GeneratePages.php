@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Generator;
 
 use App\Generator\ImageHandling\HandlePageCustomHero;
+use App\Generator\ImageHandling\PageBuilder\HandleImageContentCta;
 use App\Pages\Page\Page;
 use App\Pages\Page\PageProperty;
 use App\Pages\Page\PagePropertyCollection;
@@ -29,6 +30,7 @@ class GeneratePages
         private readonly Redis $redis,
         private readonly PageRepository $pageRepository,
         private readonly HandlePageCustomHero $handlePageCustomHero,
+        private readonly HandleImageContentCta $handleImageContentCta,
     ) {
     }
 
@@ -55,6 +57,17 @@ class GeneratePages
         }
 
         $this->paths[] = $page->path->value;
+
+        $page = $page->withJsonObject($page->json->mapToNew(
+            function (array $json): array {
+                return match ($json['type']) {
+                    'CTAs_ImageContentCta' => $this->handleImageContentCta->handle(
+                        $json,
+                    ),
+                    default => $json,
+                };
+            },
+        ));
 
         // TODO handle page types, blogs/entries/podcasts/pagination etc.
 
