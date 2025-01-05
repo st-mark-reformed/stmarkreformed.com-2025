@@ -47,6 +47,12 @@ export default function StripePaymentForm (
                 value={block.defaultAmount}
                 setValue={setValue}
             />
+            <TextInput
+                label="Success Redirect"
+                name="successRedirect"
+                value={block.successRedirect}
+                setValue={setValue}
+            />
         </div>
     );
 }

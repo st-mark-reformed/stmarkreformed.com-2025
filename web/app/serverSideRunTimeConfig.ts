@@ -19,35 +19,59 @@ export enum ConfigOptions {
 
     // Cache
     REDIS_HOST = 'REDIS_HOST',
+
+    // Stripe
+    STRIPE_PUBLISHABLE_KEY = 'STRIPE_PUBLISHABLE_KEY',
+    STRIPE_SECRET_KEY = 'STRIPE_SECRET_KEY',
 }
 
-const getConfigValue = (
+function getConfigValueFromSecret (from: ConfigOptions): string | false {
+    const secretPath = `/run/secrets/${from}`;
+
+    if (!fs.existsSync(secretPath)) {
+        return false;
+    }
+
+    return fs.readFileSync(secretPath).toString().trim();
+}
+
+function getConfigValue (
     from: ConfigOptions,
-    defaultVal: string | boolean | number,
-): string | boolean | number => {
+    defaultVal: string | boolean | number | null = null,
+): string | boolean | number {
     const fromEnv = process.env[from];
 
     if (fromEnv !== undefined) {
         return fromEnv;
     }
 
-    const secretPath = `/run/secrets/${from}`;
+    const fromSecret = getConfigValueFromSecret(from);
 
-    if (fs.existsSync(secretPath)) {
-        return fs.readFileSync(secretPath).toString();
+    if (fromSecret !== false) {
+        return fromSecret;
     }
 
-    return defaultVal;
-};
+    if (defaultVal !== null) {
+        return defaultVal;
+    }
 
-export const getConfigString = (
+    throw new Error([
+        from,
+        'could not be found in secrets or environment variables',
+        'and no default value was provided',
+    ].join(' '));
+}
+
+export function getConfigString (
     from: ConfigOptions,
-    defaultVal: string = '',
-): string => getConfigValue(from, defaultVal).toString();
+    defaultVal: string | null = null,
+): string {
+    return getConfigValue(from, defaultVal).toString();
+}
 
 export const getConfigBoolean = (
     from: ConfigOptions,
-    defaultVal: boolean = false,
+    defaultVal: boolean | null = null,
 ): boolean => {
     const val = getConfigValue(from, defaultVal);
 
@@ -62,10 +86,10 @@ export const getConfigBoolean = (
     return val;
 };
 
-export const getConfigNumber = (
+export function getConfigNumber (
     from: ConfigOptions,
-    defaultVal: number = 0,
-): number => {
+    defaultVal: number | null = null,
+): number {
     const val = getConfigValue(from, defaultVal);
 
     if (typeof val === 'string') {
@@ -77,4 +101,4 @@ export const getConfigNumber = (
     }
 
     return val;
-};
+}

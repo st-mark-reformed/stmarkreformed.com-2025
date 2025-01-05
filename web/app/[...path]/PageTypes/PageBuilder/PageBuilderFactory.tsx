@@ -5,6 +5,7 @@ import ContentBasicBlock from './ContentBasicBlock/ContentBasicBlock';
 import ContentContactForm from './ContentContactForm/ContentContactForm';
 import SimpleCta from './SimpleCTA/SimpleCta';
 import ImageContentCta from './ImageContentCta/ImageContentCta';
+import StripePaymentForm from './StripePaymentForm/StripePaymentForm';
 
 export default function PageBuilderFactory (
     {
@@ -45,6 +46,15 @@ export default function PageBuilderFactory (
         if (block.type === 'CTAs_ImageContentCta') {
             return (
                 <ImageContentCta
+                    key={block.id}
+                    blockBase={block}
+                />
+            );
+        }
+
+        if (block.type === 'Content_StripePaymentForm') {
+            return (
+                <StripePaymentForm
                     key={block.id}
                     blockBase={block}
                 />

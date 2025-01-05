@@ -8,6 +8,7 @@ export const StripePaymentFormTypeSchema = PageBuilderBaseTypeSchema.and(z.objec
     noTopSpace: z.boolean(),
     heading: z.string(),
     defaultAmount: z.string(),
+    successRedirect: z.string(),
 }));
 
 export type StripePaymentFormType = z.infer<typeof StripePaymentFormTypeSchema>;
@@ -21,4 +22,5 @@ export const stripePaymentFormDefaultData: StripePaymentFormType = {
     noTopSpace: false,
     heading: '',
     defaultAmount: '',
+    successRedirect: '',
 };
