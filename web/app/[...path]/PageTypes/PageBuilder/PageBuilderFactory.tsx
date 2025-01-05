@@ -6,6 +6,7 @@ import ContentContactForm from './ContentContactForm/ContentContactForm';
 import SimpleCta from './SimpleCTA/SimpleCta';
 import ImageContentCta from './ImageContentCta/ImageContentCta';
 import StripePaymentForm from './StripePaymentForm/StripePaymentForm';
+import { ConfigOptions, getConfigString } from '../../../serverSideRunTimeConfig';
 
 export default function PageBuilderFactory (
     {
@@ -57,6 +58,9 @@ export default function PageBuilderFactory (
                 <StripePaymentForm
                     key={block.id}
                     blockBase={block}
+                    stripePublishableKey={getConfigString(
+                        ConfigOptions.STRIPE_PUBLISHABLE_KEY,
+                    )}
                 />
             );
         }

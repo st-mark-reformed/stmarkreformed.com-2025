@@ -4,19 +4,49 @@
 /* eslint-disable react/no-danger */
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useState } from 'react';
 import smartypants from 'smartypants';
+import { loadStripe } from '@stripe/stripe-js';
 import { PageBuilderBlockBase } from '../../../../types/PageBuilder';
 import { StripePaymentFormBlockType } from './StripePaymentFormBlockType';
+import CreateCheckoutSession from './CreateCheckoutSession';
 
 export default function StripePaymentForm (
     {
         blockBase,
+        stripePublishableKey,
     }: {
         blockBase: PageBuilderBlockBase;
+        stripePublishableKey: string;
     },
 ) {
     const block = blockBase as StripePaymentFormBlockType;
+
+    const [amount, setAmount] = useState(block.defaultAmount);
+
+    const stripePromise = loadStripe(stripePublishableKey);
+
+    const handleStripeCheckoutSession = async () => {
+        const stripe = await stripePromise;
+
+        if (!stripe) {
+            throw new Error('An unknown error occurred.');
+        }
+
+        const result = await CreateCheckoutSession(
+            amount,
+            window.location.origin + block.successRedirect,
+            window.location.href,
+        );
+
+        if (!result.success) {
+            return;
+        }
+
+        await stripe.redirectToCheckout({
+            sessionId: result.sessionId,
+        });
+    };
 
     return (
         <div
@@ -52,7 +82,7 @@ export default function StripePaymentForm (
                             className="rounded bg-gray-50 shadow-md pt-6 px-8 pb-8"
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                console.log('TODO: handle stripe payment');
+                                handleStripeCheckoutSession();
                             }}
                         >
                             <div className="mb-1">
@@ -73,7 +103,8 @@ export default function StripePaymentForm (
                                         type="number"
                                         className="block w-full pl-7 sm:text-sm border-gray-300 rounded-md focus:ring-0 focus:border-crimson"
                                         id="amount"
-                                        defaultValue={block.defaultAmount}
+                                        value={amount}
+                                        onChange={(e) => setAmount(e.target.value)}
                                         step="1"
                                     />
                                 </div>
