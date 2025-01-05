@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable react/no-danger */
 import React, { ReactNode } from 'react';
 import { GetStaticMenuData } from '../[...path]/GetPageData/GetStaticMenuData';
 import { MenuItems } from '../types/MenuType';
@@ -63,26 +65,28 @@ export default async function Layout (
                 }
 
                 return (
-                    <style>
-                        {`
-                            .hero-background-image {
-                                background-image: url('${hero.heroImage1x}');
-                                background-attachment: fixed;
-                            }
-
-                            @media (-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+                    <style
+                        dangerouslySetInnerHTML={{
+                            __html: `
                                 .hero-background-image {
-                                    background-image: url('${hero.heroImage2x}');
+                                    background-image: url('${hero.heroImage1x}');
+                                    background-attachment: fixed;
                                 }
-                            }
 
-                            @media (hover: none) {
-                                .hero-background-image {
-                                    background-attachment: initial;
+                                @media (-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+                                    .hero-background-image {
+                                        background-image: url('${hero.heroImage2x}');
+                                    }
                                 }
-                            }
-                        `}
-                    </style>
+
+                                @media (hover: none) {
+                                    .hero-background-image {
+                                        background-attachment: initial;
+                                    }
+                                }
+                            `,
+                        }}
+                    />
                 );
             })()}
             <div className="h-full bg-bronze">
