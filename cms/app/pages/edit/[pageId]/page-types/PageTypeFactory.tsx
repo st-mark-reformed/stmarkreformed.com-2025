@@ -5,6 +5,7 @@ import { PageType } from '../../../PageType';
 import Page from './Page';
 import PageBuilder from './PageBuilder/PageBuilder';
 import TextInput from '../../../../inputs/TextInput';
+import Calendar from './Calendar';
 
 export default function PageTypeFactory (
     {
@@ -33,7 +34,7 @@ export default function PageTypeFactory (
     }
 
     if (pageType === PageType.calendar) {
-        return null;
+        return <Calendar data={data} setData={setData} />;
     }
 
     if (pageType === PageType.blog_entries) {
