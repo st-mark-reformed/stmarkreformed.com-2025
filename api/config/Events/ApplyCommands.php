@@ -12,6 +12,7 @@ use App\Persistence\Migrate\MigrateUpCommand;
 use App\Persistence\Seed\SeedCreateCommand;
 use App\Persistence\Seed\SeedRunCommand;
 use BuzzingPixel\Queue\Framework\QueueConsumeNextSymfonyCommand;
+use BuzzingPixel\Scheduler\Framework\RunScheduleSymfonyCommand;
 use RxAnte\AppBootstrap\Cli\ApplyCliCommandsEvent;
 
 readonly class ApplyCommands
@@ -28,6 +29,10 @@ readonly class ApplyCommands
 
         $commands->addSymfonyCommand(
             QueueConsumeNextSymfonyCommand::class,
+        );
+
+        $commands->addSymfonyCommand(
+            RunScheduleSymfonyCommand::class,
         );
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00d77d2a993a038ab0ddf20b40568299",
+    "content-hash": "6ad82d98074369b9255ff9f5651fdbcb",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -189,6 +189,58 @@
                 "source": "https://github.com/buzzingpixel/php-queue/tree/2.0.2"
             },
             "time": "2024-12-30T03:50:47+00:00"
+        },
+        {
+            "name": "buzzingpixel/php-scheduler",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/buzzingpixel/php-scheduler.git",
+                "reference": "e403e510857e05ac23bd3b2c0c0d589dcbd158d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/buzzingpixel/php-scheduler/zipball/e403e510857e05ac23bd3b2c0c0d589dcbd158d7",
+                "reference": "e403e510857e05ac23bd3b2c0c0d589dcbd158d7",
+                "shasum": ""
+            },
+            "require": {
+                "lcobucci/clock": "^3.1",
+                "php": "^8.2",
+                "psr/clock": "^1.0",
+                "spatie/php-cloneable": "^1.0",
+                "symfony/cache": "^6.2 || ^7"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^11.0.0",
+                "mnapoli/silly": "^1.8",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "squizlabs/php_codesniffer": "^3.6",
+                "symfony/console": "^6.2",
+                "symfony/var-dumper": "^6.2"
+            },
+            "suggest": {
+                "ext-redis": "Required to use the Redis driver",
+                "mnapoli/silly": "If you're using the Silly Console app, a buzzingpixel-schedule:run command is supplied",
+                "symfony/console": "If you're using Symfony Console, a buzzingpixel-schedule:run command is supplied"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BuzzingPixel\\Scheduler\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "support": {
+                "issues": "https://github.com/buzzingpixel/php-scheduler/issues",
+                "source": "https://github.com/buzzingpixel/php-scheduler/tree/1.1.1"
+            },
+            "time": "2025-01-08T03:37:08+00:00"
         },
         {
             "name": "buzzingpixel/php-template-engine",

@@ -137,6 +137,7 @@
       <path value="$PROJECT_DIR$/api/vendor/gumlet/php-image-resize" />
       <path value="$PROJECT_DIR$/api/vendor/spatie/image-optimizer" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/api/vendor/buzzingpixel/php-scheduler" />
     </include_path>
   </component>
   <component name="PhpProjectServersManager">
