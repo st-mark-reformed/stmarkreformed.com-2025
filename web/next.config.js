@@ -15,4 +15,13 @@ module.exports = {
     },
     poweredByHeader: false,
     reactStrictMode: true,
+    async redirects() {
+        return [
+            {
+                source: '/calendar/ics',
+                destination: '/ics/calendar',
+                permanent: true,
+            },
+        ];
+    }
 };
