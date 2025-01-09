@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Config;
 
-use App\Calendar\CacheRemoteIcsFiles;
+use App\Calendar\EnqueueCacheRemoteIcsFiles;
 use BuzzingPixel\Scheduler\Frequency;
 use BuzzingPixel\Scheduler\ScheduleItem;
 use BuzzingPixel\Scheduler\ScheduleItemCollection;
@@ -16,7 +16,7 @@ readonly class ScheduleFactory implements \BuzzingPixel\Scheduler\ScheduleFactor
         return new ScheduleItemCollection([
             new ScheduleItem(
                 Frequency::FIVE_MINUTES,
-                CacheRemoteIcsFiles::class,
+                EnqueueCacheRemoteIcsFiles::class,
             ),
         ]);
     }

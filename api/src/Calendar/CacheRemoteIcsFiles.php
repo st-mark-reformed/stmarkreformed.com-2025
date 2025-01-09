@@ -12,6 +12,10 @@ use Redis;
 
 readonly class CacheRemoteIcsFiles
 {
+    public const string JOB_HANDLE = 'cache-remote-ics-files';
+
+    public const string JOB_NAME = 'Cache Remote ICS Files';
+
     public function __construct(
         private Redis $redis,
         private PageRepository $pageRepository,
