@@ -62,6 +62,24 @@ services:
     secrets:
       - FUSION_AUTH_SIGNING_CERTIFICATE
 
+  api-schedule-runner:
+    env_file:
+      - ./api/.env.dev
+      - ./api/.env.local
+    container_name: smrc_api-schedule-runner
+    image: ghcr.io/st-mark-reformed/smrc-2025-api-schedule-runner
+    environment:
+      - HOSTNAME=smrc_api-schedule-runner
+      - ENABLE_XDEBUG=0
+      - ENABLE_PHP_DEV_CONFIG=0
+    volumes:
+      - ../api:/var/www:delegated
+    networks:
+      traefik:
+      default:
+    secrets:
+      - FUSION_AUTH_SIGNING_CERTIFICATE
+
   api_db:
     container_name: smrc_api_db
     image: mariadb:10.6
