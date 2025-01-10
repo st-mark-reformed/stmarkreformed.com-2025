@@ -6,8 +6,8 @@ namespace App\Calendar\Month;
 
 use App\Calendar\Event;
 use App\Calendar\EventCollection;
+use Config\SystemTimezone;
 use DateTimeImmutable;
-use DateTimeZone;
 use Psr\Clock\ClockInterface;
 use RxAnte\DateImmutable;
 
@@ -17,6 +17,7 @@ readonly class MonthDayFactory
 {
     public function __construct(
         private ClockInterface $clock,
+        private SystemTimezone $systemTimezone,
         private MonthRangeFactory $monthRangeFactory,
     ) {
     }
@@ -29,7 +30,7 @@ readonly class MonthDayFactory
         $monthRange = $this->monthRangeFactory->make($month);
 
         $currentTime = $this->clock->now()->setTimezone(
-            new DateTimeZone('US/Central'),
+            $this->systemTimezone,
         );
 
         $currentDateInt = (int) $currentTime->format('Ymd');

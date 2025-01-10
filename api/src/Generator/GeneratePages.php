@@ -10,11 +10,13 @@ use App\Pages\Page\Page;
 use App\Pages\Page\PageProperty;
 use App\Pages\Page\PagePropertyCollection;
 use App\Pages\Page\PageStatus;
+use App\Pages\Page\PageType;
 use App\Pages\PageRepository;
 use Redis;
 
 use function array_filter;
 use function array_map;
+use function array_merge;
 use function count;
 use function in_array;
 use function json_encode;
@@ -31,6 +33,7 @@ class GeneratePages
         private readonly PageRepository $pageRepository,
         private readonly HandlePageCustomHero $handlePageCustomHero,
         private readonly HandleImageContentCta $handleImageContentCta,
+        private readonly GenerateCalendarPages $generateCalendarPages,
     ) {
     }
 
@@ -70,6 +73,16 @@ class GeneratePages
         ));
 
         // TODO handle page types, blogs/entries/podcasts/pagination etc.
+
+        switch ($page->type) {
+            case PageType::calendar:
+                $this->paths = array_merge(
+                    $this->paths,
+                    $this->generateCalendarPages->fromPage(
+                        $page,
+                    ),
+                );
+        }
 
         $pageData = $page->asScalarArray(
             new PagePropertyCollection([

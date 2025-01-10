@@ -213,4 +213,9 @@ readonly class PageCollection
 
         return new PageCollection($foundPages);
     }
+
+    public function first(): Page
+    {
+        return $this->pages[0];
+    }
 }

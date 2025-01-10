@@ -45,4 +45,19 @@ readonly class Event
     {
         return $this->with(startDate: $date);
     }
+
+    /** @return mixed[] */
+    public function asScalarArray(): array
+    {
+        return [
+            'uid' => $this->uid,
+            'summary' => $this->summary,
+            'description' => $this->description,
+            'location' => $this->location,
+            'startDate' => $this->startDate->format('Y-m-d H:i:s'),
+            'endDate' => $this->endDate->format('Y-m-d H:i:s'),
+            'isMultiDay' => $this->isMultiDay,
+            'totalDays' => $this->totalDays,
+        ];
+    }
 }

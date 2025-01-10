@@ -4,23 +4,15 @@ declare(strict_types=1);
 
 namespace App\Calendar;
 
-use App\Calendar\Month\MonthRangeFactory;
-use DateTimeImmutable;
-use DateTimeZone;
-use ICal\ICal;
 use Redis;
 
-use function array_map;
-use function assert;
 use function is_string;
-
-// phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
+use function unserialize;
 
 readonly class EventRepository
 {
     public function __construct(
         private Redis $redis,
-        private MonthRangeFactory $monthRangeFactory,
     ) {
     }
 
@@ -29,53 +21,20 @@ readonly class EventRepository
         string $month,
         string $pagePath,
     ): EventCollection {
-        $monthRange = $this->monthRangeFactory->make($month);
+        $allEventCache = $this->redis->get('all_events_cache:' . $pagePath);
 
-        $ics = $this->redis->get('static_ics_data:' . $pagePath);
-
-        if (! is_string($ics)) {
+        if (! is_string($allEventCache)) {
             return new EventCollection();
         }
 
-        $ical = new ICal(options: [
-            'defaultTimezone' => new DateTimeZone('US/Central'),
-        ]);
+        $allEvents = unserialize($allEventCache);
 
-        $ical->initString($ics);
+        if (! ($allEvents instanceof EventCollection)) {
+            return new EventCollection();
+        }
 
-        $endDate = $monthRange->getEndDate() ?? $monthRange->getStartDate();
-
-        $icalEvents = $ical->eventsFromRange(
-            $monthRange->getStartDate()->format('Y-m-d h:i:s'),
-            $endDate->format('Y-m-d h:i:s'),
-        );
-
-        return new EventCollection(array_map(
-            static function (\ICal\Event $event): Event {
-                $startDate = DateTimeImmutable::createFromFormat(
-                    'Ymd\THis',
-                    $event->dtstart_tz,
-                    new DateTimeZone('US/Central'),
-                );
-                assert($startDate instanceof DateTimeImmutable);
-
-                $endDate = DateTimeImmutable::createFromFormat(
-                    'Ymd\THis',
-                    $event->dtend_tz,
-                    new DateTimeZone('US/Central'),
-                );
-                assert($endDate instanceof DateTimeImmutable);
-
-                return new Event(
-                    uid: $event->uid,
-                    summary: $event->summary,
-                    description: $event->description ?? '',
-                    location: $event->location ?? '',
-                    startDate: $startDate,
-                    endDate: $endDate,
-                );
-            },
-            $icalEvents,
-        ));
+        return $allEvents->filter(static fn (
+            Event $e,
+        ) => $e->startDate->format('Y-m') === $month);
     }
 }

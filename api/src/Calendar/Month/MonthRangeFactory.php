@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace App\Calendar\Month;
 
+use Config\SystemTimezone;
 use DateInterval;
 use DatePeriod;
 use DateTimeImmutable;
-use DateTimeZone;
 
 use function assert;
 
 readonly class MonthRangeFactory
 {
+    public function __construct(private SystemTimezone $systemTimezone)
+    {
+    }
+
     /**
      * @param string $month as 2022-01, 2022-04 etc.
      *
@@ -23,7 +27,7 @@ readonly class MonthRangeFactory
         $firstDay = DateTimeImmutable::createFromFormat(
             'Y-m-d H:i:s',
             $month . '-01 00:00:00',
-            new DateTimeZone('US/Central'),
+            $this->systemTimezone,
         );
 
         assert($firstDay instanceof DateTimeImmutable);

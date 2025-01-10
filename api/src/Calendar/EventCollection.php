@@ -33,11 +33,15 @@ readonly class EventCollection
             assert($event instanceof Event);
 
             if ($event->isMultiDay) {
-                $startDateMinus1 = (clone $event->startDate)->modify('-1 Day');
+                $startDateMinus1 = (clone $event->startDate)->modify(
+                    '-1 Day',
+                );
 
                 for ($i = 1; $i <= $event->totalDays; $i++) {
                     $finalEvents[] = $event->withStartDate(
-                        $startDateMinus1->modify('+' . $i . ' Days'),
+                        $startDateMinus1->modify(
+                            '+' . $i . ' Days',
+                        ),
                     );
                 }
 
@@ -73,5 +77,13 @@ readonly class EventCollection
     public function withEvents(array $events = []): EventCollection
     {
         return $this->with(events: $events);
+    }
+
+    /** @return mixed[] */
+    public function asScalarArray(): array
+    {
+        return $this->mapToArray(
+            static fn (Event $e) => $e->asScalarArray(),
+        );
     }
 }

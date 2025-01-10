@@ -27,4 +27,18 @@ readonly class MonthDayCollection
     {
         return (int) ceil(count($this->items) / 7);
     }
+
+    /** @return mixed[] */
+    public function mapToArray(callable $callback): array
+    {
+        return array_map($callback, $this->items);
+    }
+
+    /** @return mixed[] */
+    public function asScalarArray(): array
+    {
+        return $this->mapToArray(
+            static fn (MonthDay $d) => $d->asScalarArray(),
+        );
+    }
 }
