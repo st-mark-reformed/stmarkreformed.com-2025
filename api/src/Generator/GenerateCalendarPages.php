@@ -14,6 +14,7 @@ use Config\SystemTimezone;
 use DateInterval;
 use Psr\Clock\ClockInterface;
 use Redis;
+use RxAnte\DateImmutable;
 
 use function array_map;
 use function array_merge;
@@ -54,7 +55,7 @@ class GenerateCalendarPages
     /** @return string[] a list of paths generated */
     public function fromPage(Page $page): array
     {
-        if (! $page->type === PageType::calendar) {
+        if ($page->type !== PageType::calendar) {
             return [];
         }
 
@@ -73,6 +74,11 @@ class GenerateCalendarPages
         string $month,
         Page $page,
     ): string {
+        $monthDate = DateImmutable::createFromFormat(
+            'Y-m-d',
+            $month . '-01',
+        );
+
         $eventsForMonth = $this->eventRepository->getEventsForMonth(
             $month,
             $page->path->value,
@@ -100,8 +106,13 @@ class GenerateCalendarPages
                     ]),
                 ),
                 [
-                    'monthDays' => $monthDays->asScalarArray(),
-                    'monthRows' => $monthDays->rows(),
+                    'calendarData' => [
+                        'pagePath' => $pageCachePath,
+                        'monthDays' => $monthDays->asScalarArray(),
+                        'monthRows' => $monthDays->rows(),
+                        'monthString' => $month,
+                        'dateHeading' => $monthDate->format('F Y'),
+                    ],
                 ],
             )),
         );

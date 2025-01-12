@@ -39,6 +39,11 @@ export type PageBaseType = {
     heroHeading: string;
     heroSubheading: string;
     heroParagraph: string;
-    monthDays?: Array<MonthDayType>;
-    monthRows?: number;
+    calendarData?: {
+        pagePath: string;
+        monthDays: Array<MonthDayType>;
+        monthRows: number;
+        monthString: string;
+        dateHeading: string;
+    };
 };

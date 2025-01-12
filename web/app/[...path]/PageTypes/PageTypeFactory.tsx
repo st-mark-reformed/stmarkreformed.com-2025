@@ -4,7 +4,7 @@ import Page from './Page';
 import PageBuilderFactory from './PageBuilder/PageBuilderFactory';
 import Calendar from './Calendar/Calendar';
 
-export default function PageTypeFactory (
+export default async function PageTypeFactory (
     {
         pageData,
     }: {

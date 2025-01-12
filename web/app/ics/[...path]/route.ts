@@ -2,8 +2,6 @@ import { CreateSegmentsFromRequest } from '../../Url/CreateSegmentsFromRequest';
 import getRedisClient from '../../cache/RedisClient';
 
 export async function GET (request: Request) {
-    const headers = { 'Content-Type': 'text/plain' };
-
     const segments = CreateSegmentsFromRequest(request);
 
     const { trimmedPath } = segments.fromSegmentsAfter(1);
@@ -15,11 +13,16 @@ export async function GET (request: Request) {
     if (!icsData) {
         return new Response('Resource not found', {
             status: 404,
-            headers,
+            headers: { 'content-type': 'text/plain' },
         });
     }
 
     return new Response(icsData, {
-        headers: { 'Content-Type': 'text/plain' },
+        headers: {
+            'cache-control': 'must-revalidate, post-check=0, pre-check=0',
+            'content-type': 'text/calendar; charset=utf-8',
+            expires: '0',
+            pragma: 'public',
+        },
     });
 }

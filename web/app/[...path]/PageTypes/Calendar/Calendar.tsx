@@ -1,8 +1,49 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { PageBaseType } from '../../../types/PageType';
+import { GetStaticPageData } from '../../GetPageData/GetStaticPageData';
+import CalendarPageHeader from './CalendarPageHeader';
+import CalendarDayHeading from './CalendarDayHeading';
 
-export default function Calendar (
+function calcPrevPath (currentPath: string): string {
+    const currentPathArray = currentPath.split('/');
+
+    let yearInt = parseInt(currentPathArray[1], 10);
+
+    let monthInt = (parseInt(currentPathArray[2], 10) - 1);
+
+    if (monthInt < 1) {
+        yearInt -= 1;
+        monthInt = 12;
+    }
+
+    return [
+        currentPathArray[0],
+        yearInt.toString(),
+        monthInt.toString().padStart(2, '0'),
+    ].join('/');
+}
+
+function calcNextPath (currentPath: string): string {
+    const currentPathArray = currentPath.split('/');
+
+    let yearInt = parseInt(currentPathArray[1], 10);
+
+    let monthInt = (parseInt(currentPathArray[2], 10) + 1);
+
+    if (monthInt > 12) {
+        yearInt += 1;
+        monthInt = 1;
+    }
+
+    return [
+        currentPathArray[0],
+        yearInt.toString(),
+        monthInt.toString().padStart(2, '0'),
+    ].join('/');
+}
+
+export default async function Calendar (
     {
         pageData,
     }: {
@@ -13,7 +54,7 @@ export default function Calendar (
      * If there is no monthDays, then this is the base page and we need to
      * redirect to the current month
      */
-    if (!pageData.monthDays || !pageData.monthRows) {
+    if (!pageData.calendarData) {
         const date = new Date();
 
         redirect([
@@ -24,113 +65,88 @@ export default function Calendar (
         ].join('/'));
     }
 
-    const { monthDays } = pageData;
+    const {
+        pagePath,
+        monthDays,
+        dateHeading,
+        monthString,
+        monthRows,
+    } = pageData.calendarData;
 
-    const monthString = 'TODO monthString';
-    const dateHeading = 'TODO dateHeading';
-    const icsUrl = 'TODO/icsUrl';
-    const currentMonthLink = 'TODO/currentMonthLink';
-    const prevMonthLink = 'TODO/prevMonthLink';
-    const nextMonthLink = 'TODO/nextMonthLink';
+    const currentMonth = new Date();
+
+    const prevPagePath = calcPrevPath(pagePath);
+
+    const prevPageData = await GetStaticPageData(prevPagePath);
+
+    const nextPagePath = calcNextPath(pagePath);
+
+    const nextPageData = await GetStaticPageData(nextPagePath);
+
+    const icsUrl = `/ics/${pageData.path}`;
+
+    const currentMonthPath = [
+        pageData.path,
+        currentMonth.getFullYear(),
+        (currentMonth.getMonth() + 1).toString().padStart(2, '0'),
+    ].join('/');
+
+    let currentMonthLink = '';
+
+    if (currentMonthPath !== pagePath) {
+        currentMonthLink = [
+            '',
+            currentMonthPath,
+        ].join('/');
+    }
+
+    let prevMonthLink = '';
+
+    if (prevPageData) {
+        prevMonthLink = `/${prevPagePath}`;
+    }
+
+    let nextMonthLink = '';
+
+    if (nextPageData) {
+        nextMonthLink = `/${nextPagePath}`;
+    }
+
+    let gridRowsClass = '';
+
+    if (monthRows === 1) {
+        gridRowsClass = 'grid-rows-1';
+    } else if (monthRows === 2) {
+        gridRowsClass = 'grid-rows-2';
+    } else if (monthRows === 3) {
+        gridRowsClass = 'grid-rows-3';
+    } else if (monthRows === 4) {
+        gridRowsClass = 'grid-rows-4';
+    } else if (monthRows === 5) {
+        gridRowsClass = 'grid-rows-5';
+    } else if (monthRows === 6) {
+        gridRowsClass = 'grid-rows-6';
+    } else if (monthRows === 7) {
+        gridRowsClass = 'grid-rows-7';
+    }
+
+    console.log(monthRows);
 
     return (
         <div className="p-4 pb-10 max-w-1800px mx-auto">
             <div className="lg:flex lg:h-full lg:flex-col">
-                <header className="relative z-20 sm:flex items-center justify-between border-b border-gray-200 py-4 lg:flex-none">
-                    <h1 className="mb-4 sm:mb-0 text-lg font-semibold text-gray-900">
-                        <time dateTime={monthString}>{dateHeading}</time>
-                    </h1>
-                    <div className="flex items-center">
-                        <div className="mr-4 items-center flex">
-                            <div className="relative">
-                                <a
-                                    href={icsUrl}
-                                    type="button"
-                                    className="flex items-center rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 select-none"
-                                    id="menu-button"
-                                    title="Copy and paste link into the subscribe action of your calendar"
-                                >
-                                    Subscribe
-                                </a>
-                            </div>
-                        </div>
-                        {(() => {
-                            if (currentMonthLink === null) {
-                                return null;
-                            }
-
-                            return (
-                                <div className="mr-4 items-center flex">
-                                    <div className="relative">
-                                        <a
-                                            href={currentMonthLink}
-                                            type="button"
-                                            className="flex items-center rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
-                                            id="menu-button"
-                                        >
-                                            Current Month
-                                        </a>
-                                    </div>
-                                </div>
-                            );
-                        })()}
-                        <div className="flex items-center rounded-md shadow-sm md:items-stretch">
-                            <a
-                                href={prevMonthLink}
-                                type="button"
-                                className="flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-white py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
-                            >
-                                <span className="sr-only">Previous month</span>
-                                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>
-                            </a>
-                            <a
-                                href={nextMonthLink}
-                                type="button"
-                                className="flex items-center justify-center rounded-r-md border border-gray-300 bg-white py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
-                            >
-                                <span className="sr-only">Next month</span>
-                                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </header>
+                <CalendarPageHeader
+                    monthString={monthString}
+                    dateHeading={dateHeading}
+                    icsUrl={icsUrl}
+                    currentMonthLink={currentMonthLink}
+                    prevMonthLink={prevMonthLink}
+                    nextMonthLink={nextMonthLink}
+                />
                 <div className="hidden shadow-md lg:flex lg:flex-auto lg:flex-col">
-                    <div className="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-400 text-center text-xs font-semibold leading-6 text-gray-100 lg:flex-none">
-                        <div className="bg-crimson-dark py-2">
-                            S
-                            <span className="sr-only sm:not-sr-only">un</span>
-                        </div>
-                        <div className="bg-crimson-dark py-2">
-                            M
-                            <span className="sr-only sm:not-sr-only">on</span>
-                        </div>
-                        <div className="bg-crimson-dark py-2">
-                            T
-                            <span className="sr-only sm:not-sr-only">ue</span>
-                        </div>
-                        <div className="bg-crimson-dark py-2">
-                            W
-                            <span className="sr-only sm:not-sr-only">ed</span>
-                        </div>
-                        <div className="bg-crimson-dark py-2">
-                            T
-                            <span className="sr-only sm:not-sr-only">hu</span>
-                        </div>
-                        <div className="bg-crimson-dark py-2">
-                            F
-                            <span className="sr-only sm:not-sr-only">ri</span>
-                        </div>
-                        <div className="bg-crimson-dark py-2">
-                            S
-                            <span className="sr-only sm:not-sr-only">at</span>
-                        </div>
-                    </div>
+                    <CalendarDayHeading />
                     <div className="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-                        <div className={`hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-${monthDays.rows} lg:gap-px`}>
+                        <div className={`hidden w-full lg:grid grid-cols-7 gap-px ${gridRowsClass}`}>
                             {monthDays.map((day) => (
                                 <div
                                     key={day.ymd}
@@ -166,9 +182,7 @@ export default function Calendar (
                                             }
 
                                             return (
-                                                <span
-                                                    className="block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-lightest-red h-7 w-7 z-10 rounded-full"
-                                                />
+                                                <span className="block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-lightest-red h-7 w-7 z-10 rounded-full" />
                                             );
                                         })()}
                                     </time>
