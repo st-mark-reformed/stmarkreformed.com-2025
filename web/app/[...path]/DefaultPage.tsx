@@ -1,5 +1,5 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { GetAllPageData } from './GetPageData/GetAllPageData';
 import { DefaultPageParams } from './DefaultPageParams';
 import Layout from '../layout/Layout';

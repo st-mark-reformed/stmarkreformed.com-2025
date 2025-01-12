@@ -1,4 +1,5 @@
 import { Url } from './UrlType';
+import { MonthDayType } from './MonthDayType';
 
 export enum PageStatus {
     published = 'published',
@@ -38,4 +39,6 @@ export type PageBaseType = {
     heroHeading: string;
     heroSubheading: string;
     heroParagraph: string;
+    monthDays?: Array<MonthDayType>;
+    monthRows?: number;
 };
