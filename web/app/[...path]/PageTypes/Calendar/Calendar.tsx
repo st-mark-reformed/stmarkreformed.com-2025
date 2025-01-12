@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable react/no-danger */
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { ClockIcon } from '@heroicons/react/16/solid';
@@ -5,6 +7,7 @@ import { PageBaseType } from '../../../types/PageType';
 import { GetStaticPageData } from '../../GetPageData/GetStaticPageData';
 import CalendarPageHeader from './CalendarPageHeader';
 import CalendarDayHeading from './CalendarDayHeading';
+import typography from '../../../typography/typography';
 
 function calcPrevPath (currentPath: string): string {
     const currentPathArray = currentPath.split('/');
@@ -286,8 +289,20 @@ export default async function Calendar (
                                                                     })()}
                                                                     {event.summary}
                                                                 </p>
-                                                                {event.location
-                                                                    && <p className="font-light text-xs">{event.location}</p>}
+                                                                {(() => {
+                                                                    if (!event.location) {
+                                                                        return null;
+                                                                    }
+
+                                                                    return (
+                                                                        <p
+                                                                            className="font-light text-xs"
+                                                                            dangerouslySetInnerHTML={{
+                                                                                __html: typography(event.location),
+                                                                            }}
+                                                                        />
+                                                                    );
+                                                                })()}
                                                             </span>
                                                         </li>
                                                     );
@@ -377,7 +392,10 @@ export default async function Calendar (
                                                         return classes.join(' ');
                                                     })()}
                                                 >
-                                                    {event.summary}
+                                                    <span dangerouslySetInnerHTML={{
+                                                        __html: typography(event.summary),
+                                                    }}
+                                                    />
                                                     {(() => {
                                                         if (!event.isInPast) {
                                                             return null;
@@ -402,9 +420,10 @@ export default async function Calendar (
 
                                                         return classes.join(' ');
                                                     })()}
-                                                >
-                                                    {event.location}
-                                                </p>
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: typography(event.location),
+                                                    }}
+                                                />
                                                 <time
                                                     dateTime={(() => {
                                                         if (event.isAllDay) {

@@ -1,6 +1,9 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable react/no-danger */
 import Link from 'next/link';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/16/solid';
 import React from 'react';
+import typography from '../../../typography/typography';
 
 export default function CalendarPageHeader (
     {
@@ -24,7 +27,12 @@ export default function CalendarPageHeader (
             className="relative z-20 sm:flex items-center justify-between border-b border-gray-200 py-4 lg:flex-none"
         >
             <h1 className="mb-4 sm:mb-0 text-lg font-semibold text-gray-900">
-                <time dateTime={monthString}>{dateHeading}</time>
+                <time
+                    dateTime={monthString}
+                    dangerouslySetInnerHTML={{
+                        __html: typography(dateHeading),
+                    }}
+                />
             </h1>
             <div className="flex items-center">
                 <div className="mr-4 items-center flex">
