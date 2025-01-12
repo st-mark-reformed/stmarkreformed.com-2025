@@ -112,6 +112,7 @@ class GenerateCalendarPages
                         'monthRows' => $monthDays->rows(),
                         'monthString' => $month,
                         'dateHeading' => $monthDate->format('F Y'),
+                        'monthEventsList' => $eventsForMonth->asScalarArray(),
                     ],
                 ],
             )),

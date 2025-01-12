@@ -1,5 +1,6 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
+import { ClockIcon } from '@heroicons/react/16/solid';
 import { PageBaseType } from '../../../types/PageType';
 import { GetStaticPageData } from '../../GetPageData/GetStaticPageData';
 import CalendarPageHeader from './CalendarPageHeader';
@@ -71,6 +72,7 @@ export default async function Calendar (
         dateHeading,
         monthString,
         monthRows,
+        monthEventsList,
     } = pageData.calendarData;
 
     const currentMonth = new Date();
@@ -130,8 +132,6 @@ export default async function Calendar (
         gridRowsClass = 'grid-rows-7';
     }
 
-    console.log(monthRows);
-
     return (
         <div className="p-4 pb-10 max-w-1800px mx-auto">
             <div className="lg:flex lg:h-full lg:flex-col">
@@ -163,7 +163,18 @@ export default async function Calendar (
                                     })()}
                                 >
                                     <time
-                                        className={`inline-block relative${day.isCurrentDay ? ' ml-2' : ''}`}
+                                        className={(() => {
+                                            const classes = [
+                                                'inline-block',
+                                                'relative',
+                                            ];
+
+                                            if (day.isCurrentDay) {
+                                                classes.push('ml-2');
+                                            }
+
+                                            return classes.join(' ');
+                                        })()}
                                         dateTime={day.ymd}
                                     >
                                         <span className="relative z-20">
@@ -193,63 +204,94 @@ export default async function Calendar (
 
                                         return (
                                             <ol className="mt-2">
-                                                {day.events.map((event) => (
-                                                    <li
-                                                        key={event.uid}
-                                                        className={(() => {
-                                                            console.log('TODO');
-                                                            // if (event.allDay) {
-                                                            //     if (day.isActiveMonth) {
-                                                            //         return 'mb-4 bg-crimson py-0.5 px-1.5';
-                                                            //     }
-                                                            //
-                                                            //     return 'mb-4 bg-lighter-red py-0.5 px-1.5';
-                                                            // }
+                                                {day.events.map((event) => {
+                                                    const startDate = new Date(event.startDate);
 
-                                                            return 'mb-4 py-0.5 px-1.5';
-                                                        }
-                                                        )()}
-                                                    >
-                                                        <span className="group leading-tight">
-                                                            <p
-                                                                className={(() => {
+                                                    const timeString = startDate.toLocaleTimeString(
+                                                        'en-US',
+                                                        {
+                                                            hour: 'numeric',
+                                                            minute: 'numeric',
+                                                            hour12: true,
+                                                        },
+                                                    );
+
+                                                    return (
+                                                        <li
+                                                            key={event.uid}
+                                                            className={(() => {
+                                                                const classes = [
+                                                                    'mb-4',
+                                                                    'py-0.5',
+                                                                    'px-1.5',
+                                                                ];
+
+                                                                if (event.isAllDay) {
                                                                     if (day.isActiveMonth) {
-                                                                        // if (event.allDay) {
-                                                                        //     return 'font-medium text-white leading-tight';
-                                                                        // }
-
-                                                                        return 'font-medium text-gray-900 leading-tight';
+                                                                        classes.push('bg-crimson');
+                                                                    } else {
+                                                                        classes.push('bg-lighter-red');
                                                                     }
+                                                                }
 
-                                                                    // if (event.allDay) {
-                                                                    //     return 'font-medium text-gray-300 leading-tight';
-                                                                    // }
-
-                                                                    return 'font-medium text-gray-400 leading-tight';
-                                                                })()}
-                                                            >
-                                                                {!event.isAllDay && (
-                                                                    <time
-                                                                        className={(() => {
-                                                                            if (day.isActiveMonth) {
-                                                                                return 'text-teal-600 inline-block font-bold';
+                                                                return classes.join(' ');
+                                                            }
+                                                            )()}
+                                                        >
+                                                            <span className="group leading-tight">
+                                                                <p
+                                                                    className={(() => {
+                                                                        if (day.isActiveMonth) {
+                                                                            if (event.isAllDay) {
+                                                                                return 'font-medium text-white leading-tight';
                                                                             }
 
-                                                                            return 'text-gray-400 inline-block font-bold';
-                                                                        })()}
-                                                                    >
-                                                                        TODO
-                                                                        {/* {event.startDate.format('g:i A')} */}
-                                                                        :
-                                                                    </time>
-                                                                )}
-                                                                {event.summary}
-                                                            </p>
-                                                            {event.location
+                                                                            return 'font-medium text-gray-900 leading-tight';
+                                                                        }
+
+                                                                        if (event.isAllDay) {
+                                                                            return 'font-medium text-gray-300 leading-tight';
+                                                                        }
+
+                                                                        return 'font-medium text-gray-400 leading-tight';
+                                                                    })()}
+                                                                >
+                                                                    {(() => {
+                                                                        if (event.isAllDay) {
+                                                                            return null;
+                                                                        }
+
+                                                                        return (
+                                                                            <time
+                                                                                className={(() => {
+                                                                                    const classes = [
+                                                                                        'inline-block',
+                                                                                        'font-bold',
+                                                                                        'mr-0.5',
+                                                                                    ];
+
+                                                                                    if (day.isActiveMonth) {
+                                                                                        classes.push('text-teal-800');
+                                                                                    } else {
+                                                                                        classes.push('text-gray-400');
+                                                                                    }
+
+                                                                                    return classes.join(' ');
+                                                                                })()}
+                                                                            >
+                                                                                {timeString}
+                                                                                :
+                                                                            </time>
+                                                                        );
+                                                                    })()}
+                                                                    {event.summary}
+                                                                </p>
+                                                                {event.location
                                                                     && <p className="font-light text-xs">{event.location}</p>}
-                                                        </span>
-                                                    </li>
-                                                ))}
+                                                            </span>
+                                                        </li>
+                                                    );
+                                                })}
                                             </ol>
                                         );
                                     })()}
@@ -259,33 +301,160 @@ export default async function Calendar (
                     </div>
                 </div>
                 {(() => {
-                    return <>Bar</>;
-                    if (monthEventsOnly.count === 0) {
+                    if (monthEventsList.length < 1) {
                         return null;
                     }
 
                     return (
                         <div className="py-10 sm:px-6 lg:hidden">
                             <ol className="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5">
-                                {monthEventsOnly.items.map((event, index) => (
-                                    <li key={index} className={`group flex p-4 pr-6${event.isInPast ? ' bg-gray-100' : ''}`}>
-                                        <div className="flex-auto">
-                                            <p className={`font-semibold${event.isInPast ? ' text-gray-400' : ' text-teal-600'}`}>
-                                                {event.event.title}
-                                                {event.isInPast && <span className="text-gray-400 text-xxs italic font-normal">(past)</span>}
-                                            </p>
-                                            <p className={`${event.isInPast ? 'text-gray-400' : 'text-gray-900'}`}>
-                                                {event.event.location}
-                                            </p>
-                                            <time dateTime="2022-01-15T09:00" className={`mt-2 flex items-center${event.isInPast ? ' text-gray-400' : 'text-gray-700'}`}>
-                                                <svg className="mr-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                                                </svg>
-                                                {event.event.startDate.format('l, F j, g:i A')}
-                                            </time>
-                                        </div>
-                                    </li>
-                                ))}
+                                {monthEventsList.map((event) => {
+                                    const startDate = new Date(event.startDate);
+
+                                    const year = startDate.getFullYear();
+
+                                    const month = startDate.getMonth() + 1;
+
+                                    const monthName = startDate.toLocaleString(
+                                        'en-US',
+                                        { month: 'long' },
+                                    );
+
+                                    const day = startDate.getDate();
+
+                                    const dayName = startDate.toLocaleDateString(
+                                        'en-US',
+                                        { weekday: 'long' },
+                                    );
+
+                                    const timeString = startDate.toLocaleTimeString(
+                                        'en-US',
+                                        {
+                                            hour: 'numeric',
+                                            minute: 'numeric',
+                                            hour12: true,
+                                        },
+                                    );
+
+                                    const timeString24hour = startDate.toLocaleTimeString(
+                                        'en-US',
+                                        {
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                            hour12: false,
+                                        },
+                                    );
+
+                                    return (
+                                        <li
+                                            key={event.uid}
+                                            className={(() => {
+                                                const classes = [
+                                                    'group',
+                                                    'flex',
+                                                    'p-4',
+                                                    'pr-6',
+                                                ];
+
+                                                if (event.isInPast) {
+                                                    classes.push('bg-gray-100');
+                                                }
+
+                                                return classes.join(' ');
+                                            })()}
+                                        >
+                                            <div className="flex-auto">
+                                                <p
+                                                    className={(() => {
+                                                        const classes = ['font-semibold'];
+
+                                                        if (event.isInPast) {
+                                                            classes.push('text-gray-400');
+                                                        } else {
+                                                            classes.push('text-teal-600');
+                                                        }
+
+                                                        return classes.join(' ');
+                                                    })()}
+                                                >
+                                                    {event.summary}
+                                                    {(() => {
+                                                        if (!event.isInPast) {
+                                                            return null;
+                                                        }
+
+                                                        return (
+                                                            <span className="text-gray-400 text-xxs italic font-normal">
+                                                                {' (past)'}
+                                                            </span>
+                                                        );
+                                                    })()}
+                                                </p>
+                                                <p
+                                                    className={(() => {
+                                                        const classes = [];
+
+                                                        if (event.isInPast) {
+                                                            classes.push('text-gray-400');
+                                                        } else {
+                                                            classes.push('text-gray-900');
+                                                        }
+
+                                                        return classes.join(' ');
+                                                    })()}
+                                                >
+                                                    {event.location}
+                                                </p>
+                                                <time
+                                                    dateTime={(() => {
+                                                        if (event.isAllDay) {
+                                                            return `${year}-${month}-${day}`;
+                                                        }
+
+                                                        return `${year}-${month}-${day}T${timeString24hour}`;
+                                                    })()}
+                                                    className={(() => {
+                                                        const classes = [
+                                                            'mt-2',
+                                                            'flex',
+                                                            'items-center',
+                                                        ];
+
+                                                        if (event.isInPast) {
+                                                            classes.push('text-gray-400');
+                                                        } else {
+                                                            classes.push('text-gray-700');
+                                                        }
+
+                                                        return classes.join(' ');
+                                                    })()}
+                                                >
+                                                    <ClockIcon className="mr-2 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                    {dayName}
+                                                    ,
+                                                    {' '}
+                                                    {monthName}
+                                                    ,
+                                                    {' '}
+                                                    {day}
+                                                    {(() => {
+                                                        if (event.isAllDay) {
+                                                            return null;
+                                                        }
+
+                                                        return (
+                                                            <>
+                                                                ,
+                                                                {' '}
+                                                                {timeString}
+                                                            </>
+                                                        );
+                                                    })()}
+                                                </time>
+                                            </div>
+                                        </li>
+                                    );
+                                })}
                             </ol>
                         </div>
                     );

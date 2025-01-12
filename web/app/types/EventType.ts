@@ -3,8 +3,10 @@ export type EventType = {
     summary: string;
     description: string;
     location: string;
+    isInPast: boolean;
     startDate: string;
     endDate: string;
     isMultiDay: boolean;
+    isAllDay: boolean;
     totalDays: number;
 };

@@ -8,11 +8,15 @@ use DateTimeImmutable;
 use RxAnte\DateImmutable;
 use Spatie\Cloneable\Cloneable;
 
+use function max;
+
 readonly class Event
 {
     use Cloneable;
 
     public bool $isMultiDay;
+
+    public bool $isAllDay;
 
     public int $totalDays;
 
@@ -21,6 +25,7 @@ readonly class Event
         public string $summary,
         public string $description,
         public string $location,
+        public bool $isInPast,
         public DateTimeImmutable $startDate,
         public DateTimeImmutable $endDate,
     ) {
@@ -34,11 +39,19 @@ readonly class Event
             $endDate->format('Y-m-d 00:00:00'),
         );
 
-        $this->totalDays = (int) $endDay->diff($startDay)->format(
-            '%a',
-        );
+        $totalDaysPreProcess = (int) $endDay->diff(
+            $startDay,
+        )->format('%a');
+
+        $this->totalDays = max(1, $totalDaysPreProcess);
 
         $this->isMultiDay = $this->totalDays > 1;
+
+        if ($totalDaysPreProcess > 0) {
+            $this->isAllDay = true;
+        } else {
+            $this->isAllDay = false;
+        }
     }
 
     public function withStartDate(DateTimeImmutable|DateImmutable $date): Event
@@ -54,9 +67,11 @@ readonly class Event
             'summary' => $this->summary,
             'description' => $this->description,
             'location' => $this->location,
+            'isInPast' => $this->isInPast,
             'startDate' => $this->startDate->format('Y-m-d H:i:s'),
             'endDate' => $this->endDate->format('Y-m-d H:i:s'),
             'isMultiDay' => $this->isMultiDay,
+            'isAllDay' => $this->isAllDay,
             'totalDays' => $this->totalDays,
         ];
     }

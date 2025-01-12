@@ -1,5 +1,6 @@
 import { Url } from './UrlType';
 import { MonthDayType } from './MonthDayType';
+import { EventType } from './EventType';
 
 export enum PageStatus {
     published = 'published',
@@ -45,5 +46,6 @@ export type PageBaseType = {
         monthRows: number;
         monthString: string;
         dateHeading: string;
+        monthEventsList: Array<EventType>;
     };
 };

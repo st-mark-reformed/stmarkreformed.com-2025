@@ -6,6 +6,7 @@ namespace App\Calendar;
 
 use Config\SystemTimezone;
 use DateTimeImmutable;
+use Psr\Clock\ClockInterface;
 
 use function assert;
 
@@ -13,8 +14,10 @@ use function assert;
 
 readonly class EventFactory
 {
-    public function __construct(private SystemTimezone $systemTimezone)
-    {
+    public function __construct(
+        private ClockInterface $clock,
+        private SystemTimezone $systemTimezone,
+    ) {
     }
 
     public function createFromICalEvent(\ICal\Event $event): Event
@@ -38,6 +41,7 @@ readonly class EventFactory
             summary: $event->summary,
             description: $event->description ?? '',
             location: $event->location ?? '',
+            isInPast: $this->clock->now()->getTimestamp() > $endDate->getTimestamp(),
             startDate: $startDate,
             endDate: $endDate,
         );
