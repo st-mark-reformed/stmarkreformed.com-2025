@@ -8,6 +8,7 @@ use Spatie\Cloneable\Cloneable;
 
 use function array_filter;
 use function array_map;
+use function array_slice;
 use function array_values;
 use function assert;
 use function count;
@@ -71,6 +72,15 @@ readonly class EventCollection
             $this->events,
             $callback,
         )));
+    }
+
+    public function fromLimit(int $limit): EventCollection
+    {
+        return $this->with(events: array_slice(
+            $this->events,
+            0,
+            $limit,
+        ));
     }
 
     /** @param Event[] $events */

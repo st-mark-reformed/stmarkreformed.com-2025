@@ -7,6 +7,7 @@ import {
 export const UpcomingEventsTypeSchema = PageBuilderBaseTypeSchema.and(z.object({
     heading: z.string(),
     subHeading: z.string(),
+    calendarPage: z.string(),
 }));
 
 export type UpcomingEventsType = z.infer<typeof UpcomingEventsTypeSchema>;
@@ -19,4 +20,5 @@ export const upcomingEventsDefaultData: UpcomingEventsType = {
     internalName: '',
     heading: '',
     subHeading: '',
+    calendarPage: '',
 };

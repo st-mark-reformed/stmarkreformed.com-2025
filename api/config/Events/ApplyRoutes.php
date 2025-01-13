@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Config\Events;
 
+use App\Calendar\GetCalendarSelectOptions;
 use App\ContactForm\PostContactForm;
 use App\Globals\GetAllGlobalsAction;
 use App\Globals\PatchGlobal\PatchGlobalAction;
@@ -38,6 +39,7 @@ readonly class ApplyRoutes
         GetAllGlobalsAction::applyRoute($routes);
         PatchGlobalAction::applyRoute($routes);
         PostContactForm::applyRoute($routes);
+        GetCalendarSelectOptions::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

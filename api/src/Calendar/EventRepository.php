@@ -16,11 +16,8 @@ readonly class EventRepository
     ) {
     }
 
-    /** @param string $month 2024-02, 2025-10, etc. */
-    public function getEventsForMonth(
-        string $month,
-        string $pagePath,
-    ): EventCollection {
+    private function getEventsCache(string $pagePath): EventCollection
+    {
         $allEventCache = $this->redis->get('all_events_cache:' . $pagePath);
 
         if (! is_string($allEventCache)) {
@@ -33,8 +30,25 @@ readonly class EventRepository
             return new EventCollection();
         }
 
-        return $allEvents->filter(static fn (
+        return $allEvents;
+    }
+
+    /** @param string $month 2024-02, 2025-10, etc. */
+    public function getEventsForMonth(
+        string $month,
+        string $pagePath,
+    ): EventCollection {
+        return $this->getEventsCache($pagePath)->filter(static fn (
             Event $e,
         ) => $e->startDate->format('Y-m') === $month);
+    }
+
+    public function getUpcomingEvents(
+        string $pagePath,
+        int $limit = 8,
+    ): EventCollection {
+        return $this->getEventsCache($pagePath)->filter(
+            static fn (Event $event) => ! $event->isInPast,
+        )->fromLimit($limit);
     }
 }

@@ -7,6 +7,7 @@ import SimpleCta from './SimpleCTA/SimpleCta';
 import ImageContentCta from './ImageContentCta/ImageContentCta';
 import StripePaymentForm from './StripePaymentForm/StripePaymentForm';
 import { ConfigOptions, getConfigString } from '../../../serverSideRunTimeConfig';
+import UpcomingEvents from './UpcomingEvents/UpcomingEvents';
 
 export default function PageBuilderFactory (
     {
@@ -65,6 +66,20 @@ export default function PageBuilderFactory (
             );
         }
 
-        return <>{block.type}</>;
+        if (block.type === 'Features_UpcomingEvents') {
+            return (
+                <UpcomingEvents
+                    key={block.id}
+                    blockBase={block}
+                />
+            );
+        }
+
+        return (
+            <>
+                <br />
+                {block.type}
+            </>
+        );
     });
 }

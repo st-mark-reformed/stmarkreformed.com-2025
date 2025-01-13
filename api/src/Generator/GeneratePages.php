@@ -6,6 +6,7 @@ namespace App\Generator;
 
 use App\Generator\ImageHandling\HandlePageCustomHero;
 use App\Generator\ImageHandling\PageBuilder\HandleImageContentCta;
+use App\Generator\PageBuilderBlockHandlers\UpcomingEventsHandler;
 use App\Pages\Page\Page;
 use App\Pages\Page\PageProperty;
 use App\Pages\Page\PagePropertyCollection;
@@ -34,6 +35,7 @@ class GeneratePages
         private readonly HandlePageCustomHero $handlePageCustomHero,
         private readonly HandleImageContentCta $handleImageContentCta,
         private readonly GenerateCalendarPages $generateCalendarPages,
+        private readonly UpcomingEventsHandler $upcomingEventsHandler,
     ) {
     }
 
@@ -91,6 +93,10 @@ class GeneratePages
         );
 
         $pageData = $this->handlePageCustomHero->handle($pageData);
+
+        $pageData['json'] = $this->upcomingEventsHandler->handle(
+            $pageData['json'],
+        );
 
         $this->redis->set(
             'static_page_data:' . $page->path->value,

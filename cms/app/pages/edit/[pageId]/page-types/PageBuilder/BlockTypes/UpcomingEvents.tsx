@@ -4,6 +4,7 @@ import React from 'react';
 import TextInput from '../../../../../../inputs/TextInput';
 import TextArea from '../../../../../../inputs/TextArea';
 import { UpcomingEventsType } from '../PageBuilderTypes/UpcomingEventsType';
+import CalendarSelector from '../../../../../../inputs/CalendarSelector';
 
 export default function UpcomingEvents (
     {
@@ -41,6 +42,12 @@ export default function UpcomingEvents (
                 value={block.subHeading}
                 setValue={setValue}
                 rows={3}
+            />
+            <CalendarSelector
+                selectedValue={block.calendarPage || ''}
+                setSelectedValue={(value: string) => {
+                    setValue('calendarPage', value);
+                }}
             />
         </div>
     );
