@@ -12,6 +12,7 @@ use App\Healthcheck;
 use App\Pages\DeletePagesAction;
 use App\Pages\GetAllPagesAction;
 use App\Pages\GetBlogEntryPages;
+use App\Pages\GetBlogPage\GetBlogEntriesPageAction;
 use App\Pages\GetPage\GetPageAction;
 use App\Pages\GetPageTypesAction;
 use App\Pages\GetPhotoGalleryEntryPages;
@@ -34,6 +35,7 @@ readonly class ApplyRoutes
         Healthcheck::applyRoute($routes);
         GetAllPagesAction::applyRoute($routes);
         GetBlogEntryPages::applyRoute($routes);
+        GetBlogEntriesPageAction::applyRoute($routes);
         GetPodcastEntryPages::applyRoute($routes);
         GetPhotoGalleryEntryPages::applyRoute($routes);
         GetPublicationsEntryPages::applyRoute($routes);
