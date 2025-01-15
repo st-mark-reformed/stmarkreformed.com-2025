@@ -2,6 +2,10 @@ import React, { Suspense } from 'react';
 import Sidebar from './Sidebar';
 import Breadcrumbs, { BreadcrumbItems, CurrentBreadcrumbItem } from './Breadcrumbs';
 import PartialPageLoading from '../PartialPageLoading';
+import GetBlogEntryPages from './GetBlogEntryPages';
+import GetPodcastEntryPages from './GetPodcastEntryPages';
+import GetPhotoGalleryEntryPages from './GetPhotoGalleryEntryPages';
+import GetPublicationsEntryPages from './GetPublicationsEntryPages';
 
 export enum InnerMaxWidth {
     xsmall = 'max-w-3xl',
@@ -25,9 +29,19 @@ export default async function Layout (
         innerMaxWidth?: InnerMaxWidth;
     },
 ) {
+    const blogEntryPages = await GetBlogEntryPages();
+    const podcastEntryPages = await GetPodcastEntryPages();
+    const photoGalleryEntryPages = await GetPhotoGalleryEntryPages();
+    const publicationsEntryPages = await GetPublicationsEntryPages();
+
     return (
         <div>
-            <Sidebar />
+            <Sidebar
+                blogEntryPages={blogEntryPages}
+                podcastEntryPages={podcastEntryPages}
+                photoGalleryEntryPages={photoGalleryEntryPages}
+                publicationsEntryPages={publicationsEntryPages}
+            />
             <div className="lg:pl-72">
                 {(() => {
                     if (!breadcrumbs) {

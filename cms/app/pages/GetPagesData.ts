@@ -1,5 +1,5 @@
 import { RequestFactory } from '../api/request/RequestFactory';
-import { PageTypeFrontEndNoDataArray, PageTypeNoDataArray, PageTypeNoDataArraySchema } from './PageType';
+import { PageTypeFrontEndNoDataArray, PageTypeNoDataArray } from './PageType';
 import { TransformPageTypeNoData } from './PageTransformer';
 
 type ResponseNoAccess = {

@@ -3,6 +3,28 @@ import Link from 'next/link';
 import { EyeIcon, PencilIcon, ListBulletIcon } from '@heroicons/react/24/solid';
 import { PageStatus, PageType, PageTypeFrontEndNoData } from './PageType';
 
+function EntryListButton (
+    {
+        href,
+        label,
+    }: {
+        href: string;
+        label: string;
+    },
+) {
+    return (
+        <Link
+            data-prevent-select
+            href={href}
+            className="rounded bg-orange-800 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-orange-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 ml-4"
+        >
+            <ListBulletIcon className="h-3 w-3 text-white inline -mt-0.5" />
+            {' '}
+            {label}
+        </Link>
+    );
+}
+
 export default function PageItem (
     {
         page,
@@ -109,29 +131,37 @@ export default function PageItem (
                             {(() => {
                                 if (page.type === PageType.blog_entries) {
                                     return (
-                                        <Link
-                                            data-prevent-select
+                                        <EntryListButton
                                             href={`/blog-entries/${page.id}`}
-                                            className="rounded bg-orange-800 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-orange-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 ml-4"
-                                        >
-                                            <ListBulletIcon className="h-3 w-3 text-white inline -mt-0.5" />
-                                            {' '}
-                                            Entries List
-                                        </Link>
+                                            label="Entries List"
+                                        />
+                                    );
+                                }
+
+                                if (page.type === PageType.podcast_entries) {
+                                    return (
+                                        <EntryListButton
+                                            href={`/podcast-entries/${page.id}`}
+                                            label="Entries List"
+                                        />
+                                    );
+                                }
+
+                                if (page.type === PageType.photo_galleries) {
+                                    return (
+                                        <EntryListButton
+                                            href={`/galleries/${page.id}`}
+                                            label="Galleries List"
+                                        />
                                     );
                                 }
 
                                 if (page.type === PageType.publications) {
                                     return (
-                                        <Link
-                                            data-prevent-select
+                                        <EntryListButton
                                             href={`/publications/${page.id}`}
-                                            className="rounded bg-orange-800 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-orange-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 ml-4"
-                                        >
-                                            <ListBulletIcon className="h-3 w-3 text-white inline -mt-0.5" />
-                                            {' '}
-                                            Publications List
-                                        </Link>
+                                            label="Publications List"
+                                        />
                                     );
                                 }
 

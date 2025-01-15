@@ -6,20 +6,37 @@ import {
 } from '@headlessui/react';
 import {
     Bars3Icon,
-    Cog6ToothIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Navigation from './Navigation';
+import { PageTypeFrontEndNoDataArray } from '../pages/PageType';
 
 function classNames (...classes: Array<string>) {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function Sidebar () {
+export default function Sidebar (
+    {
+        blogEntryPages,
+        podcastEntryPages,
+        photoGalleryEntryPages,
+        publicationsEntryPages,
+    }: {
+        blogEntryPages: PageTypeFrontEndNoDataArray;
+        podcastEntryPages: PageTypeFrontEndNoDataArray;
+        photoGalleryEntryPages: PageTypeFrontEndNoDataArray;
+        publicationsEntryPages: PageTypeFrontEndNoDataArray;
+    },
+) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    const navigation = Navigation();
+    const navigation = Navigation({
+        blogEntryPages,
+        podcastEntryPages,
+        photoGalleryEntryPages,
+        publicationsEntryPages,
+    });
 
     return (
         <>
@@ -154,7 +171,7 @@ export default function Sidebar () {
                                                     ))}
                                                 </ul>
                                             </li>
-                                            <li className="mt-auto">
+                                            {/* <li className="mt-auto">
                                                 <Link
                                                     href="#todo"
                                                     className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-cyan-600"
@@ -165,7 +182,7 @@ export default function Sidebar () {
                                                     />
                                                     Settings
                                                 </Link>
-                                            </li>
+                                            </li> */}
                                         </ul>
                                     </nav>
                                 </div>
@@ -264,7 +281,7 @@ export default function Sidebar () {
                                     ))}
                                 </ul>
                             </li>
-                            <li className="mt-auto">
+                            {/* <li className="mt-auto">
                                 <Link
                                     href="#todo"
                                     className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-cyan-600"
@@ -275,7 +292,7 @@ export default function Sidebar () {
                                     />
                                     Settings
                                 </Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </nav>
                 </div>
