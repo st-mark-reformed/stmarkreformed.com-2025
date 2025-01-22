@@ -8,6 +8,7 @@ import { ProfileTypeFrontEnd } from './ProfileType';
 import RenderOnMount from '../RenderOnMount';
 import NewProfileOverlay from './NewProfileOverlay';
 import EmptyState from '../EmptyState';
+import ProfileItem from './ProfileItem';
 
 export default function PageClientSide (
     {
@@ -64,7 +65,18 @@ export default function PageClientSide (
                     );
                 }
 
-                return <>TODO</>;
+                return (
+                    <ul
+                        className="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 rounded-xl"
+                    >
+                        {profiles.map((profile) => (
+                            <ProfileItem
+                                key={`${profile.id}-parent`}
+                                profile={profile}
+                            />
+                        ))}
+                    </ul>
+                );
             })()}
         </>
     );
