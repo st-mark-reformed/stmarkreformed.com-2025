@@ -23,6 +23,7 @@ use App\Pages\PatchPage\PatchPageAction;
 use App\Pages\PatchPagesPosition\PatchPagesPositionAction;
 use App\Pages\PostNewPage\PostNewPageAction;
 use App\Profiles\GetAllProfilesAction;
+use App\Profiles\PostNewProfile\PostNewProfileAction;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
 use RxAnte\OAuth\Routes\Route as OauthRoute;
 use RxAnte\OAuth\Routes\RoutesFactory as OauthRoutesFactory;
@@ -52,6 +53,7 @@ readonly class ApplyRoutes
         PostContactForm::applyRoute($routes);
         GetCalendarSelectOptions::applyRoute($routes);
         GetAllProfilesAction::applyRoute($routes);
+        PostNewProfileAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

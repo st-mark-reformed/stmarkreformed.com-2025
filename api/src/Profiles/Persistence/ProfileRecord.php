@@ -36,5 +36,5 @@ class ProfileRecord extends Record
 
     public string $bio = '';
 
-    public bool $has_messages = true;
+    public bool $has_messages = false;
 }

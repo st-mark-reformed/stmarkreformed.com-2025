@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import PostNewPageHandler from '../pages/PostNewPageHandler';
 import PortalOverlay from '../layout/PortalOverlay';
 import Message from '../messaging/Message';
+import PostNewProfileHandler, { ProfileData } from './PostNewProfileHandler';
 
 export default function NewProfileOverlay (
     {
@@ -12,10 +12,7 @@ export default function NewProfileOverlay (
 ) {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const [profileData, setProfileData] = useState<{
-        firstName: string;
-        lastName: string;
-    }>({
+    const [profileData, setProfileData] = useState<ProfileData>({
         firstName: '',
         lastName: '',
     });
@@ -37,21 +34,21 @@ export default function NewProfileOverlay (
 
         setIsSubmitting(true);
 
-        // PostNewPageHandler(pageName).then((result) => {
-        //     setIsSubmitting(false);
-        //
-        //     if (result.data.success) {
-        //         setErrors([]);
-        //
-        //         setIsVisible(false);
-        //
-        //         return;
-        //     }
-        //
-        //     setErrors(result.data.messages);
-        //
-        //     setErrorIsVisible(true);
-        // });
+        PostNewProfileHandler(profileData).then((result) => {
+            setIsSubmitting(false);
+
+            if (result.data.success) {
+                setErrors([]);
+
+                setIsVisible(false);
+
+                return;
+            }
+
+            setErrors(result.data.messages);
+
+            setErrorIsVisible(true);
+        });
     };
 
     const buttonClasses = [
