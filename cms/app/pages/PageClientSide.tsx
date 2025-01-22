@@ -106,7 +106,9 @@ export default function PageClientSide (
 
                     return (
                         createPortal(
-                            <NewPageOverlay setIsVisible={setNewPageIsOpen} />,
+                            <NewPageOverlay
+                                setIsVisible={setNewPageIsOpen}
+                            />,
                             document.body,
                         )
                     );
@@ -136,9 +138,12 @@ export default function PageClientSide (
             {(() => {
                 if (pages.length < 1) {
                     return (
-                        <EmptyState onButtonClick={() => {
-                            setNewPageIsOpen(true);
-                        }}
+                        <EmptyState
+                            onButtonClick={() => {
+                                setNewPageIsOpen(true);
+                            }}
+                            itemNamePlural="Pages"
+                            itemNameSingular="Page"
                         />
                     );
                 }

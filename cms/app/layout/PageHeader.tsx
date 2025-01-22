@@ -1,10 +1,50 @@
 import Link from 'next/link';
-import React, { ReactElement } from 'react';
+import React, { MouseEvent, ReactElement } from 'react';
 
 type PrimaryOrSecondaryLink = {
     content: string | ReactElement;
-    href: string;
+    href?: string;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
+
+function RenderButton (
+    {
+        link,
+        classes,
+    }: {
+        link: PrimaryOrSecondaryLink | undefined;
+        classes: Array<string>;
+    },
+) {
+    if (!link) {
+        return null;
+    }
+
+    if (link.onClick) {
+        return (
+            <button
+                type="button"
+                onClick={link.onClick}
+                className={classes.join(' ')}
+            >
+                {link.content}
+            </button>
+        );
+    }
+
+    if (link.href) {
+        return (
+            <Link
+                href={link.href}
+                className={classes.join(' ')}
+            >
+                {link.content}
+            </Link>
+        );
+    }
+
+    return null;
+}
 
 export default function PageHeader (
     {
@@ -21,7 +61,7 @@ export default function PageHeader (
         RenderCustomButton?: () => React.ReactElement;
     },
 ) {
-    const primaryButtonMargin = secondaryLink ? 'ml-3' : '';
+    const primaryButtonMargin = secondaryLink && (secondaryLink.href || secondaryLink.onClick) ? 'ml-3' : '';
 
     return (
         <div className="bg-amber-950 px-4 py-5 sm:px-6 rounded-xl">
@@ -43,34 +83,43 @@ export default function PageHeader (
                     })()}
                 </div>
                 <div className="mt-4 flex md:ml-4 md:mt-0">
-                    {(() => {
-                        if (!secondaryLink) {
-                            return null;
-                        }
-
-                        return (
-                            <Link
-                                href={secondaryLink.href}
-                                className="inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
-                            >
-                                {secondaryLink.content}
-                            </Link>
-                        );
-                    })()}
-                    {(() => {
-                        if (!primaryLink) {
-                            return null;
-                        }
-
-                        return (
-                            <Link
-                                href={primaryLink.href}
-                                className={`${primaryButtonMargin} inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600`}
-                            >
-                                {primaryLink.content}
-                            </Link>
-                        );
-                    })()}
+                    <RenderButton
+                        link={secondaryLink}
+                        classes={[
+                            'inline-flex',
+                            'items-center0',
+                            'rounded-md',
+                            'bg-white/10',
+                            'px-3',
+                            'py-2',
+                            'text-sm',
+                            'font-semibold',
+                            'text-white',
+                            'shadow-sm',
+                            'hover:bg-white/2',
+                        ]}
+                    />
+                    <RenderButton
+                        link={primaryLink}
+                        classes={[
+                            primaryButtonMargin,
+                            'inline-flex',
+                            'items-center',
+                            'rounded-md',
+                            'bg-cyan-600',
+                            'px-3',
+                            'py-2',
+                            'text-sm',
+                            'font-semibold',
+                            'text-white',
+                            'shadow-sm',
+                            'hover:bg-cyan-500',
+                            'focus-visible:outline',
+                            'focus-visible:outline-2',
+                            'focus-visible:outline-offset-2',
+                            'focus-visible:outline-cyan-600',
+                        ]}
+                    />
                     {(() => {
                         if (!RenderCustomButton) {
                             return null;

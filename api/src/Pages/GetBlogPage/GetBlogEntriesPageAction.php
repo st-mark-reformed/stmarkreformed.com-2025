@@ -18,6 +18,11 @@ readonly class GetBlogEntriesPageAction
     public static function applyRoute(ApplyRoutesEvent $routes): void
     {
         $routes->get(
+            '/test/{blogPageId}',
+            self::class,
+        );
+
+        $routes->get(
             '/pages/blog-entries-page/{blogPageId}',
             self::class,
         )

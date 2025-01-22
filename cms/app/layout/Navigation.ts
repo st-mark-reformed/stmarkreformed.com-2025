@@ -8,6 +8,7 @@ import {
     MicrophoneIcon,
     PencilSquareIcon,
     PhotoIcon,
+    UsersIcon,
 } from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
 import { PageTypeFrontEndNoDataArray } from '../pages/PageType';
@@ -106,6 +107,12 @@ export default function Navigation (
             name: 'Globals',
             href: '/globals',
             icon: GlobeAltIcon,
+            currentPathname,
+        }),
+        createItem({
+            name: 'Profiles',
+            href: '/profiles',
+            icon: UsersIcon,
             currentPathname,
         }),
     ];

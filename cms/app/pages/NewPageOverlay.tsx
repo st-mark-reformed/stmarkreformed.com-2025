@@ -84,7 +84,10 @@ export default function NewPageOverlay (
                     <h3 className={`${headingTopPadding} text-base font-semibold leading-6 text-gray-900`}>Page Name</h3>
                     <div className="mt-2 text-right">
                         <div className="w-full mb-2">
-                            <label htmlFor="email" className="sr-only">
+                            <label
+                                htmlFor="pageName"
+                                className="sr-only"
+                            >
                                 Page Name
                             </label>
                             <input
@@ -92,6 +95,7 @@ export default function NewPageOverlay (
                                 autoFocus
                                 type="text"
                                 name="pageName"
+                                id="pageName"
                                 value={pageName}
                                 onChange={(e) => {
                                     setPageName(e.currentTarget.value);
