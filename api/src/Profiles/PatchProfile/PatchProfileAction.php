@@ -2,33 +2,33 @@
 
 declare(strict_types=1);
 
-namespace App\Pages\GetBlogPage;
+namespace App\Profiles\PatchProfile;
 
 use App\Authentication\RequireCmsAccessRoleMiddleware;
 use App\Authentication\UserAttributes;
-use App\Pages\PageRepository;
+use App\Persistence\ResultResponder;
+use App\Profiles\GetProfile\ProfileIdFactory;
+use App\Profiles\ProfileRepository;
 use JetBrains\PhpStorm\ArrayShape;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
 use RxAnte\OAuth\RequireOauthTokenHeaderMiddleware;
 
-readonly class GetBlogEntriesPageAction
+readonly class PatchProfileAction
 {
     public static function applyRoute(ApplyRoutesEvent $routes): void
     {
-        $routes->get(
-            '/pages/blog-entries-page/{blogPageId}',
-            self::class,
-        )
+        $routes->patch('/profiles/{profileId}', self::class)
             ->add(RequireCmsAccessRoleMiddleware::class)
             ->add(RequireOauthTokenHeaderMiddleware::class);
     }
 
     public function __construct(
-        private Responder $responder,
-        private PageRepository $repository,
-        private PageIdFactory $pageIdFactory,
+        private ResultResponder $responder,
+        private UpdateProfile $updateProfile,
+        private ProfileRepository $repository,
+        private ProfileIdFactory $profileIdFactory,
     ) {
     }
 
@@ -37,14 +37,19 @@ readonly class GetBlogEntriesPageAction
         ServerRequestInterface $request,
         ResponseInterface $response,
         UserAttributes $userAttributes,
-        #[ArrayShape(['blogPageId' => 'string'])]
+        #[ArrayShape(['profileId' => 'string'])]
         array $attributes,
     ): ResponseInterface {
-        $pageId = $this->pageIdFactory->fromString(
-            $attributes['blogPageId'],
+        $profileId = $this->profileIdFactory->fromString(
+            $attributes['profileId'],
         );
 
-        $result = $this->repository->findAllPages()->findOneById($pageId);
+        $profileResult = $this->repository->findProfileById($profileId);
+
+        $result = $this->updateProfile->fromRequest(
+            $request,
+            $profileResult,
+        );
 
         return $this->responder->respond($result);
     }

@@ -82,4 +82,48 @@ readonly class Profile
 
         return $values;
     }
+
+    public function withPhoto(string $value): Profile
+    {
+        return $this->with(photo: new Photo($value));
+    }
+
+    public function withTitleOrHonorific(string $value): Profile
+    {
+        return $this->with(titleOrHonorific: new TitleOrHonorific(
+            $value,
+        ));
+    }
+
+    public function withFirstName(string $value): Profile
+    {
+        return $this->with(firstName: new FirstName($value));
+    }
+
+    public function withLastName(string $value): Profile
+    {
+        return $this->with(lastName: new LastName($value));
+    }
+
+    public function withEmail(string $value): Profile
+    {
+        return $this->with(email: new Email($value));
+    }
+
+    public function withLeadershipPosition(string $value): Profile
+    {
+        return $this->with(leadershipPosition: LeadershipPosition::fromString(
+            $value,
+        ));
+    }
+
+    public function withBio(string $value): Profile
+    {
+        return $this->with(bio: new Bio($value));
+    }
+
+    public function withHasMessages(bool $value): Profile
+    {
+        return $this->with(hasMessages: $value);
+    }
 }

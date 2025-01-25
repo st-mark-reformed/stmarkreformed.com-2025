@@ -2,33 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\Pages\GetBlogPage;
+namespace App\Profiles\GetProfile;
 
 use App\Authentication\RequireCmsAccessRoleMiddleware;
 use App\Authentication\UserAttributes;
-use App\Pages\PageRepository;
+use App\Profiles\ProfileRepository;
 use JetBrains\PhpStorm\ArrayShape;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
 use RxAnte\OAuth\RequireOauthTokenHeaderMiddleware;
 
-readonly class GetBlogEntriesPageAction
+readonly class GetProfileAction
 {
     public static function applyRoute(ApplyRoutesEvent $routes): void
     {
-        $routes->get(
-            '/pages/blog-entries-page/{blogPageId}',
-            self::class,
-        )
+        $routes->get('/profiles/{profileId}', self::class)
             ->add(RequireCmsAccessRoleMiddleware::class)
             ->add(RequireOauthTokenHeaderMiddleware::class);
     }
 
     public function __construct(
         private Responder $responder,
-        private PageRepository $repository,
-        private PageIdFactory $pageIdFactory,
+        private ProfileRepository $repository,
+        private ProfileIdFactory $profileIdFactory,
     ) {
     }
 
@@ -37,14 +34,14 @@ readonly class GetBlogEntriesPageAction
         ServerRequestInterface $request,
         ResponseInterface $response,
         UserAttributes $userAttributes,
-        #[ArrayShape(['blogPageId' => 'string'])]
+        #[ArrayShape(['profileId' => 'string'])]
         array $attributes,
     ): ResponseInterface {
-        $pageId = $this->pageIdFactory->fromString(
-            $attributes['blogPageId'],
+        $profileId = $this->profileIdFactory->fromString(
+            $attributes['profileId'],
         );
 
-        $result = $this->repository->findAllPages()->findOneById($pageId);
+        $result = $this->repository->findProfileById($profileId);
 
         return $this->responder->respond($result);
     }

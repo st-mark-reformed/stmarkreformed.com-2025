@@ -23,6 +23,8 @@ use App\Pages\PatchPage\PatchPageAction;
 use App\Pages\PatchPagesPosition\PatchPagesPositionAction;
 use App\Pages\PostNewPage\PostNewPageAction;
 use App\Profiles\GetAllProfilesAction;
+use App\Profiles\GetProfile\GetProfileAction;
+use App\Profiles\PatchProfile\PatchProfileAction;
 use App\Profiles\PostNewProfile\PostNewProfileAction;
 use RxAnte\AppBootstrap\Http\ApplyRoutesEvent;
 use RxAnte\OAuth\Routes\Route as OauthRoute;
@@ -54,6 +56,8 @@ readonly class ApplyRoutes
         GetCalendarSelectOptions::applyRoute($routes);
         GetAllProfilesAction::applyRoute($routes);
         PostNewProfileAction::applyRoute($routes);
+        GetProfileAction::applyRoute($routes);
+        PatchProfileAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }
