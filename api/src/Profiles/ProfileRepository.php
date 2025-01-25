@@ -9,7 +9,9 @@ use App\Persistence\FindRecordById;
 use App\Persistence\PersistNewRecord;
 use App\Persistence\PersistRecord;
 use App\Persistence\Result;
+use App\Persistence\UuidCollection;
 use App\Profiles\Persistence\CreateNewProfileRecord;
+use App\Profiles\Persistence\DeleteProfiles;
 use App\Profiles\Persistence\FindAllProfiles;
 use App\Profiles\Persistence\ProfileEntityToRecord;
 use App\Profiles\Persistence\ProfileRecord;
@@ -26,6 +28,7 @@ readonly class ProfileRepository
 {
     public function __construct(
         private PersistRecord $persistRecord,
+        private DeleteProfiles $deleteProfiles,
         private FindRecordById $findRecordById,
         private FindAllProfiles $findAllProfiles,
         private PersistNewRecord $persistNewRecord,
@@ -96,6 +99,15 @@ readonly class ProfileRepository
         $result = $this->persistRecord->persist(
             $this->profileEntityToRecord->transform($profile),
         );
+
+        $this->enqueueGenerateSiteData->enqueue();
+
+        return $result;
+    }
+
+    public function deleteProfiles(UuidCollection $ids): Result
+    {
+        $result = $this->deleteProfiles->delete($ids);
 
         $this->enqueueGenerateSiteData->enqueue();
 

@@ -144,6 +144,7 @@ export default function NewProfileOverlay (
                                     });
                                 }}
                                 className={inputClasses.join(' ')}
+                                autoComplete="off"
                             />
                         </div>
                         <div className="w-full mb-2">
@@ -167,6 +168,7 @@ export default function NewProfileOverlay (
                                     });
                                 }}
                                 className={inputClasses.join(' ')}
+                                autoComplete="off"
                             />
                         </div>
 

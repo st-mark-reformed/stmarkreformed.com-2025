@@ -22,6 +22,7 @@ use App\Pages\OverlappingUrisReport\GetOverlappingUriReportAction;
 use App\Pages\PatchPage\PatchPageAction;
 use App\Pages\PatchPagesPosition\PatchPagesPositionAction;
 use App\Pages\PostNewPage\PostNewPageAction;
+use App\Profiles\DeleteProfilesAction;
 use App\Profiles\GetAllProfilesAction;
 use App\Profiles\GetProfile\GetProfileAction;
 use App\Profiles\PatchProfile\PatchProfileAction;
@@ -58,6 +59,7 @@ readonly class ApplyRoutes
         PostNewProfileAction::applyRoute($routes);
         GetProfileAction::applyRoute($routes);
         PatchProfileAction::applyRoute($routes);
+        DeleteProfilesAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }
