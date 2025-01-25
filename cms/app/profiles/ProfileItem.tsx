@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { PencilIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { ProfileTypeFrontEnd } from './ProfileType';
@@ -6,14 +6,56 @@ import { ProfileTypeFrontEnd } from './ProfileType';
 export default function ProfileItem (
     {
         profile,
+        selectedIds,
+        setSelectedIds,
     }: {
         profile: ProfileTypeFrontEnd;
+        selectedIds: Array<string>;
+        setSelectedIds: Dispatch<SetStateAction<Array<string>>>;
     },
 ) {
+    const isSelected = selectedIds.indexOf(profile.id) > -1;
+
+    const liClasses = [
+        'relative',
+        'flex',
+        'justify-between',
+        'gap-x-6',
+        'px-4',
+        'py-5',
+        'sm:px-6',
+    ];
+
+    if (isSelected) {
+        liClasses.push('bg-cyan-600/5');
+    }
+
     return (
         <>
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
-            <li className="relative flex justify-between gap-x-6 px-4 py-5 sm:px-6">
+            <li
+                className={liClasses.join(' ')}
+                onClick={(e) => {
+                    const element = e.target as HTMLElement;
+
+                    if (element.dataset.preventSelect) {
+                        return;
+                    }
+
+                    const newSelectedIds = [...selectedIds];
+
+                    if (isSelected) {
+                        newSelectedIds.splice(
+                            selectedIds.indexOf(profile.id),
+                            1,
+                        );
+                    } else {
+                        newSelectedIds.push(profile.id);
+                    }
+
+                    setSelectedIds(newSelectedIds);
+                }}
+            >
                 <div className="flex min-w-0 gap-x-4 pl-0">
                     <div className="min-w-0 flex-auto">
                         <p className="text-sm font-semibold leading-6 text-gray-900">
@@ -57,6 +99,12 @@ export default function ProfileItem (
                                 {' '}
                                 Edit
                             </Link>
+                            <input
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-600 ml-4"
+                                checked={isSelected}
+                                onChange={() => {}}
+                            />
                         </div>
                     </div>
                 </div>

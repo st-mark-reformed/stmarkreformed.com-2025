@@ -87,7 +87,7 @@ export default function PageHeader (
                         link={secondaryLink}
                         classes={[
                             'inline-flex',
-                            'items-center0',
+                            'items-center',
                             'rounded-md',
                             'bg-white/10',
                             'px-3',
@@ -96,7 +96,7 @@ export default function PageHeader (
                             'font-semibold',
                             'text-white',
                             'shadow-sm',
-                            'hover:bg-white/2',
+                            'hover:bg-white/20',
                         ]}
                     />
                     <RenderButton
