@@ -87,7 +87,7 @@ export default function DndSingleFileUploader (
                                             <img
                                                 src={fileUrl}
                                                 alt=""
-                                                className="h-24 mx-auto"
+                                                className="h-24 mx-auto object-contain"
                                             />
                                         );
                                     }

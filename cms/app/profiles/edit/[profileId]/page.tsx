@@ -42,8 +42,6 @@ export default async function Page ({ params }: Params) {
         notFound();
     }
 
-    console.log(data.data);
-
     return (
         <Layout
             breadcrumbs={{
