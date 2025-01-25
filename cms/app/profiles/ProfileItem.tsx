@@ -1,15 +1,17 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { PencilIcon } from '@heroicons/react/24/solid';
+import { PencilIcon, PhotoIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { ProfileTypeFrontEnd } from './ProfileType';
 
 export default function ProfileItem (
     {
         profile,
+        apiFeUrl,
         selectedIds,
         setSelectedIds,
     }: {
         profile: ProfileTypeFrontEnd;
+        apiFeUrl: string;
         selectedIds: Array<string>;
         setSelectedIds: Dispatch<SetStateAction<Array<string>>>;
     },
@@ -57,6 +59,26 @@ export default function ProfileItem (
                 }}
             >
                 <div className="flex min-w-0 gap-x-4 pl-0">
+                    <div>
+                        {(() => {
+                            if (profile.photo) {
+                                return (
+                                    <img
+                                        src={`${apiFeUrl}${profile.photo}`}
+                                        alt={profile.fullNameWithTitle}
+                                        className="w-12 mx-auto object-contain rounded"
+                                    />
+                                );
+                            }
+
+                            return (
+                                <PhotoIcon
+                                    className="mx-auto h-12 w-12 text-gray-300"
+                                    aria-hidden="true"
+                                />
+                            );
+                        })()}
+                    </div>
                     <div className="min-w-0 flex-auto">
                         <p className="text-sm font-semibold leading-6 text-gray-900">
                             {profile.fullNameWithTitle}

@@ -16,8 +16,10 @@ import Message from '../messaging/Message';
 export default function PageClientSide (
     {
         profiles,
+        apiFeUrl,
     }: {
         profiles: Array<ProfileTypeFrontEnd>;
+        apiFeUrl: string;
     },
 ) {
     const [newProfileIsOpen, setNewProfileIsOpen] = useState(false);
@@ -135,6 +137,7 @@ export default function PageClientSide (
                         {profiles.map((profile) => (
                             <ProfileItem
                                 key={`${profile.id}-parent`}
+                                apiFeUrl={apiFeUrl}
                                 profile={profile}
                                 selectedIds={selectedIds}
                                 setSelectedIds={setSelectedIds}

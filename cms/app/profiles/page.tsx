@@ -5,6 +5,7 @@ import Layout, { InnerMaxWidth } from '../layout/Layout';
 import PageClientSide from './PageClientSide';
 import GetProfilesData from './GetProfilesData';
 import AccessDenied from '../AccessDenied';
+import { ConfigOptions, getConfigString } from '../serverSideRunTimeConfig';
 
 export const metadata: Metadata = {
     title: createPageTitle('Profiles'),
@@ -25,7 +26,10 @@ export default async function Page () {
             }}
             innerMaxWidth={InnerMaxWidth.small}
         >
-            <PageClientSide profiles={result.data} />
+            <PageClientSide
+                apiFeUrl={getConfigString(ConfigOptions.API_FE_URL)}
+                profiles={result.data}
+            />
         </Layout>
     );
 }
