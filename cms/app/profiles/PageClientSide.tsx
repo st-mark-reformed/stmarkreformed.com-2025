@@ -12,7 +12,7 @@ import EmptyState from '../EmptyState';
 import ProfileItem from './ProfileItem';
 import DeleteProfiles from './DeleteProfiles';
 import Message from '../messaging/Message';
-import ConfirmDeleteOverlay from './ConfirmDeleteOverlay';
+import ConfirmDeleteOverlay from '../ConfirmDeleteOverlay';
 
 export default function PageClientSide (
     {
@@ -57,6 +57,8 @@ export default function PageClientSide (
                             <ConfirmDeleteOverlay
                                 closeOverlay={closeOverlay}
                                 isDeleting={isDeleting}
+                                heading="Delete Selected Profiles?"
+                                body="This is a non-recoverable action, and has the potential to break relationships with blog authors or podcast speakers. Do you wish to proceed?"
                                 proceed={() => {
                                     setIsDeleting(true);
 

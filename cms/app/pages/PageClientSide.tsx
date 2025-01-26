@@ -17,6 +17,7 @@ import { PageTypeFrontEndNoDataArray } from './PageType';
 import PageItem from './PageItem';
 import DeletePages from './DeletePages';
 import Message from '../messaging/Message';
+import ConfirmDeleteOverlay from '../ConfirmDeleteOverlay';
 
 export default function PageClientSide (
     {
@@ -27,97 +28,124 @@ export default function PageClientSide (
         children: React.ReactNode;
     },
 ) {
-    const [newPageIsOpen, setNewPageIsOpen] = useState(false);
+    const [overlay, setOverlay] = useState<
+    ''
+    | 'newPage'
+    | 'confirmDelete'
+    >('');
+
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const closeOverlay = () => {
+        setOverlay('');
+    };
 
     const [selectedIds, setSelectedIds] = useState<Array<string>>([]);
 
-    const hasSelected = selectedIds.length > 0;
-
     const [errorMessages, setErrorMessages] = useState<Array<string>>([]);
 
-    const renderCustomButton = () => {
-        if (hasSelected) {
-            return (
-                <>
-                    <button
-                        type="button"
-                        className="inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm bg-white/10 text-white hover:bg-white/20"
-                        onClick={() => {
-                            setSelectedIds([]);
-                        }}
-                    >
-                        <MinusCircleIcon className="h-5 w-5 mr-1" />
-                        Deselect All
-                    </button>
-                    <button
-                        type="button"
-                        className="ml-3 inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
-                        onClick={() => {
-                            DeletePages(selectedIds).then((response) => {
-                                if (response.data.success) {
-                                    setSelectedIds([]);
-
-                                    return;
-                                }
-
-                                setErrorMessages(response.data.messages);
-                            });
-                        }}
-                    >
-                        <TrashIcon className="h-5 w-5 mr-1" />
-                        Delete Selected
-                    </button>
-                </>
-            );
-        }
-
-        return (
-            <>
-                <Link
-                    href="/pages/reorder"
-                    className="inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
-                >
-                    <BarsArrowUpIcon className="h-5 w-5 mr-1" />
-                    {' '}
-                    Reorder Pages
-                </Link>
-                <button
-                    type="button"
-                    className="ml-3 inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
-                    onClick={() => {
-                        setNewPageIsOpen(true);
-                    }}
-                >
-                    <PlusIcon className="h-5 w-5 mr-1" />
-                    {' '}
-                    Add Page
-                </button>
-            </>
-        );
-    };
+    const hasSelected = selectedIds.length > 0;
 
     return (
         <>
             <RenderOnMount>
                 {(() => {
-                    if (!newPageIsOpen) {
-                        return null;
+                    if (overlay === 'newPage') {
+                        return (
+                            createPortal(
+                                <NewPageOverlay closeOverlay={closeOverlay} />,
+                                document.body,
+                            )
+                        );
                     }
 
-                    return (
-                        createPortal(
-                            <NewPageOverlay
-                                setIsVisible={setNewPageIsOpen}
+                    if (overlay === 'confirmDelete') {
+                        return createPortal(
+                            <ConfirmDeleteOverlay
+                                closeOverlay={closeOverlay}
+                                isDeleting={isDeleting}
+                                heading="Delete Selected Pages?"
+                                proceed={() => {
+                                    setIsDeleting(true);
+
+                                    DeletePages(selectedIds).then((response) => {
+                                        if (response.data.success) {
+                                            setSelectedIds([]);
+
+                                            closeOverlay();
+
+                                            setIsDeleting(false);
+
+                                            return;
+                                        }
+
+                                        setErrorMessages(response.data.messages);
+                                    });
+                                }}
                             />,
                             document.body,
-                        )
-                    );
+                        );
+                    }
+
+                    return null;
                 })()}
             </RenderOnMount>
             <div className="mb-4 ">
                 <PageHeader
                     title="Site Pages"
-                    RenderCustomButton={renderCustomButton}
+                    // RenderCustomButton={renderCustomButton}
+                    primaryLink={(() => {
+                        if (hasSelected) {
+                            return {
+                                content: (
+                                    <>
+                                        <TrashIcon className="h-5 w-5 mr-1" />
+                                        Delete Selected
+                                    </>
+                                ),
+                                onClick: () => {
+                                    setOverlay('confirmDelete');
+                                },
+                            };
+                        }
+
+                        return {
+                            content: (
+                                <>
+                                    <PlusIcon className="h-5 w-5 mr-1" />
+                                    Add Page
+                                </>
+                            ),
+                            onClick: () => {
+                                setOverlay('newPage');
+                            },
+                        };
+                    })()}
+                    secondaryLink={(() => {
+                        if (hasSelected) {
+                            return {
+                                content: (
+                                    <>
+                                        <MinusCircleIcon className="h-5 w-5 mr-1" />
+                                        Deselect All
+                                    </>
+                                ),
+                                onClick: () => {
+                                    setSelectedIds([]);
+                                },
+                            };
+                        }
+
+                        return {
+                            content: (
+                                <>
+                                    <BarsArrowUpIcon className="h-5 w-5 mr-1" />
+                                    Reorder Pages
+                                </>
+                            ),
+                            href: '/pages/reorder',
+                        };
+                    })()}
                 />
             </div>
             {children}
@@ -140,7 +168,7 @@ export default function PageClientSide (
                     return (
                         <EmptyState
                             onButtonClick={() => {
-                                setNewPageIsOpen(true);
+                                setOverlay('newPage');
                             }}
                             itemNamePlural="Pages"
                             itemNameSingular="Page"

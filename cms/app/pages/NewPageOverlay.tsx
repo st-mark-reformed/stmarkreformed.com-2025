@@ -1,13 +1,13 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import PortalOverlay from '../layout/PortalOverlay';
 import PostNewPageHandler from './PostNewPageHandler';
 import Message from '../messaging/Message';
 
 export default function NewPageOverlay (
     {
-        setIsVisible,
+        closeOverlay,
     }: {
-        setIsVisible: Dispatch<SetStateAction<boolean>>;
+        closeOverlay: () => void;
     },
 ) {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,7 +37,7 @@ export default function NewPageOverlay (
             if (result.data.success) {
                 setErrors([]);
 
-                setIsVisible(false);
+                closeOverlay();
 
                 return;
             }
@@ -63,7 +63,7 @@ export default function NewPageOverlay (
                 className="bg-white shadow sm:rounded-lg text-left"
                 onKeyDown={(e) => {
                     if (e.key === 'Escape') {
-                        setIsVisible(false);
+                        closeOverlay();
                     }
 
                     if (e.key !== 'Enter') {
@@ -108,7 +108,7 @@ export default function NewPageOverlay (
                                 type="button"
                                 className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                 onClick={() => {
-                                    setIsVisible(false);
+                                    closeOverlay();
                                 }}
                             >
                                 Cancel

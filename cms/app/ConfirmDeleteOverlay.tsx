@@ -1,16 +1,20 @@
 import React from 'react';
 
-import PortalOverlay from '../layout/PortalOverlay';
+import PortalOverlay from './layout/PortalOverlay';
 
 export default function ConfirmDeleteOverlay (
     {
         closeOverlay,
         proceed,
         isDeleting,
+        heading = 'Delete Selected?',
+        body = 'This is a non-recoverable action. Do you wish to proceed?',
     }: {
         closeOverlay: () => void;
         proceed: () => void;
         isDeleting: boolean;
+        heading?: string;
+        body?: string;
     },
 ) {
     const buttonClasses = [
@@ -57,11 +61,11 @@ export default function ConfirmDeleteOverlay (
                     <h3
                         className="text-base font-semibold leading-6 text-gray-900"
                     >
-                        Delete Selected Profiles?
+                        {heading}
                     </h3>
                     <div className="mt-2 text-left">
                         <p className="w-full mb-2 max-w-lg">
-                            This is a non-recoverable action, and has the potential to break relationships with blog authors or podcast speakers. Do you wish to proceed?
+                            {body}
                         </p>
                         <div className="flex justify-between">
                             <button
