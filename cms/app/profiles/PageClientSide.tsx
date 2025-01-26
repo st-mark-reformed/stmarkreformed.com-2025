@@ -12,6 +12,7 @@ import EmptyState from '../EmptyState';
 import ProfileItem from './ProfileItem';
 import DeleteProfiles from './DeleteProfiles';
 import Message from '../messaging/Message';
+import ConfirmDeleteOverlay from './ConfirmDeleteOverlay';
 
 export default function PageClientSide (
     {
@@ -22,28 +23,63 @@ export default function PageClientSide (
         apiFeUrl: string;
     },
 ) {
-    const [newProfileIsOpen, setNewProfileIsOpen] = useState(false);
+    const [overlay, setOverlay] = useState<
+    ''
+    | 'newProfile'
+    | 'confirmDelete'
+    >('');
+
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const closeOverlay = () => {
+        setOverlay('');
+    };
 
     const [selectedIds, setSelectedIds] = useState<Array<string>>([]);
 
-    const hasSelected = selectedIds.length > 0;
-
     const [errorMessages, setErrorMessages] = useState<Array<string>>([]);
+
+    const hasSelected = selectedIds.length > 0;
 
     return (
         <>
             <RenderOnMount>
                 {(() => {
-                    if (!newProfileIsOpen) {
-                        return null;
+                    if (overlay === 'newProfile') {
+                        return createPortal(
+                            <NewProfileOverlay closeOverlay={closeOverlay} />,
+                            document.body,
+                        );
                     }
 
-                    return createPortal(
-                        <NewProfileOverlay
-                            setIsVisible={setNewProfileIsOpen}
-                        />,
-                        document.body,
-                    );
+                    if (overlay === 'confirmDelete') {
+                        return createPortal(
+                            <ConfirmDeleteOverlay
+                                closeOverlay={closeOverlay}
+                                isDeleting={isDeleting}
+                                proceed={() => {
+                                    setIsDeleting(true);
+
+                                    DeleteProfiles(selectedIds).then((response) => {
+                                        if (response.data.success) {
+                                            setSelectedIds([]);
+
+                                            closeOverlay();
+
+                                            setIsDeleting(false);
+
+                                            return;
+                                        }
+
+                                        setErrorMessages(response.data.messages);
+                                    });
+                                }}
+                            />,
+                            document.body,
+                        );
+                    }
+
+                    return null;
                 })()}
             </RenderOnMount>
             <div className="mb-4 ">
@@ -59,15 +95,7 @@ export default function PageClientSide (
                                     </>
                                 ),
                                 onClick: () => {
-                                    DeleteProfiles(selectedIds).then((response) => {
-                                        if (response.data.success) {
-                                            setSelectedIds([]);
-
-                                            return;
-                                        }
-
-                                        setErrorMessages(response.data.messages);
-                                    });
+                                    setOverlay('confirmDelete');
                                 },
                             };
                         }
@@ -80,7 +108,7 @@ export default function PageClientSide (
                                 </>
                             ),
                             onClick: () => {
-                                setNewProfileIsOpen(true);
+                                setOverlay('newProfile');
                             },
                         };
                     })()}
@@ -122,7 +150,7 @@ export default function PageClientSide (
                     return (
                         <EmptyState
                             onButtonClick={() => {
-                                setNewProfileIsOpen(true);
+                                setOverlay('newProfile');
                             }}
                             itemNamePlural="Profiles"
                             itemNameSingular="Profile"

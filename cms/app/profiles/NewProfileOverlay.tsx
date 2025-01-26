@@ -1,13 +1,13 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import PortalOverlay from '../layout/PortalOverlay';
 import Message from '../messaging/Message';
 import PostNewProfileHandler, { ProfileData } from './PostNewProfileHandler';
 
 export default function NewProfileOverlay (
     {
-        setIsVisible,
+        closeOverlay,
     }: {
-        setIsVisible: Dispatch<SetStateAction<boolean>>;
+        closeOverlay: () => void;
     },
 ) {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,7 +40,7 @@ export default function NewProfileOverlay (
             if (result.data.success) {
                 setErrors([]);
 
-                setIsVisible(false);
+                closeOverlay();
 
                 return;
             }
@@ -99,7 +99,7 @@ export default function NewProfileOverlay (
                 className="bg-white shadow sm:rounded-lg text-left"
                 onKeyDown={(e) => {
                     if (e.key === 'Escape') {
-                        setIsVisible(false);
+                        closeOverlay();
                     }
 
                     if (e.key !== 'Enter') {
@@ -171,13 +171,12 @@ export default function NewProfileOverlay (
                                 autoComplete="off"
                             />
                         </div>
-
                         <div className="flex justify-between">
                             <button
                                 type="button"
                                 className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                 onClick={() => {
-                                    setIsVisible(false);
+                                    closeOverlay();
                                 }}
                             >
                                 Cancel
