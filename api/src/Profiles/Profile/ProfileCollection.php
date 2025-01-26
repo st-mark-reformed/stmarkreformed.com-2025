@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Profiles\Profile;
 
+use App\Profiles\ProfileResult;
+use Ramsey\Uuid\UuidInterface;
+use RuntimeException;
+
+use function array_filter;
 use function array_map;
 use function array_values;
 use function count;
@@ -40,5 +45,41 @@ readonly class ProfileCollection
             static fn (Profile $p) => $p->asScalarArray($omit),
             $this->profiles,
         );
+    }
+
+    public function first(): Profile
+    {
+        return $this->profiles[0];
+    }
+
+    public function findFirst(): ProfileResult
+    {
+        return new ProfileResult($this->profiles[0] ?? null);
+    }
+
+    public function filter(callable $callable): ProfileCollection
+    {
+        return new ProfileCollection(array_filter(
+            $this->profiles,
+            $callable,
+        ));
+    }
+
+    public function findOneById(UuidInterface $id): ProfileResult
+    {
+        return $this->filter(
+            static fn (Profile $p) => $p->id->equals($id),
+        )->findFirst();
+    }
+
+    public function getOneById(UuidInterface $id): Profile
+    {
+        $result = $this->findOneById($id);
+
+        if (! $result->hasProfile) {
+            throw new RuntimeException('Profile not found');
+        }
+
+        return $result->profile;
     }
 }

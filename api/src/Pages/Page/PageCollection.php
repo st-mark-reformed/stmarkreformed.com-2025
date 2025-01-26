@@ -175,13 +175,13 @@ readonly class PageCollection
 
     public function getOneById(UuidInterface $id): Page
     {
-        $found = $this->findOneById($id);
+        $result = $this->findOneById($id);
 
-        if (! $found->hasPage) {
+        if (! $result->hasPage) {
             throw new RuntimeException('Page not found');
         }
 
-        return $found->page;
+        return $result->page;
     }
 
     public function findAllByPageType(PageType $type): PageCollection

@@ -13,6 +13,7 @@ use App\Persistence\UuidCollection;
 use App\Profiles\Persistence\CreateNewProfileRecord;
 use App\Profiles\Persistence\DeleteProfiles;
 use App\Profiles\Persistence\FindAllProfiles;
+use App\Profiles\Persistence\FindProfilesByIds;
 use App\Profiles\Persistence\ProfileEntityToRecord;
 use App\Profiles\Persistence\ProfileRecord;
 use App\Profiles\Persistence\ProfileRecordToEntity;
@@ -32,6 +33,7 @@ readonly class ProfileRepository
         private FindRecordById $findRecordById,
         private FindAllProfiles $findAllProfiles,
         private PersistNewRecord $persistNewRecord,
+        private FindProfilesByIds $findProfilesByIds,
         private ProfileRecordToEntity $profileRecordToEntity,
         private ProfileEntityToRecord $profileEntityToRecord,
         private CreateNewProfileRecord $createNewProfileRecord,
@@ -43,6 +45,13 @@ readonly class ProfileRepository
     {
         return $this->profileRecordToEntity->transformCollection(
             $this->findAllProfiles->find(),
+        );
+    }
+
+    public function findProfilesByIds(UuidCollection $ids): ProfileCollection
+    {
+        return $this->profileRecordToEntity->transformCollection(
+            $this->findProfilesByIds->find($ids),
         );
     }
 
