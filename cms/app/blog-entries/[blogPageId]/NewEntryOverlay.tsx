@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import PortalOverlay from '../layout/PortalOverlay';
-import PostNewPageHandler from './PostNewPageHandler';
-import Message from '../messaging/Message';
+import PortalOverlay from '../../layout/PortalOverlay';
+import Message from '../../messaging/Message';
+import PostNewEntryHandler from './PostNewEntryHandler';
 
-export default function NewPageOverlay (
+export default function NewEntryOverlay (
     {
+        blogPageId,
         closeOverlay,
     }: {
+        blogPageId: string;
         closeOverlay: () => void;
     },
 ) {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const [pageName, setPageName] = useState('');
+    const [entryName, setEntryName] = useState('');
 
     const [errorIsVisible, setErrorIsVisible] = useState(false);
 
@@ -31,7 +33,7 @@ export default function NewPageOverlay (
 
         setIsSubmitting(true);
 
-        PostNewPageHandler(pageName).then((result) => {
+        PostNewEntryHandler(blogPageId, entryName).then((result) => {
             setIsSubmitting(false);
 
             if (result.data.success) {
@@ -96,24 +98,24 @@ export default function NewPageOverlay (
                         body={errors}
                         type="error"
                     />
-                    <h3 className={`${headingTopPadding} text-base font-semibold leading-6 text-gray-900`}>Page Name</h3>
+                    <h3 className={`${headingTopPadding} text-base font-semibold leading-6 text-gray-900`}>Entry Name</h3>
                     <div className="mt-2 text-right">
                         <div className="w-full mb-2">
                             <label
                                 htmlFor="pageName"
                                 className="sr-only"
                             >
-                                Page Name
+                                Entry Name
                             </label>
                             <input
                                 // eslint-disable-next-line jsx-a11y/no-autofocus
                                 autoFocus
                                 type="text"
-                                name="pageName"
-                                id="pageName"
-                                value={pageName}
+                                name="entryName"
+                                id="entryName"
+                                value={entryName}
                                 onChange={(e) => {
-                                    setPageName(e.currentTarget.value);
+                                    setEntryName(e.currentTarget.value);
                                 }}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6"
                             />

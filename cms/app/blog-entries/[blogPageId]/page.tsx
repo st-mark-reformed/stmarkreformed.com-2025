@@ -63,6 +63,7 @@ export default async function Page (
         >
             <PageClientSide
                 blogPage={data.data.blogPage}
+                entries={data.data.entries}
             />
         </Layout>
     );

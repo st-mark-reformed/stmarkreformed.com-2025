@@ -51,11 +51,9 @@ export default function PageClientSide (
             <RenderOnMount>
                 {(() => {
                     if (overlay === 'newPage') {
-                        return (
-                            createPortal(
-                                <NewPageOverlay closeOverlay={closeOverlay} />,
-                                document.body,
-                            )
+                        return createPortal(
+                            <NewPageOverlay closeOverlay={closeOverlay} />,
+                            document.body,
                         );
                     }
 

@@ -45,6 +45,8 @@ const pageTypeNoDataBaseSchema = z.object({
  * PageType No Data
  */
 
+export type PageTypeNoDataNoChildren = z.infer<typeof pageTypeNoDataBaseSchema>;
+
 export type PageTypeNoData = z.infer<typeof pageTypeNoDataBaseSchema> & {
     children: Array<PageTypeNoData>;
 };

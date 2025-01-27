@@ -4,6 +4,7 @@ import {
 } from '../../pages/PageType';
 import { RequestFactory } from '../../api/request/RequestFactory';
 import { TransformPageTypeWithDataNoChildren } from '../../pages/PageTransformer';
+import { EntryType } from '../EntryType';
 
 function isInteger (str: string | string[]): boolean {
     if (!(typeof str === 'string')) {
@@ -28,7 +29,7 @@ type ResponseWithAccess = {
     notFound: false;
     data: {
         blogPage: PageTypeWithDataNoChildrenFrontEnd;
-        entries: Array<never>;
+        entries: Array<EntryType>;
     };
 };
 

@@ -49,7 +49,7 @@ readonly class Entry
                     PageProperty::children,
                 ]),
             ),
-            'authorProfileId' => $this->author->asScalarArray(),
+            'author' => $this->author->asScalarArray(),
             'name' => $this->name->value,
             'slug' => $this->slug->value,
             'path' => $this->path->value,
