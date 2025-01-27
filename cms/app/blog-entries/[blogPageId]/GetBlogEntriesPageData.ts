@@ -5,6 +5,14 @@ import {
 import { RequestFactory } from '../../api/request/RequestFactory';
 import { TransformPageTypeWithDataNoChildren } from '../../pages/PageTransformer';
 
+function isInteger (str: string | string[]): boolean {
+    if (!(typeof str === 'string')) {
+        return false;
+    }
+
+    return /^-?\d+$/.test(str);
+}
+
 type ResponseNoAccess = {
     userHasAccess: false;
     notFound: false;
@@ -26,7 +34,25 @@ type ResponseWithAccess = {
 
 export async function GetBlogEntriesPageData (
     blogPageId: string,
+    searchParams: { [key: string]: string | string[] },
 ): Promise<ResponseNoAccess | ResponseWith404 | ResponseWithAccess> {
+    const notFoundResponse: ResponseWith404 = {
+        userHasAccess: true,
+        notFound: true,
+    };
+
+    const { page } = searchParams;
+
+    if (page !== undefined && (!isInteger(page) || page === '1')) {
+        return notFoundResponse;
+    }
+
+    const pageInt = typeof page === 'string' ? parseInt(page, 10) : 1;
+
+    if (pageInt < 1) {
+        return notFoundResponse;
+    }
+
     const response = await RequestFactory().makeWithSignInRedirect({
         uri: `/pages/blog-entries-page/${blogPageId}`,
         cacheSeconds: 5,

@@ -20,8 +20,9 @@ readonly class Responder
     ) {
     }
 
-    public function respond(PageResult $result): ResponseInterface
-    {
+    public function respond(
+        PageResult $result,
+    ): ResponseInterface {
         $response = $this->responseFactory->createResponse()->withHeader(
             'Content-type',
             'application/json',

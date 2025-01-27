@@ -9,10 +9,16 @@ import PageClientSide from './PageClientSide';
 
 type Params = {
     params: { blogPageId: string };
+    searchParams: { [key: string]: string | string[] };
 };
 
-export async function generateMetadata ({ params }: Params): Promise<Metadata> {
-    const data = await GetBlogEntriesPageData(params.blogPageId);
+export async function generateMetadata (
+    {
+        params,
+        searchParams,
+    }: Params,
+): Promise<Metadata> {
+    const data = await GetBlogEntriesPageData(params.blogPageId, searchParams);
 
     if (!data.userHasAccess) {
         return { title: createPageTitle('Access Denied') };
@@ -27,8 +33,13 @@ export async function generateMetadata ({ params }: Params): Promise<Metadata> {
     };
 }
 
-export default async function Page ({ params }: Params) {
-    const data = await GetBlogEntriesPageData(params.blogPageId);
+export default async function Page (
+    {
+        params,
+        searchParams,
+    }: Params,
+) {
+    const data = await GetBlogEntriesPageData(params.blogPageId, searchParams);
 
     if (!data.userHasAccess) {
         return <AccessDenied />;

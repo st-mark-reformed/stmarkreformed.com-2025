@@ -27,8 +27,8 @@ readonly class GetBlogEntriesPageAction
 
     public function __construct(
         private Responder $responder,
-        private PageRepository $repository,
         private PageIdFactory $pageIdFactory,
+        private PageRepository $pageRepository,
     ) {
     }
 
@@ -44,8 +44,10 @@ readonly class GetBlogEntriesPageAction
             $attributes['blogPageId'],
         );
 
-        $result = $this->repository->findAllPages()->findOneById($pageId);
+        $blogPageResult = $this->pageRepository->findAllPages()->findOneById(
+            $pageId,
+        );
 
-        return $this->responder->respond($result);
+        return $this->responder->respond($blogPageResult);
     }
 }
