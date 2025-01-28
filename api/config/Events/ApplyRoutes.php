@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Config\Events;
 
+use App\BlogEntries\PostNewEntry\PostNewEntryAction;
 use App\Calendar\GetCalendarSelectOptions;
 use App\ContactForm\PostContactForm;
 use App\Globals\GetAllGlobalsAction;
@@ -60,6 +61,7 @@ readonly class ApplyRoutes
         GetProfileAction::applyRoute($routes);
         PatchProfileAction::applyRoute($routes);
         DeleteProfilesAction::applyRoute($routes);
+        PostNewEntryAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

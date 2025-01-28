@@ -12,7 +12,7 @@ export default async function PostNewEntryHandler (
     entryName: string,
 ): Promise<ApiResponseResult> {
     return ParseApiResponse(await RequestFactory().makeWithSignInRedirect({
-        uri: `/pages/blog-entries-page/${blogPageId}`,
+        uri: `/blog-entries/${blogPageId}`,
         method: RequestMethods.POST,
         payload: { entryName },
         cacheSeconds: 0,

@@ -32,9 +32,7 @@ readonly class Entry
         public EntryType $type = EntryType::entry,
         public PageData $data = new PageData(''),
         public PageJson $json = new PageJson('{}'),
-        public DateTimeImmutable $datePublished = new DateTimeImmutable(
-            'now',
-        ),
+        public DateTimeImmutable|null $datePublished = null,
     ) {
     }
 

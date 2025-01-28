@@ -50,5 +50,5 @@ class EntryRecord extends Record
 
     public string $json = '{}';
 
-    public string $date_published = '';
+    public string|null $date_published = null;
 }

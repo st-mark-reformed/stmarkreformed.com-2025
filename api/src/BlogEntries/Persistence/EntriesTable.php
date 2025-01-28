@@ -62,7 +62,7 @@ readonly class EntriesTable
         )->addColumn(
             'date_published',
             AdapterInterface::PHINX_TYPE_DATETIME,
-            ['null' => false],
+            ['null' => true, 'default' => null],
         )
             ->addIndex(['blog_page_id'])
             ->addIndex(['author_profile_id'])
