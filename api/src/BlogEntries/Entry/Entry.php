@@ -17,6 +17,7 @@ use App\Pages\Page\PageStatus;
 use App\Profiles\Profile\Profile;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DateTimeZone;
 use Ramsey\Uuid\UuidInterface;
 
 readonly class Entry
@@ -24,7 +25,7 @@ readonly class Entry
     public function __construct(
         public UuidInterface $id = new EmptyUuid(),
         public Page $blogPage = new Page(),
-        public Profile $author = new Profile(),
+        public Profile|null $author = null,
         public PageName $name = new PageName('NoOp'),
         public PageSlug $slug = new PageSlug('noop'),
         public PagePath $path = new PagePath('noop'),
@@ -47,7 +48,7 @@ readonly class Entry
                     PageProperty::children,
                 ]),
             ),
-            'author' => $this->author->asScalarArray(),
+            'author' => $this->author?->asScalarArray(),
             'name' => $this->name->value,
             'slug' => $this->slug->value,
             'path' => $this->path->value,
@@ -55,9 +56,9 @@ readonly class Entry
             'type' => $this->type->name,
             'data' => $this->data->value,
             'json' => $this->json->data,
-            'datePublished' => $this->datePublished->format(
-                DateTimeInterface::ATOM,
-            ),
+            'datePublished' => $this->datePublished?->setTimezone(
+                new DateTimeZone('US/Central'),
+            )->format(DateTimeInterface::ATOM),
         ];
 
         $omit->map(

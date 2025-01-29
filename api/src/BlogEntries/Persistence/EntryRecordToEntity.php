@@ -20,6 +20,7 @@ use App\Profiles\Profile\ProfileCollection;
 use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
+use Throwable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
 
@@ -36,14 +37,27 @@ readonly class EntryRecordToEntity
                 $blogPages,
                 $authors,
             ): Entry {
+                $author = null;
+
+                if ($record->author_profile_id !== '') {
+                    try {
+                        $authorResult = $authors->findOneById(
+                            Uuid::fromString($record->author_profile_id),
+                        );
+
+                        if ($authorResult->hasProfile) {
+                            $author = $authorResult->profile;
+                        }
+                    } catch (Throwable) {
+                    }
+                }
+
                 return $this->transformRecord(
                     $record,
                     $blogPages->getOneById(
                         Uuid::fromString($record->blog_page_id),
                     ),
-                    $authors->getOneById(
-                        Uuid::fromString($record->author_profile_id),
-                    ),
+                    $author,
                 );
             },
         ));
@@ -52,7 +66,7 @@ readonly class EntryRecordToEntity
     public function transformRecord(
         EntryRecord $record,
         Page $blogPage,
-        Profile $author,
+        Profile|null $author,
     ): Entry {
         if ($blogPage->id->toString() !== $record->blog_page_id) {
             throw new RuntimeException(
@@ -60,16 +74,22 @@ readonly class EntryRecordToEntity
             );
         }
 
-        if ($author->id->toString() !== $record->author_profile_id) {
+        if (
+            $author !== null && $author->id->toString() !== $record->author_profile_id
+        ) {
             throw new RuntimeException(
                 'The author profile ID must match the entry record',
             );
         }
 
-        $datePublished = DateTimeImmutable::createFromFormat(
-            'Y-m-d H:i:s',
-            $record->date_published,
-        );
+        $datePublished = null;
+
+        if ($record->date_published !== null) {
+            $datePublished = DateTimeImmutable::createFromFormat(
+                'Y-m-d H:i:s',
+                $record->date_published,
+            );
+        }
 
         if ($datePublished === false) {
             throw new RuntimeException(

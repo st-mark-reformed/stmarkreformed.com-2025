@@ -6,12 +6,13 @@ import { MinusCircleIcon } from '@heroicons/react/24/outline';
 import { createPortal } from 'react-dom';
 import PageHeader from '../../layout/PageHeader';
 import { PageTypeWithDataNoChildrenFrontEnd } from '../../pages/PageType';
-import { EntryType } from '../EntryType';
+import { EntryTypeFrontEnd } from '../EntryType';
 import Message from '../../messaging/Message';
 import EmptyState from '../../EmptyState';
 import RenderOnMount from '../../RenderOnMount';
 import NewEntryOverlay from './NewEntryOverlay';
 import ConfirmDeleteOverlay from '../../ConfirmDeleteOverlay';
+import PageItem from './PageItem';
 
 export default function PageClientSide (
     {
@@ -19,7 +20,7 @@ export default function PageClientSide (
         entries,
     }: {
         blogPage: PageTypeWithDataNoChildrenFrontEnd;
-        entries: Array<EntryType>;
+        entries: Array<EntryTypeFrontEnd>;
     },
 ) {
     const [overlay, setOverlay] = useState<
@@ -137,6 +138,7 @@ export default function PageClientSide (
                 body={errorMessages}
                 padBottom
             />
+            {/* TODO: Pagination */}
             {(() => {
                 if (entries.length < 1) {
                     return (
@@ -150,8 +152,20 @@ export default function PageClientSide (
                     );
                 }
 
-                return <>TODO</>;
+                return (
+                    <ul className="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 rounded-xl">
+                        {entries.map((entry) => (
+                            <PageItem
+                                key={entry.slug}
+                                entry={entry}
+                                selectedIds={selectedIds}
+                                setSelectedIds={setSelectedIds}
+                            />
+                        ))}
+                    </ul>
+                );
             })()}
+            {/* TODO: Pagination */}
         </>
     );
 }

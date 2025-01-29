@@ -175,9 +175,7 @@ export default function PageClientSide (
                 }
 
                 return (
-                    <ul
-                        className="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 rounded-xl"
-                    >
+                    <ul className="divide-y divide-gray-100 overflow-hidden bg-white shadow-sm ring-1 ring-gray-900/5 rounded-xl">
                         {pages.map((page) => (
                             <PageItem
                                 key={`${page.slug}-parent`}

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\BlogEntries\Persistence;
 
+use App\EmptyUuid;
 use App\Persistence\ApiPdo;
 use App\Persistence\Sort;
 use PDO;
+use Ramsey\Uuid\UuidInterface;
 
 use function implode;
 
@@ -17,6 +19,7 @@ readonly class FindEntries
     }
 
     public function find(
+        UuidInterface $blogPageId,
         int $limit = 0,
         int $offset = 0,
         OrderBy $orderBy = OrderBy::date_published,
@@ -29,8 +32,13 @@ readonly class FindEntries
             $columns,
             'FROM',
             EntryRecord::getTableName(),
-            'ORDER BY ' . $orderBy->name . ' ' . $sort->name,
         ];
+
+        if (! ($blogPageId instanceof EmptyUuid)) {
+            $sql[] = 'WHERE blog_page_id = :blog_page_id';
+        }
+
+        $sql[] = 'ORDER BY ' . $orderBy->name . ' ' . $sort->name;
 
         if ($limit > 0) {
             $sql[] = 'LIMIT ' . $limit;
@@ -44,7 +52,9 @@ readonly class FindEntries
             implode(' ', $sql),
         );
 
-        $statement->execute();
+        $statement->execute(
+            ['blog_page_id' => $blogPageId->toString()],
+        );
 
         return new EntryRecordCollection($statement->fetchAll(
             PDO::FETCH_CLASS,

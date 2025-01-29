@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Config\Events;
 
+use App\BlogEntries\GetBlogPage\GetBlogEntriesPageAction;
 use App\BlogEntries\PostNewEntry\PostNewEntryAction;
 use App\Calendar\GetCalendarSelectOptions;
 use App\ContactForm\PostContactForm;
@@ -13,7 +14,6 @@ use App\Healthcheck;
 use App\Pages\DeletePagesAction;
 use App\Pages\GetAllPagesAction;
 use App\Pages\GetBlogEntryPages;
-use App\Pages\GetBlogPage\GetBlogEntriesPageAction;
 use App\Pages\GetPage\GetPageAction;
 use App\Pages\GetPageTypesAction;
 use App\Pages\GetPhotoGalleryEntryPages;

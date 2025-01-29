@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Pages\GetBlogPage;
+namespace App\BlogEntries\GetBlogPage;
 
 use App\EmptyUuid;
 use App\Persistence\UuidFactoryWithOrderedTimeCodec;

@@ -43,7 +43,7 @@ readonly class FindProfilesByIds
             'ORDER BY last_name ASC, first_name ASC',
         ]));
 
-        $statement->execute();
+        $statement->execute($ids->asScalarArray());
 
         return new ProfileRecordCollection($statement->fetchAll(
             PDO::FETCH_CLASS,

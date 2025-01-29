@@ -4,7 +4,7 @@ import {
 } from '../../pages/PageType';
 import { RequestFactory } from '../../api/request/RequestFactory';
 import { TransformPageTypeWithDataNoChildren } from '../../pages/PageTransformer';
-import { EntryType } from '../EntryType';
+import { EntryType, EntryTypeFrontEnd, TransformEntry } from '../EntryType';
 
 function isInteger (str: string | string[]): boolean {
     if (!(typeof str === 'string')) {
@@ -29,7 +29,7 @@ type ResponseWithAccess = {
     notFound: false;
     data: {
         blogPage: PageTypeWithDataNoChildrenFrontEnd;
-        entries: Array<EntryType>;
+        entries: Array<EntryTypeFrontEnd>;
     };
 };
 
@@ -54,8 +54,15 @@ export async function GetBlogEntriesPageData (
         return notFoundResponse;
     }
 
+    const queryParams = new URLSearchParams();
+
+    if (pageInt) {
+        queryParams.append('page', pageInt.toString());
+    }
+
     const response = await RequestFactory().makeWithSignInRedirect({
-        uri: `/pages/blog-entries-page/${blogPageId}`,
+        uri: `/blog-entries/${blogPageId}`,
+        queryParams,
         cacheSeconds: 5,
         cacheTags: ['pageData'],
     });
@@ -77,12 +84,15 @@ export async function GetBlogEntriesPageData (
     // @ts-expect-error TS2339
     const blogPage = response.json.blogPage as PageTypeWithDataNoChildren;
 
+    // @ts-expect-error TS2339
+    const entries = response.json.entries as Array<EntryType>;
+
     return {
         userHasAccess: true,
         notFound: false,
         data: {
             blogPage: TransformPageTypeWithDataNoChildren(blogPage),
-            entries: [],
+            entries: entries.map((entry) => TransformEntry(entry)),
         },
     };
 }

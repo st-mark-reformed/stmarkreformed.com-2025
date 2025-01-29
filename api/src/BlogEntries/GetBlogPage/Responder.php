@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Pages\GetBlogPage;
+namespace App\BlogEntries\GetBlogPage;
 
+use App\BlogEntries\Entry\EntryCollection;
 use App\Pages\Page\PageProperty;
 use App\Pages\Page\PagePropertyCollection;
 use App\Pages\Page\PageResult;
@@ -22,13 +23,15 @@ readonly class Responder
 
     public function respond(
         PageResult $result,
+        EntryCollection $entries,
+        int $pageNum,
     ): ResponseInterface {
         $response = $this->responseFactory->createResponse()->withHeader(
             'Content-type',
             'application/json',
         );
 
-        if (! $result->hasPage) {
+        if (! $result->hasPage || ($pageNum > 1 && $entries->count() < 1)) {
             return $this->send404($response);
         }
 
@@ -43,7 +46,7 @@ readonly class Responder
                         PageProperty::children,
                     ]),
                 ),
-                'entries' => [],
+                'entries' => $entries->asScalarArray(),
             ],
         ));
 
