@@ -6,7 +6,6 @@ namespace App\BlogEntries\Persistence;
 
 use App\EmptyUuid;
 use App\Persistence\ApiPdo;
-use App\Persistence\Sort;
 use PDO;
 use Ramsey\Uuid\UuidInterface;
 
@@ -20,10 +19,9 @@ readonly class FindEntries
 
     public function find(
         UuidInterface $blogPageId,
-        int $limit = 0,
-        int $offset = 0,
-        OrderBy $orderBy = OrderBy::date_published,
-        Sort $sort = Sort::DESC,
+        int $limit,
+        int $offset,
+        OrderBySortCollection $ordering,
     ): EntryRecordCollection {
         $columns = implode(', ', EntryRecord::getColumns());
 
@@ -38,7 +36,7 @@ readonly class FindEntries
             $sql[] = 'WHERE blog_page_id = :blog_page_id';
         }
 
-        $sql[] = 'ORDER BY ' . $orderBy->name . ' ' . $sort->name;
+        $sql = $ordering->compileIntoSqlArray($sql);
 
         if ($limit > 0) {
             $sql[] = 'LIMIT ' . $limit;

@@ -10,6 +10,8 @@ use App\BlogEntries\Persistence\EntryRecord;
 use App\BlogEntries\Persistence\EntryRecordToEntity;
 use App\BlogEntries\Persistence\FindEntries;
 use App\BlogEntries\Persistence\OrderBy;
+use App\BlogEntries\Persistence\OrderBySort;
+use App\BlogEntries\Persistence\OrderBySortCollection;
 use App\EmptyUuid;
 use App\Pages\Page\PageName;
 use App\Pages\Page\PageType;
@@ -40,8 +42,16 @@ readonly class EntryRepository
         UuidInterface $blogPageId = new EmptyUuid(),
         int $limit = 0,
         int $offset = 0,
-        OrderBy $orderBy = OrderBy::date_published,
-        Sort $sort = Sort::DESC,
+        OrderBySortCollection $ordering = new OrderBySortCollection([
+            new OrderBySort(
+                orderBy: OrderBy::status,
+                sort: Sort::DESC,
+            ),
+            new OrderBySort(
+                orderBy: OrderBy::date_published,
+                sort: Sort::DESC,
+            ),
+        ]),
     ): EntryCollection {
         $pages = $this->pageRepository->findAllPages()->findAllByPageType(
             PageType::blog_entries,
@@ -57,8 +67,7 @@ readonly class EntryRepository
             $blogPageId,
             $limit,
             $offset,
-            $orderBy,
-            $sort,
+            $ordering,
         );
 
         $entriesWithAuthorProfileIds = $entries->filter(
