@@ -45,11 +45,14 @@ export default function PageItem (
 
     if (isSelected) {
         liClasses.push('bg-cyan-600/5');
+    } else if (entry.status === PageStatus.unpublished) {
+        liClasses.push('bg-gray-50');
     }
 
     const hasPage = entry.status === PageStatus.published;
 
     return (
+        /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */
         <li
             className={liClasses.join(' ')}
             onClick={(e) => {
@@ -77,7 +80,7 @@ export default function PageItem (
                 <div className="min-w-0 flex-auto">
                     <p className="text-sm font-semibold leading-6 text-gray-900">
                         {entry.name}
-                        <span className={`ml-2 inline-flex items-center rounded-md px-1.5 py-0 text-xxs font-medium ring-1 ring-inset ${statusBadgeClasses}`}>
+                        <span className={`ml-2 inline-flex items-center rounded-md px-1.5 py-0 text-xxs font-medium ring-1 ring-inset ${statusBadgeClasses.join(' ')}`}>
                             {entry.status}
                         </span>
                     </p>
