@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { EntryTypeFrontEnd, Type } from '../../../EntryType';
 import { PageStatus } from '../../../../pages/PageType';
+import { UrlFieldType } from '../../../../inputs/UrlFieldType';
 
 type SubmissionData = Omit<EntryTypeFrontEnd, 'blogPage' | 'author'> & {
     authorId: string | null;
@@ -21,8 +22,39 @@ export default function useDataManager (initialData: EntryTypeFrontEnd) {
     const [data, setDataInternal] = useState<SubmissionData>(stateData);
 
     const setStringData = (
-        key: 'id' | 'authorId' | 'name' | 'path' | 'data',
+        key: 'id'
+        | 'authorId'
+        | 'name'
+        | 'path'
+        | 'data'
+        | 'heroImage'
+        | 'heroHeading'
+        | 'heroSubheading'
+        | 'heroParagraph',
         val: string,
+    ) => {
+        const newData = { ...data };
+
+        newData[key] = val;
+
+        setDataInternal(newData);
+    };
+
+    const setBooleanData = (
+        key: 'useShortHero'
+        | 'useCustomHero',
+        val: boolean,
+    ) => {
+        const newData = { ...data };
+
+        newData[key] = val;
+
+        setDataInternal(newData);
+    };
+
+    const setNumberData = (
+        key: 'heroDarkeningOverlayOpacity',
+        val: number,
     ) => {
         const newData = { ...data };
 
@@ -83,13 +115,24 @@ export default function useDataManager (initialData: EntryTypeFrontEnd) {
         setDataInternal(newData);
     };
 
+    const setHeroUpperCta = (json: UrlFieldType | object) => {
+        const newData = { ...data };
+
+        newData.heroUpperCta = json;
+
+        setDataInternal(newData);
+    };
+
     return {
         data,
         setStringData,
+        setBooleanData,
+        setNumberData,
         setSlug,
         setStatus,
         setType,
         setJson,
         setDatePublished,
+        setHeroUpperCta,
     };
 }

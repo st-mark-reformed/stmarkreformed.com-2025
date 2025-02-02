@@ -63,6 +63,38 @@ readonly class EntriesTable
             'date_published',
             AdapterInterface::PHINX_TYPE_DATETIME,
             ['null' => true, 'default' => null],
+        )->addColumn(
+            'use_short_hero',
+            AdapterInterface::PHINX_TYPE_BOOLEAN,
+            ['null' => false, 'default' => true],
+        )->addColumn(
+            'use_custom_hero',
+            AdapterInterface::PHINX_TYPE_BOOLEAN,
+            ['null' => false, 'default' => false],
+        )->addColumn(
+            'hero_darkening_overlay_opacity',
+            AdapterInterface::PHINX_TYPE_TINY_INTEGER,
+            ['null' => false],
+        )->addColumn(
+            'hero_image',
+            AdapterInterface::PHINX_TYPE_STRING,
+            ['null' => false, 'default' => ''],
+        )->addColumn(
+            'hero_upper_cta',
+            AdapterInterface::PHINX_TYPE_JSON,
+            ['null' => false, 'default' => '{}'],
+        )->addColumn(
+            'hero_heading',
+            AdapterInterface::PHINX_TYPE_STRING,
+            ['null' => false, 'default' => ''],
+        )->addColumn(
+            'hero_subheading',
+            AdapterInterface::PHINX_TYPE_STRING,
+            ['null' => false, 'default' => ''],
+        )->addColumn(
+            'hero_paragraph',
+            AdapterInterface::PHINX_TYPE_TEXT,
+            ['null' => false, 'default' => ''],
         )
             ->addIndex(['blog_page_id'])
             ->addIndex(['author_profile_id'])

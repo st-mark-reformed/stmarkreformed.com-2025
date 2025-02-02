@@ -51,4 +51,20 @@ class EntryRecord extends Record
     public string $json = '{}';
 
     public string|null $date_published = null;
+
+    public bool $use_short_hero = true;
+
+    public bool $use_custom_hero = false;
+
+    public int $hero_darkening_overlay_opacity = 0;
+
+    public string $hero_image = '';
+
+    public string $hero_upper_cta = '{}';
+
+    public string $hero_heading = '';
+
+    public string $hero_subheading = '';
+
+    public string $hero_paragraph = '';
 }

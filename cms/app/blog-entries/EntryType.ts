@@ -10,6 +10,7 @@ import {
 import { ConfigOptions, getConfigString } from '../serverSideRunTimeConfig';
 import { TransformPageTypeWithDataNoChildren } from '../pages/PageTransformer';
 import { TransformProfileType } from '../profiles/ProfileTransformer';
+import { UrlFieldType } from '../inputs/UrlFieldType';
 
 export enum Type {
     entry = 'entry',
@@ -28,6 +29,14 @@ export type EntryType = {
     data: string;
     json: Array<never>;
     datePublished: string | null;
+    useShortHero: boolean;
+    useCustomHero: boolean;
+    heroDarkeningOverlayOpacity: number;
+    heroImage: string;
+    heroUpperCta: UrlFieldType | object;
+    heroHeading: string;
+    heroSubheading: string;
+    heroParagraph: string;
 };
 
 export type EntryTypeFrontEnd = Omit<

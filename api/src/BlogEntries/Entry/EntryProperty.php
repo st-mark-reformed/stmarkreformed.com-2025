@@ -19,6 +19,14 @@ enum EntryProperty
     case data;
     case json;
     case datePublished;
+    case useShortHero;
+    case useCustomHero;
+    case heroDarkeningOverlayOpacity;
+    case heroImage;
+    case heroUpperCta;
+    case heroHeading;
+    case heroSubheading;
+    case heroParagraph;
 
     public static function createFromString(string $property): EntryProperty
     {

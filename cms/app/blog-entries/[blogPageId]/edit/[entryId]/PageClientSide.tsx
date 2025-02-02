@@ -24,11 +24,14 @@ export default function PageClientSide (
     const {
         data,
         setStringData,
+        setBooleanData,
+        setNumberData,
         setSlug,
         setStatus,
         setType,
         setJson,
         setDatePublished,
+        setHeroUpperCta,
     } = useDataManager(initialData);
 
     const [success, setSuccess] = useState(false);

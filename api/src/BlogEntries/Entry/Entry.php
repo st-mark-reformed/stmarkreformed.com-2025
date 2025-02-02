@@ -34,6 +34,14 @@ readonly class Entry
         public PageData $data = new PageData(''),
         public PageJson $json = new PageJson('{}'),
         public DateTimeImmutable|null $datePublished = null,
+        public bool $useShortHero = true,
+        public bool $useCustomHero = false,
+        public int $heroDarkeningOverlayOpacity = 0,
+        public string $heroImage = '',
+        public PageJson $heroUpperCta = new PageJson('{}'),
+        public string $heroHeading = '',
+        public string $heroSubheading = '',
+        public string $heroParagraph = '',
     ) {
     }
 
@@ -59,6 +67,14 @@ readonly class Entry
             'datePublished' => $this->datePublished?->setTimezone(
                 new DateTimeZone('US/Central'),
             )->format(DateTimeInterface::ATOM),
+            'useShortHero' => $this->useShortHero,
+            'useCustomHero' => $this->useCustomHero,
+            'heroDarkeningOverlayOpacity' => $this->heroDarkeningOverlayOpacity,
+            'heroImage' => $this->heroImage,
+            'heroUpperCta' => $this->heroUpperCta->data,
+            'heroHeading' => $this->heroHeading,
+            'heroSubheading' => $this->heroSubheading,
+            'heroParagraph' => $this->heroParagraph,
         ];
 
         $omit->map(
