@@ -3,9 +3,24 @@ import { EntryTypeFrontEnd, Type } from '../../../EntryType';
 import { PageStatus } from '../../../../pages/PageType';
 import { UrlFieldType } from '../../../../inputs/UrlFieldType';
 
-type SubmissionData = Omit<EntryTypeFrontEnd, 'blogPage' | 'author'> & {
+export type SubmissionData = Omit<EntryTypeFrontEnd, 'blogPage' | 'author'> & {
     authorId: string | null;
 };
+
+export type StringDataKeys = 'id'
+| 'authorId'
+| 'name'
+| 'path'
+| 'data'
+| 'heroImage'
+| 'heroHeading'
+| 'heroSubheading'
+| 'heroParagraph';
+
+export type BooleanDataKeys = 'useShortHero'
+| 'useCustomHero';
+
+export type NumberDataKeys = 'heroDarkeningOverlayOpacity';
 
 export default function useDataManager (initialData: EntryTypeFrontEnd) {
     const stateData = {
@@ -21,18 +36,7 @@ export default function useDataManager (initialData: EntryTypeFrontEnd) {
 
     const [data, setDataInternal] = useState<SubmissionData>(stateData);
 
-    const setStringData = (
-        key: 'id'
-        | 'authorId'
-        | 'name'
-        | 'path'
-        | 'data'
-        | 'heroImage'
-        | 'heroHeading'
-        | 'heroSubheading'
-        | 'heroParagraph',
-        val: string,
-    ) => {
+    const setStringData = (key: StringDataKeys, val: string) => {
         const newData = { ...data };
 
         newData[key] = val;
@@ -40,11 +44,7 @@ export default function useDataManager (initialData: EntryTypeFrontEnd) {
         setDataInternal(newData);
     };
 
-    const setBooleanData = (
-        key: 'useShortHero'
-        | 'useCustomHero',
-        val: boolean,
-    ) => {
+    const setBooleanData = (key: BooleanDataKeys, val: boolean) => {
         const newData = { ...data };
 
         newData[key] = val;
@@ -52,10 +52,7 @@ export default function useDataManager (initialData: EntryTypeFrontEnd) {
         setDataInternal(newData);
     };
 
-    const setNumberData = (
-        key: 'heroDarkeningOverlayOpacity',
-        val: number,
-    ) => {
+    const setNumberData = (key: NumberDataKeys, val: number) => {
         const newData = { ...data };
 
         newData[key] = val;

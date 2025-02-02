@@ -11,11 +11,7 @@ import { ConfigOptions, getConfigString } from '../serverSideRunTimeConfig';
 import { TransformPageTypeWithDataNoChildren } from '../pages/PageTransformer';
 import { TransformProfileType } from '../profiles/ProfileTransformer';
 import { UrlFieldType } from '../inputs/UrlFieldType';
-
-export enum Type {
-    entry = 'entry',
-    entry_builder = 'entry_builder',
-}
+import { EntryTypeType } from './EntryTypeType';
 
 export type EntryType = {
     id: string;
@@ -25,7 +21,7 @@ export type EntryType = {
     slug: string;
     path: string;
     status: PageStatus;
-    type: Type;
+    type: EntryTypeType;
     data: string;
     json: Array<never>;
     datePublished: string | null;

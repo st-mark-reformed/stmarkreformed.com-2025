@@ -1,5 +1,8 @@
 'use client';
 
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, { useMemo, useState } from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { EntryTypeFrontEnd, Type } from '../../../EntryType';
@@ -11,6 +14,9 @@ import EntryType from './inputs/EntryType';
 import TextInput from '../../../../inputs/TextInput';
 import { PageStatus } from '../../../../pages/PageType';
 import Toggle from '../../../../inputs/Toggle';
+import CustomHero from './CustomHero';
+import Hero from './Hero';
+import EntryTypeFactory from './EntryTypeFactory';
 
 export default function PageClientSide (
     {
@@ -120,6 +126,28 @@ export default function PageClientSide (
                             }}
                         />
                     </div>
+                    <CustomHero
+                        data={data}
+                        setStringData={setStringData}
+                        setBooleanData={setBooleanData}
+                        setNumberData={setNumberData}
+                    />
+                    <Hero
+                        data={data}
+                        setStringData={setStringData}
+                    />
+                    <EntryTypeFactory
+                        type={data.type}
+                        data={data.data}
+                        setData={(val: string) => {
+                            setStringData('data', val);
+                        }}
+                        json={data.json}
+                        setJson={(val: Array<any>) => {
+                            // @ts-expect-error TS2345
+                            setJson(val);
+                        }}
+                    />
                 </div>
             </form>
         </FrontEndPageContext.Provider>
