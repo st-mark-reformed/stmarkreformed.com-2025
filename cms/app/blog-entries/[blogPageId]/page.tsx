@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { GetBlogEntriesPageData } from './GetBlogEntriesPageData';
 import AccessDenied from '../../AccessDenied';
-import Layout from '../../layout/Layout';
+import Layout, { InnerMaxWidth } from '../../layout/Layout';
 import { createPageTitle } from '../../createPageTitle';
 import PageClientSide from './PageClientSide';
 
@@ -52,14 +52,10 @@ export default async function Page (
     return (
         <Layout
             breadcrumbs={{
-                breadcrumbs: [
-                    {
-                        value: 'Pages',
-                        href: '/pages',
-                    },
-                ],
-                currentBreadcrumb: { value: 'Edit' },
+                breadcrumbs: [],
+                currentBreadcrumb: { value: `${data.data.blogPage.name} Entries` },
             }}
+            innerMaxWidth={InnerMaxWidth.small}
         >
             <PageClientSide
                 blogPage={data.data.blogPage}

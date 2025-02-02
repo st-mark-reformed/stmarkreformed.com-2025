@@ -18,6 +18,7 @@ export default async function GetPageTypes (): Promise<Options> {
     const response = await RequestFactory().makeWithToken({
         uri: '/pages/types',
         cacheTags: ['pageData'],
+        cacheSeconds: 0,
     });
 
     OptionsSchema.parse(response.json);

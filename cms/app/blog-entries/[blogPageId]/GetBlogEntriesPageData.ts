@@ -63,7 +63,7 @@ export async function GetBlogEntriesPageData (
     const response = await RequestFactory().makeWithSignInRedirect({
         uri: `/blog-entries/${blogPageId}`,
         queryParams,
-        cacheSeconds: 5,
+        cacheSeconds: 0,
         cacheTags: ['pageData'],
     });
 

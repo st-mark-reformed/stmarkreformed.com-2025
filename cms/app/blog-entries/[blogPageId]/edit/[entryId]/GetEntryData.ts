@@ -1,9 +1,5 @@
-import { RequestFactory } from '../../../api/request/RequestFactory';
-import {
-    PageTypeWithDataNoChildren,
-    PageTypeWithDataNoChildrenFrontEnd,
-} from '../../PageType';
-import { TransformPageTypeWithDataNoChildren } from '../../PageTransformer';
+import { EntryType, EntryTypeFrontEnd, TransformEntry } from '../../../EntryType';
+import { RequestFactory } from '../../../../api/request/RequestFactory';
 
 type ResponseNoAccess = {
     userHasAccess: false;
@@ -18,14 +14,15 @@ type ResponseWith404 = {
 type ResponseWithAccess = {
     userHasAccess: true;
     notFound: false;
-    data: PageTypeWithDataNoChildrenFrontEnd;
+    entry: EntryTypeFrontEnd;
 };
 
-export async function GetPageData (
-    pageId: string,
+export async function GetEntryData (
+    blogPageId: string,
+    entryId: string,
 ): Promise<ResponseNoAccess | ResponseWith404 | ResponseWithAccess> {
     const response = await RequestFactory().makeWithSignInRedirect({
-        uri: `/pages/${pageId}`,
+        uri: `/blog-entries/${blogPageId}/edit/${entryId}`,
         cacheSeconds: 0,
         cacheTags: ['pageData'],
     });
@@ -44,11 +41,11 @@ export async function GetPageData (
         };
     }
 
-    const page = response.json as PageTypeWithDataNoChildren;
+    const entry = response.json as EntryType;
 
     return {
         userHasAccess: true,
         notFound: false,
-        data: TransformPageTypeWithDataNoChildren(page),
+        entry: TransformEntry(entry),
     };
 }

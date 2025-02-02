@@ -1,6 +1,6 @@
 import {
     PageStatus,
-    PageTypeNoDataNoChildren, PageTypeWithDataNoChildren,
+    PageTypeWithDataNoChildren,
     PageTypeWithDataNoChildrenFrontEnd,
 } from '../pages/PageType';
 import {

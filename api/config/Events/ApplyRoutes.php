@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Config\Events;
 
+use App\BlogEntries\GetBlogEntryPage\GetBlogEntryPageAction;
 use App\BlogEntries\GetBlogPage\GetBlogEntriesPageAction;
+use App\BlogEntries\GetEntryTypesAction;
 use App\BlogEntries\PostNewEntry\PostNewEntryAction;
 use App\Calendar\GetCalendarSelectOptions;
 use App\ContactForm\PostContactForm;
@@ -41,6 +43,7 @@ readonly class ApplyRoutes
         Healthcheck::applyRoute($routes);
         GetAllPagesAction::applyRoute($routes);
         GetBlogEntryPages::applyRoute($routes);
+        GetEntryTypesAction::applyRoute($routes);
         GetBlogEntriesPageAction::applyRoute($routes);
         GetPodcastEntryPages::applyRoute($routes);
         GetPhotoGalleryEntryPages::applyRoute($routes);
@@ -62,6 +65,7 @@ readonly class ApplyRoutes
         PatchProfileAction::applyRoute($routes);
         DeleteProfilesAction::applyRoute($routes);
         PostNewEntryAction::applyRoute($routes);
+        GetBlogEntryPageAction::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }

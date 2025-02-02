@@ -18,6 +18,7 @@ export default async function GetCalendarSelector (): Promise<Options> {
     const response = await RequestFactory().makeWithToken({
         uri: '/calendar/select-options',
         cacheTags: ['pageData'],
+        cacheSeconds: 0,
     });
 
     OptionsSchema.parse(response.json);

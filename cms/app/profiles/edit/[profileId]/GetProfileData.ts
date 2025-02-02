@@ -23,7 +23,7 @@ export async function GetProfileData (
 ): Promise<ResponseNoAccess | ResponseWith404 | ResponseWithAccess> {
     const response = await RequestFactory().makeWithSignInRedirect({
         uri: `/profiles/${profileId}`,
-        cacheSeconds: 5,
+        cacheSeconds: 0,
         cacheTags: ['pageData'],
     });
 

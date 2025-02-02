@@ -16,13 +16,16 @@ use App\EmptyUuid;
 use App\Pages\Page\PageName;
 use App\Pages\Page\PageType;
 use App\Pages\PageRepository;
+use App\Persistence\FindRecordById;
 use App\Persistence\PersistNewRecord;
 use App\Persistence\Result;
 use App\Persistence\Sort;
 use App\Persistence\UuidCollection;
 use App\Profiles\ProfileRepository;
+use Ramsey\Uuid\Exception\InvalidUuidStringException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Throwable;
 
 // phpcs:disable Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps
 
@@ -30,6 +33,7 @@ readonly class EntryRepository
 {
     public function __construct(
         private FindEntries $findEntries,
+        private FindRecordById $findRecordById,
         private PageRepository $pageRepository,
         private PersistNewRecord $persistNewRecord,
         private ProfileRepository $profileRepository,
@@ -113,5 +117,73 @@ readonly class EntryRepository
         );
 
         return $this->persistNewRecord->persist($record);
+    }
+
+    public function findEntry(string|UuidInterface $id): EntryResult
+    {
+        try {
+            $id = $id instanceof UuidInterface ? $id : Uuid::fromString(
+                $id,
+            );
+        } catch (InvalidUuidStringException) {
+            return new EntryResult(
+                null,
+                ['Invalid ID provided'],
+            );
+        }
+
+        $recordResult = $this->findRecordById->find(
+            $id,
+            EntryRecord::class,
+        );
+
+        if (
+            ! $recordResult->hasRecord ||
+            ! ($recordResult->record instanceof EntryRecord)
+        ) {
+            return new EntryResult();
+        }
+
+        try {
+            $blogPageResult = $this->pageRepository->findAllPages()
+                ->findAllByPageType(
+                    PageType::blog_entries,
+                )->findOneById(Uuid::fromString(
+                    $recordResult->record->blog_page_id,
+                ));
+
+            if (! $blogPageResult->hasPage) {
+                return new EntryResult();
+            }
+
+            $blogPage = $blogPageResult->page;
+        } catch (Throwable) {
+            return new EntryResult();
+        }
+
+        $author = null;
+
+        if ($recordResult->record->author_profile_id !== '') {
+            try {
+                $authorResult = $this->profileRepository->findProfileById(
+                    Uuid::fromString(
+                        $recordResult->record->author_profile_id,
+                    ),
+                );
+
+                if ($authorResult->hasProfile) {
+                    $author = $authorResult->profile;
+                }
+            } catch (Throwable) {
+            }
+        }
+
+        return new EntryResult(
+            $this->entryRecordToEntity->transformRecord(
+                $recordResult->record,
+                $blogPage,
+                $author,
+            ),
+        );
     }
 }
