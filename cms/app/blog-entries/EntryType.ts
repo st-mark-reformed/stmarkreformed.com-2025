@@ -29,7 +29,7 @@ export type EntryType = {
     useCustomHero: boolean;
     heroDarkeningOverlayOpacity: number;
     heroImage: string;
-    heroUpperCta: UrlFieldType | object;
+    heroUpperCta: UrlFieldType;
     heroHeading: string;
     heroSubheading: string;
     heroParagraph: string;

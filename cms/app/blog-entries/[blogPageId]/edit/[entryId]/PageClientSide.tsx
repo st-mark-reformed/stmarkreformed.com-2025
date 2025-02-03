@@ -5,7 +5,8 @@
 
 import React, { useMemo, useState } from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid';
-import { EntryTypeFrontEnd, Type } from '../../../EntryType';
+import { v4 as uuid } from 'uuid';
+import { EntryTypeFrontEnd } from '../../../EntryType';
 import useDataManager from './useDataManager';
 import { FrontEndPageContext } from '../../../../FrontEndPageContext';
 import PageHeader from '../../../../layout/PageHeader';
@@ -17,6 +18,11 @@ import Toggle from '../../../../inputs/Toggle';
 import CustomHero from './CustomHero';
 import Hero from './Hero';
 import EntryTypeFactory from './EntryTypeFactory';
+import PatchEntry from './PatchEntry';
+import { EntryTypeType } from '../../../EntryTypeType';
+import CustomDateTimePicker from '../../../../inputs/CustomDateTimePicker';
+import Url from '../../../../inputs/Url';
+import { UrlFieldTypeValues } from '../../../../inputs/UrlFieldType';
 
 export default function PageClientSide (
     {
@@ -68,7 +74,44 @@ export default function PageClientSide (
                             onClick: () => {
                                 setSuccess(false);
 
-                                console.log('todo');
+                                let datePublished = null;
+
+                                if (data.datePublished) {
+                                    const Y = data.datePublished.getFullYear()
+                                        .toString();
+                                    const m = (data.datePublished.getMonth() + 1)
+                                        .toString()
+                                        .padStart(2, '0');
+                                    const d = data.datePublished.getDate()
+                                        .toString()
+                                        .padStart(2, '0');
+                                    const H = data.datePublished.getHours()
+                                        .toString()
+                                        .padStart(2, '0');
+                                    const i = data.datePublished.getMinutes()
+                                        .toString()
+                                        .padStart(2, '0');
+
+                                    datePublished = `${Y}-${m}-${d} ${H}:${i}:00`;
+                                }
+
+                                PatchEntry({ ...data, datePublished }).then((result) => {
+                                    if (result.data.success) {
+                                        setSuccess(true);
+
+                                        setErrorIsVisible(false);
+
+                                        setErrors([]);
+
+                                        return;
+                                    }
+
+                                    setSuccess(false);
+
+                                    setErrors(result.data.messages);
+
+                                    setErrorIsVisible(true);
+                                });
                             },
                         }}
                     />
@@ -88,12 +131,12 @@ export default function PageClientSide (
                         heading="Something went wrong"
                         body={errors}
                     />
-                    <div className="align-top grid gap-4 sm:grid-cols-2">
+                    <div className="align-top grid gap-4 sm:grid-cols-4">
                         <EntryType
                             label="Entry Type"
                             selectedType={data.type}
                             setSelectedType={(val: string) => {
-                                const type = val as Type;
+                                const type = val as EntryTypeType;
                                 setType(type);
                             }}
                         />
@@ -107,6 +150,14 @@ export default function PageClientSide (
                                 );
                             }}
                         />
+                        <div className="sm:col-span-2">
+                            <CustomDateTimePicker
+                                label="Publish Date"
+                                name="publishDate"
+                                value={data.datePublished}
+                                setValue={setDatePublished}
+                            />
+                        </div>
                     </div>
                     <div className="align-top grid gap-4 sm:grid-cols-2">
                         <TextInput
@@ -132,6 +183,33 @@ export default function PageClientSide (
                         setBooleanData={setBooleanData}
                         setNumberData={setNumberData}
                     />
+                    <div>
+                        <div className="block text-sm font-semibold leading-6 text-gray-900 pb-2">
+                            Hero Upper CTA
+                        </div>
+                        <div className="p-4 border">
+                            {(() => {
+                                if (!data.heroUpperCta.id) {
+                                    setHeroUpperCta({
+                                        id: uuid(),
+                                        type: UrlFieldTypeValues.Custom,
+                                        linkText: '',
+                                        linkData: '',
+                                        newWindow: false,
+                                    });
+
+                                    return null;
+                                }
+
+                                return (
+                                    <Url
+                                        value={data.heroUpperCta}
+                                        setValue={setHeroUpperCta}
+                                    />
+                                );
+                            })()}
+                        </div>
+                    </div>
                     <Hero
                         data={data}
                         setStringData={setStringData}

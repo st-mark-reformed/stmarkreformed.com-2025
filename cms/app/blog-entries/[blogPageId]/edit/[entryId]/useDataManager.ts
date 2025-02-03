@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { EntryTypeFrontEnd, Type } from '../../../EntryType';
+import { EntryTypeFrontEnd } from '../../../EntryType';
 import { PageStatus } from '../../../../pages/PageType';
 import { UrlFieldType } from '../../../../inputs/UrlFieldType';
+import { EntryTypeType } from '../../../EntryTypeType';
 
 export type SubmissionData = Omit<EntryTypeFrontEnd, 'blogPage' | 'author'> & {
     authorId: string | null;
@@ -88,7 +89,7 @@ export default function useDataManager (initialData: EntryTypeFrontEnd) {
         setDataInternal(newData);
     };
 
-    const setType = (type: Type) => {
+    const setType = (type: EntryTypeType) => {
         const newData = { ...data };
 
         newData.type = type;
@@ -112,7 +113,7 @@ export default function useDataManager (initialData: EntryTypeFrontEnd) {
         setDataInternal(newData);
     };
 
-    const setHeroUpperCta = (json: UrlFieldType | object) => {
+    const setHeroUpperCta = (json: UrlFieldType) => {
         const newData = { ...data };
 
         newData.heroUpperCta = json;
