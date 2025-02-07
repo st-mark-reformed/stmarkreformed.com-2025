@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/api/tests" isTestSource="false" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/api/public" isTestSource="false" packagePrefix="public\" />
       <sourceFolder url="file://$MODULE_DIR$/api/storage" isTestSource="false" packagePrefix="storage\" />
+      <sourceFolder url="file://$MODULE_DIR$/devCliSrc" isTestSource="false" packagePrefix="Cli" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/bnf/phpstan-psr-container" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/buzzingpixel/symfony-var-dumper-decorator" />

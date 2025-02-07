@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="CLI PHP Files" pattern="file[stmarkreformed.com-2025]:devCliSrc//*.php" />
+</component>

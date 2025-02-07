@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset>
+    <!-- Directories to be checked -->
+    <file>./</file>
+
+    <!-- Include the RxAnte ruleset -->
+    <rule ref="RxAnteCodingStandards" />
+</ruleset>
