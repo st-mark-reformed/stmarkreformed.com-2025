@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace App\BlogEntries;
 
+use App\BlogEntries\Entry\Entry;
 use App\BlogEntries\Entry\EntryCollection;
 use App\BlogEntries\Persistence\CreateNewEntryRecord;
+use App\BlogEntries\Persistence\EntryEntityToRecord;
 use App\BlogEntries\Persistence\EntryRecord;
 use App\BlogEntries\Persistence\EntryRecordToEntity;
 use App\BlogEntries\Persistence\FindEntries;
 use App\BlogEntries\Persistence\OrderBy;
 use App\BlogEntries\Persistence\OrderBySort;
 use App\BlogEntries\Persistence\OrderBySortCollection;
+use App\BlogEntries\Persistence\ValidateEntryForPersistence;
 use App\EmptyUuid;
+use App\Generator\EnqueueGenerateSiteData;
 use App\Pages\Page\PageName;
 use App\Pages\Page\PageType;
 use App\Pages\PageRepository;
 use App\Persistence\FindRecordById;
 use App\Persistence\PersistNewRecord;
+use App\Persistence\PersistRecord;
 use App\Persistence\Result;
 use App\Persistence\Sort;
 use App\Persistence\UuidCollection;
@@ -33,12 +38,16 @@ readonly class EntryRepository
 {
     public function __construct(
         private FindEntries $findEntries,
+        private PersistRecord $persistRecord,
         private FindRecordById $findRecordById,
         private PageRepository $pageRepository,
         private PersistNewRecord $persistNewRecord,
         private ProfileRepository $profileRepository,
         private EntryRecordToEntity $entryRecordToEntity,
+        private EntryEntityToRecord $entryEntityToRecord,
         private CreateNewEntryRecord $createNewEntryRecord,
+        private EnqueueGenerateSiteData $enqueueGenerateSiteData,
+        private ValidateEntryForPersistence $validateEntryForPersistence,
     ) {
     }
 
@@ -185,5 +194,24 @@ readonly class EntryRepository
                 $author,
             ),
         );
+    }
+
+    public function persistEntry(Entry $entry): Result
+    {
+        $validationResult = $this->validateEntryForPersistence->validate(
+            $entry,
+        );
+
+        if (! $validationResult->success) {
+            return $validationResult;
+        }
+
+        $record = $this->entryEntityToRecord->processEntryEntity($entry);
+
+        $result = $this->persistRecord->persist($record);
+
+        $this->enqueueGenerateSiteData->enqueue();
+
+        return $result;
     }
 }

@@ -113,9 +113,9 @@ readonly class PageRepository
 
     public function persistPage(Page $page): Result
     {
-        $result = $this->persistRecord->persist(
-            $this->pageEntityToRecord->processPageEntity($page),
-        );
+        $record = $this->pageEntityToRecord->processPageEntity($page);
+
+        $result = $this->persistRecord->persist($record);
 
         $this->enqueueGenerateSiteData->enqueue();
 

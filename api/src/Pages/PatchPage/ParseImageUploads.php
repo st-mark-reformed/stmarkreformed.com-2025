@@ -8,7 +8,6 @@ use App\ImageHandling\Base64ImageFactory;
 use App\ImageHandling\CleanUnusedFiles;
 use App\ImageHandling\Directory;
 use App\ImageHandling\SaveBase64ImageToDisk;
-use App\Pages\Page\Page;
 use Ramsey\Uuid\UuidInterface;
 use SplFileInfo;
 
@@ -36,7 +35,14 @@ class ParseImageUploads
     ) {
     }
 
-    public function fromPageFields(Page $page): Page
+    /**
+     * @param P $page
+     *
+     * @return P
+     *
+     * @template P Page|Entry
+     */
+    public function fromFields($page)
     {
         foreach (self::IMAGE_FIELDS as $field) {
             $this->pageImages = [];
@@ -44,7 +50,7 @@ class ParseImageUploads
             /** @phpstan-ignore-next-line */
             $page = $page->{'with' . ucfirst($field)}(
                 $this->parseFieldImageData(
-                    /** @phpstan-ignore-next-line */
+                /** @phpstan-ignore-next-line */
                     $page->{$field},
                     $field,
                     $page->id,
@@ -63,7 +69,14 @@ class ParseImageUploads
     /** @var string[] */
     private array $pageImages = [];
 
-    public function fromPageJson(Page $page): Page
+    /**
+     * @param P $page
+     *
+     * @return P
+     *
+     * @template P Page|Entry
+     */
+    public function fromJson($page)
     {
         $this->pageImages = [];
 

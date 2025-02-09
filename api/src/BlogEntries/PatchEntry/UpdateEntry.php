@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Pages\PatchPage;
+namespace App\BlogEntries\PatchEntry;
 
-use App\Pages\Page\PageResult;
-use App\Pages\PageRepository;
+use App\BlogEntries\EntryRepository;
+use App\BlogEntries\EntryResult;
+use App\BlogEntries\GetBlogEntryPage\EntryIds;
+use App\Pages\PatchPage\ParseImageUploads;
 use App\Persistence\Result;
+use DateTimeImmutable;
+use DateTimeZone;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
@@ -14,19 +18,25 @@ use function assert;
 use function count;
 use function is_array;
 
-readonly class UpdatePage
+readonly class UpdateEntry
 {
     public function __construct(
-        private PageRepository $pageRepository,
+        private EntryRepository $entryRepository,
         private ParseImageUploads $parseImageUploads,
     ) {
     }
 
     public function fromRequest(
         ServerRequestInterface $request,
-        PageResult $pageResult,
+        EntryIds $entryIds,
+        EntryResult $entryResult,
     ): Result {
-        if (! $pageResult->hasPage) {
+        if (
+            ! $entryResult->hasEntry ||
+            ! $entryResult->entry->blogPage->id->equals(
+                $entryIds->blogPageId,
+            )
+        ) {
             return new Result(
                 false,
                 ['Page not found'],
@@ -35,71 +45,75 @@ readonly class UpdatePage
 
         $errors = [];
 
-        $page = $pageResult->page;
+        $entry = $entryResult->entry;
 
         $body = $request->getParsedBody();
         assert(is_array($body));
 
         try {
-            $page = $page->withName($body['name']);
+            $entry = $entry->withName($body['name']);
         } catch (Throwable $e) {
             $errors[] = $e->getMessage();
         }
 
         try {
-            $page = $page->withSlug($body['slug']);
+            $entry = $entry->withSlug($body['slug']);
         } catch (Throwable $e) {
             $errors[] = $e->getMessage();
         }
 
         try {
-            $page = $page->withPath($body['path']);
+            $entry = $entry->withPath($body['path']);
         } catch (Throwable $e) {
             $errors[] = $e->getMessage();
         }
 
         try {
-            $page = $page->withStatus($body['status']);
+            $entry = $entry->withStatus($body['status']);
         } catch (Throwable $e) {
             $errors[] = $e->getMessage();
         }
 
         try {
-            $page = $page->withType($body['type']);
+            $entry = $entry->withType($body['type']);
         } catch (Throwable $e) {
             $errors[] = $e->getMessage();
         }
 
         try {
-            $page = $page->withData($body['data']);
+            $entry = $entry->withData($body['data']);
         } catch (Throwable $e) {
             $errors[] = $e->getMessage();
         }
 
         try {
-            $page = $page->withJson($body['json']);
+            $entry = $entry->withJson($body['json']);
         } catch (Throwable $e) {
             $errors[] = $e->getMessage();
         }
 
         try {
-            $page = $page->withShowInMenu(
-                $body['showInMenu'],
-            );
+            $datePublished = $body['datePublished'];
+
+            if ($datePublished !== null) {
+                $datePublished = DateTimeImmutable::createFromFormat(
+                    'Y-m-d H:i:s',
+                    $datePublished,
+                    new DateTimeZone('US/Central'),
+                );
+
+                if ($datePublished === false) {
+                    $datePublished = null;
+                }
+            }
+
+            $entry = $entry->withDatePublished($datePublished);
         } catch (Throwable $e) {
             $errors[] = $e->getMessage();
         }
 
         try {
-            $page = $page->withShowSubPageSidebar(
-                $body['showSubPageSidebar'],
-            );
-        } catch (Throwable $e) {
-            $errors[] = $e->getMessage();
-        }
-
-        try {
-            $page = $page->withUseShortHero(
+            $entry = $entry->withUseShortHero(
                 $body['useShortHero'],
             );
         } catch (Throwable $e) {
@@ -107,7 +121,7 @@ readonly class UpdatePage
         }
 
         try {
-            $page = $page->withUseCustomHero(
+            $entry = $entry->withUseCustomHero(
                 $body['useCustomHero'],
             );
         } catch (Throwable $e) {
@@ -115,7 +129,7 @@ readonly class UpdatePage
         }
 
         try {
-            $page = $page->withHeroDarkeningOverlayOpacity(
+            $entry = $entry->withHeroDarkeningOverlayOpacity(
                 $body['heroDarkeningOverlayOpacity'],
             );
         } catch (Throwable $e) {
@@ -123,7 +137,7 @@ readonly class UpdatePage
         }
 
         try {
-            $page = $page->withHeroImage(
+            $entry = $entry->withHeroImage(
                 $body['heroImage'],
             );
         } catch (Throwable $e) {
@@ -131,13 +145,13 @@ readonly class UpdatePage
         }
 
         try {
-            $page = $page->withHeroUpperCta($body['heroUpperCta']);
+            $entry = $entry->withHeroUpperCta($body['heroUpperCta']);
         } catch (Throwable $e) {
             $errors[] = $e->getMessage();
         }
 
         try {
-            $page = $page->withHeroHeading(
+            $entry = $entry->withHeroHeading(
                 $body['heroHeading'],
             );
         } catch (Throwable $e) {
@@ -145,7 +159,7 @@ readonly class UpdatePage
         }
 
         try {
-            $page = $page->withHeroSubHeading(
+            $entry = $entry->withHeroSubHeading(
                 $body['heroSubheading'],
             );
         } catch (Throwable $e) {
@@ -153,7 +167,7 @@ readonly class UpdatePage
         }
 
         try {
-            $page = $page->withHeroParagraph(
+            $entry = $entry->withHeroParagraph(
                 $body['heroParagraph'],
             );
         } catch (Throwable $e) {
@@ -167,10 +181,10 @@ readonly class UpdatePage
             );
         }
 
-        $page = $this->parseImageUploads->fromFields($page);
+        $entry = $this->parseImageUploads->fromFields($entry);
 
-        $page = $this->parseImageUploads->fromJson($page);
+        $entry = $this->parseImageUploads->fromJson($entry);
 
-        return $this->pageRepository->persistPage($page);
+        return $this->entryRepository->persistEntry($entry);
     }
 }

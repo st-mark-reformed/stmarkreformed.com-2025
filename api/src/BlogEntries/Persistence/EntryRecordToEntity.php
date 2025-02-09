@@ -18,6 +18,7 @@ use App\Pages\Page\PageStatus;
 use App\Profiles\Profile\Profile;
 use App\Profiles\Profile\ProfileCollection;
 use DateTimeImmutable;
+use DateTimeZone;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
 use Throwable;
@@ -88,6 +89,7 @@ readonly class EntryRecordToEntity
             $datePublished = DateTimeImmutable::createFromFormat(
                 'Y-m-d H:i:s',
                 $record->date_published,
+                new DateTimeZone('US/Central'),
             );
         }
 

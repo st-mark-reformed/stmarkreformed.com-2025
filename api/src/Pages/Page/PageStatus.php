@@ -28,4 +28,9 @@ enum PageStatus
             ]));
         }
     }
+
+    public function isPublished(): bool
+    {
+        return $this === PageStatus::published;
+    }
 }

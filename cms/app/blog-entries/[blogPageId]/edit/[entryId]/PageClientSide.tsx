@@ -33,6 +33,9 @@ export default function PageClientSide (
         apiFeUrl: string;
     },
 ) {
+    // TODO: need author selector
+    // TODO: something is wrong with dates and timezones
+
     const {
         data,
         setStringData,
@@ -95,7 +98,13 @@ export default function PageClientSide (
                                     datePublished = `${Y}-${m}-${d} ${H}:${i}:00`;
                                 }
 
-                                PatchEntry({ ...data, datePublished }).then((result) => {
+                                PatchEntry(
+                                    initialData.blogPage.id,
+                                    {
+                                        ...data,
+                                        datePublished,
+                                    },
+                                ).then((result) => {
                                     if (result.data.success) {
                                         setSuccess(true);
 

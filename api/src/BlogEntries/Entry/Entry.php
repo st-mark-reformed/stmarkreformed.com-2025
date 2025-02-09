@@ -19,9 +19,18 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use Ramsey\Uuid\UuidInterface;
+use RuntimeException;
+use Spatie\Cloneable\Cloneable;
+
+use function json_encode;
+use function json_last_error_msg;
+
+// phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
 
 readonly class Entry
 {
+    use Cloneable;
+
     public function __construct(
         public UuidInterface $id = new EmptyUuid(),
         public Page $blogPage = new Page(),
@@ -86,5 +95,103 @@ readonly class Entry
         );
 
         return $values;
+    }
+
+    public function withName(string $name): Entry
+    {
+        return $this->with(name: new PageName($name));
+    }
+
+    public function withSlug(string $slug): Entry
+    {
+        return $this->with(slug: new PageSlug($slug));
+    }
+
+    public function withPath(string $path): Entry
+    {
+        return $this->with(path: new PagePath($path));
+    }
+
+    public function withStatus(string $status): Entry
+    {
+        return $this->with(status: PageStatus::fromString($status));
+    }
+
+    public function withType(string $type): Entry
+    {
+        return $this->with(type: EntryType::fromString($type));
+    }
+
+    public function withData(string $data): Entry
+    {
+        return $this->with(data: new PageData($data));
+    }
+
+    /** @phpstan-ignore-next-line */
+    public function withJson(array $json): Entry
+    {
+        $jsonString = json_encode($json);
+
+        if ($jsonString === false) {
+            throw new RuntimeException(json_last_error_msg());
+        }
+
+        return $this->with(json: new PageJson($jsonString));
+    }
+
+    public function withDatePublished(
+        DateTimeImmutable|null $datePublished,
+    ): Entry {
+        return $this->with(datePublished: $datePublished);
+    }
+
+    public function withUseShortHero(bool $useShortHero): Entry
+    {
+        return $this->with(useShortHero: $useShortHero);
+    }
+
+    public function withUseCustomHero(bool $useCustomHero): Entry
+    {
+        return $this->with(useCustomHero: $useCustomHero);
+    }
+
+    public function withHeroDarkeningOverlayOpacity(
+        int $heroDarkeningOverlayOpacity,
+    ): Entry {
+        return $this->with(
+            heroDarkeningOverlayOpacity: $heroDarkeningOverlayOpacity,
+        );
+    }
+
+    public function withHeroImage(mixed $heroImage): Entry
+    {
+        return $this->with(heroImage: $heroImage);
+    }
+
+    /** @phpstan-ignore-next-line */
+    public function withHeroUpperCta(array $json): Entry
+    {
+        $jsonString = json_encode($json);
+
+        if ($jsonString === false) {
+            throw new RuntimeException(json_last_error_msg());
+        }
+
+        return $this->with(heroUpperCta: new PageJson($jsonString));
+    }
+
+    public function withHeroHeading(mixed $heroHeading): Entry
+    {
+        return $this->with(heroHeading: $heroHeading);
+    }
+
+    public function withHeroSubHeading(mixed $heroSubheading): Entry
+    {
+        return $this->with(heroSubheading: $heroSubheading);
+    }
+
+    public function withHeroParagraph(mixed $heroParagraph): Entry
+    {
+        return $this->with(heroParagraph: $heroParagraph);
     }
 }
