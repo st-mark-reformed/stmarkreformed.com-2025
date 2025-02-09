@@ -9,6 +9,7 @@ use App\BlogEntries\EntryResult;
 use App\BlogEntries\GetBlogEntryPage\EntryIds;
 use App\Pages\PatchPage\ParseImageUploads;
 use App\Persistence\Result;
+use App\Profiles\ProfileRepository;
 use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Http\Message\ServerRequestInterface;
@@ -23,6 +24,7 @@ readonly class UpdateEntry
     public function __construct(
         private EntryRepository $entryRepository,
         private ParseImageUploads $parseImageUploads,
+        private ProfileRepository $profileRepository,
     ) {
     }
 
@@ -49,6 +51,28 @@ readonly class UpdateEntry
 
         $body = $request->getParsedBody();
         assert(is_array($body));
+
+        try {
+            $author = null;
+
+            $authorId = (string) ($body['authorId'] ?? '');
+
+            if ($authorId !== '') {
+                $authorResult = $this->profileRepository->findProfileById(
+                    $authorId,
+                );
+
+                if (! $authorResult->hasProfile) {
+                    $errors[] = 'A valid author must be specified';
+                } else {
+                    $author = $authorResult->profile;
+                }
+            }
+
+            $entry = $entry->withAuthor($author);
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
 
         try {
             $entry = $entry->withName($body['name']);

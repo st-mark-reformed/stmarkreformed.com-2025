@@ -23,6 +23,7 @@
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-drag-drop-files": "^2.4.0",
+        "react-select": "^5.10.0",
         "react-tailwindcss-datepicker": "1.7.3",
         "rxante-oauth": "^1.4.0",
         "sleep-promise": "^9.1.0",

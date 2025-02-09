@@ -23,6 +23,7 @@ import { EntryTypeType } from '../../../EntryTypeType';
 import CustomDateTimePicker from '../../../../inputs/CustomDateTimePicker';
 import Url from '../../../../inputs/Url';
 import { UrlFieldTypeValues } from '../../../../inputs/UrlFieldType';
+import SelectProfile from '../../../../inputs/SelectProfile';
 
 export default function PageClientSide (
     {
@@ -33,9 +34,6 @@ export default function PageClientSide (
         apiFeUrl: string;
     },
 ) {
-    // TODO: need author selector
-    // TODO: something is wrong with dates and timezones
-
     const {
         data,
         setStringData,
@@ -168,7 +166,7 @@ export default function PageClientSide (
                             />
                         </div>
                     </div>
-                    <div className="align-top grid gap-4 sm:grid-cols-2">
+                    <div className="align-top grid gap-4 sm:grid-cols-3">
                         <TextInput
                             label="Page Name"
                             name="name"
@@ -183,6 +181,14 @@ export default function PageClientSide (
                             value={data.slug}
                             setValue={(key: string, val: string) => {
                                 setSlug(val);
+                            }}
+                        />
+                        <SelectProfile
+                            label="Author"
+                            name="author"
+                            value={data.authorId || ''}
+                            setValue={(val) => {
+                                setStringData('authorId', val);
                             }}
                         />
                     </div>

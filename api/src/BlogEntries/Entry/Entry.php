@@ -97,6 +97,11 @@ readonly class Entry
         return $values;
     }
 
+    public function withAuthor(Profile|null $author): Entry
+    {
+        return $this->with(author: $author);
+    }
+
     public function withName(string $name): Entry
     {
         return $this->with(name: new PageName($name));
