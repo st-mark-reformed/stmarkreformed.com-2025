@@ -6,6 +6,7 @@ namespace App\BlogEntries;
 
 use App\BlogEntries\Entry\Entry;
 use App\BlogEntries\Entry\EntryCollection;
+use App\BlogEntries\Persistence\CountEntries;
 use App\BlogEntries\Persistence\CreateNewEntryRecord;
 use App\BlogEntries\Persistence\EntryEntityToRecord;
 use App\BlogEntries\Persistence\EntryRecord;
@@ -14,12 +15,15 @@ use App\BlogEntries\Persistence\FindEntries;
 use App\BlogEntries\Persistence\OrderBy;
 use App\BlogEntries\Persistence\OrderBySort;
 use App\BlogEntries\Persistence\OrderBySortCollection;
+use App\BlogEntries\Persistence\StatusCollection;
 use App\BlogEntries\Persistence\ValidateEntryForPersistence;
 use App\EmptyUuid;
 use App\Generator\EnqueueGenerateSiteData;
 use App\Pages\Page\PageName;
+use App\Pages\Page\PageStatus;
 use App\Pages\Page\PageType;
 use App\Pages\PageRepository;
+use App\Persistence\CountResult;
 use App\Persistence\FindRecordById;
 use App\Persistence\PersistNewRecord;
 use App\Persistence\PersistRecord;
@@ -38,6 +42,7 @@ readonly class EntryRepository
 {
     public function __construct(
         private FindEntries $findEntries,
+        private CountEntries $countEntries,
         private PersistRecord $persistRecord,
         private FindRecordById $findRecordById,
         private PageRepository $pageRepository,
@@ -51,10 +56,27 @@ readonly class EntryRepository
     ) {
     }
 
+    public function countEntries(
+        UuidInterface $blogPageId = new EmptyUuid(),
+        StatusCollection $statuses = new StatusCollection([
+            PageStatus::published,
+            PageStatus::unpublished,
+        ]),
+    ): CountResult {
+        return $this->countEntries->count(
+            blogPageId: $blogPageId,
+            statuses: $statuses,
+        );
+    }
+
     public function findEntries(
         UuidInterface $blogPageId = new EmptyUuid(),
         int $limit = 0,
         int $offset = 0,
+        StatusCollection $statuses = new StatusCollection([
+            PageStatus::published,
+            PageStatus::unpublished,
+        ]),
         OrderBySortCollection $ordering = new OrderBySortCollection([
             new OrderBySort(
                 orderBy: OrderBy::status,
@@ -77,10 +99,11 @@ readonly class EntryRepository
         }
 
         $entries = $this->findEntries->find(
-            $blogPageId,
-            $limit,
-            $offset,
-            $ordering,
+            blogPageId: $blogPageId,
+            limit: $limit,
+            offset: $offset,
+            statuses: $statuses,
+            ordering: $ordering,
         );
 
         $entriesWithAuthorProfileIds = $entries->filter(

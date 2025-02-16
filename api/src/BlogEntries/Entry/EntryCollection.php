@@ -22,7 +22,7 @@ readonly class EntryCollection
         ));
     }
 
-    public function hasProfiles(): bool
+    public function hasEntries(): bool
     {
         return $this->count() > 0;
     }
@@ -40,5 +40,10 @@ readonly class EntryCollection
             static fn (Entry $e) => $e->asScalarArray($omit),
             $this->entries,
         );
+    }
+
+    public function walk(callable $callback): void
+    {
+        array_map($callback, $this->entries);
     }
 }

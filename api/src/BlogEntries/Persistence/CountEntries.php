@@ -6,30 +6,30 @@ namespace App\BlogEntries\Persistence;
 
 use App\EmptyUuid;
 use App\Persistence\ApiPdo;
+use App\Persistence\CountResult;
 use App\Persistence\SqlCompilation;
 use PDO;
 use Ramsey\Uuid\UuidInterface;
 
-use function implode;
+use function array_key_exists;
+use function assert;
+use function is_array;
 
-readonly class FindEntries
+readonly class CountEntries
 {
     public function __construct(private ApiPdo $pdo)
     {
     }
 
-    public function find(
+    public function count(
         UuidInterface $blogPageId,
-        int $limit,
-        int $offset,
         StatusCollection $statuses,
-        OrderBySortCollection $ordering,
-    ): EntryRecordCollection {
-        $columns = implode(', ', EntryRecord::getColumns());
-
+    ): CountResult {
         $sql = new SqlCompilation([
             'SELECT',
-            $columns,
+            'COUNT(id)',
+            'AS',
+            'total',
             'FROM',
             EntryRecord::getTableName(),
             'WHERE 1 = 1',
@@ -46,27 +46,16 @@ readonly class FindEntries
 
         $sql = $statuses->compileIntoSql($sql);
 
-        $sql = $ordering->compileIntoSql($sql);
-
-        if ($limit > 0) {
-            $sql = $sql->withAddToStatement(
-                'LIMIT ' . $limit,
-            );
-        }
-
-        if ($offset > 0) {
-            $sql = $sql->withAddToStatement(
-                'OFFSET ' . $offset,
-            );
-        }
-
         $statement = $this->pdo->prepare($sql->compileSql());
 
         $statement->execute($sql->compileParams());
 
-        return new EntryRecordCollection($statement->fetchAll(
-            PDO::FETCH_CLASS,
-            EntryRecord::class,
-        ));
+        $queryResult = $statement->fetch(PDO::FETCH_ASSOC);
+
+        assert(is_array($queryResult));
+
+        assert(array_key_exists('total', $queryResult));
+
+        return new CountResult((int) $queryResult['total']);
     }
 }

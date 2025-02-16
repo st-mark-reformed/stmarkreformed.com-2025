@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\BlogEntries\Persistence;
 
+use App\Persistence\SqlCompilation;
+
 use function array_map;
 use function array_values;
 use function count;
@@ -23,12 +25,7 @@ readonly class OrderBySortCollection
         ));
     }
 
-    /**
-     * @param string[] $sql
-     *
-     * @return string[]
-     */
-    public function compileIntoSqlArray(array $sql): array
+    public function compileIntoSql(SqlCompilation $sql): SqlCompilation
     {
         if (! $this->hasItems()) {
             return $sql;
@@ -40,9 +37,12 @@ readonly class OrderBySortCollection
             $orderStatement[] = $item->orderBy->name . ' ' . $item->sort->name;
         }
 
-        $sql[] = 'ORDER BY ' . implode(', ', $orderStatement);
-
-        return $sql;
+        return $sql->withAddToStatement(
+            'ORDER BY ' . implode(
+                ', ',
+                $orderStatement,
+            ),
+        );
     }
 
     public function walk(callable $callback): void

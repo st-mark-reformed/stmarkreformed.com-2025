@@ -32,6 +32,7 @@ class GeneratePages
     public function __construct(
         private readonly Redis $redis,
         private readonly PageRepository $pageRepository,
+        private readonly GenerateBlogPages $generateBlogPages,
         private readonly HandlePageCustomHero $handlePageCustomHero,
         private readonly HandleImageContentCta $handleImageContentCta,
         private readonly GenerateCalendarPages $generateCalendarPages,
@@ -76,6 +77,7 @@ class GeneratePages
 
         // TODO handle page types, blogs/entries/podcasts/pagination etc.
 
+        /** @noinspection PhpUncoveredEnumCasesInspection */
         switch ($page->type) {
             case PageType::calendar:
                 $this->paths = array_merge(
@@ -84,6 +86,16 @@ class GeneratePages
                         $page,
                     ),
                 );
+                break;
+            case PageType::blog_entries:
+                $this->paths = array_merge(
+                    $this->paths,
+                    $this->generateBlogPages->fromPage(
+                        $page,
+                    ),
+                );
+
+                return;
         }
 
         $pageData = $page->asScalarArray(

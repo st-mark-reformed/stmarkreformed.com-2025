@@ -144,6 +144,11 @@ readonly class Entry
         return $this->with(json: new PageJson($jsonString));
     }
 
+    public function withJsonObject(PageJson $json): Entry
+    {
+        return $this->with(json: $json);
+    }
+
     public function withDatePublished(
         DateTimeImmutable|null $datePublished,
     ): Entry {

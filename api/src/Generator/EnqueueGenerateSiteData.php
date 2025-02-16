@@ -25,7 +25,7 @@ readonly class EnqueueGenerateSiteData
     {
         if (
             count(array_filter(
-                $this->queueHandler->getEnqueuedItems()->asArray(),
+                $this->queueHandler->getEnqueuedItems()->queueItems,
                 static fn (
                     QueueItemWithKey $q,
                 ) => $q->handle === GenerateSiteData::JOB_HANDLE,
