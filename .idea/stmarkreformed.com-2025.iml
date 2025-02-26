@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/api/public" isTestSource="false" packagePrefix="public\" />
       <sourceFolder url="file://$MODULE_DIR$/api/storage" isTestSource="false" packagePrefix="storage\" />
       <sourceFolder url="file://$MODULE_DIR$/devCliSrc" isTestSource="false" packagePrefix="Cli" />
+      <sourceFolder url="file://$MODULE_DIR$/devCliSrc/." isTestSource="false" packagePrefix="Cli\" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/bnf/phpstan-psr-container" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/buzzingpixel/symfony-var-dumper-decorator" />
@@ -109,6 +110,54 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/buzzingpixel/php-scheduler" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/johngrogg/ics-parser" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/rxante/dateimmutable" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/bnf/phpstan-psr-container" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/crell/attributeutils" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/crell/fp" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/crell/ordered-collection" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/crell/tukio" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/dealerdirect/phpcodesniffer-composer-installer" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/doctrine/coding-standard" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/fig/event-dispatcher-util" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/fig/http-message-util" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/jetbrains/phpstorm-attributes" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/laravel/serializable-closure" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/mnapoli/silly" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/nikic/fast-route" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/php-di/invoker" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/php-di/php-di" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/phpstan/phpdoc-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/phpstan/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/phpstan/phpstan-deprecation-rules" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/phpstan/phpstan-mockery" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/phpstan/phpstan-strict-rules" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/psr/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/psr/http-server-handler" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/psr/http-server-middleware" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/rxante/coding-standards" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/rxante/php-app-bootstrap" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/slevomat/coding-standard" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/slim/csrf" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/slim/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/slim/slim" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/squizlabs/php_codesniffer" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/polyfill-php80" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/devCliSrc/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/timostamm/text-truncation" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

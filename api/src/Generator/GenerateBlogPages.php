@@ -91,27 +91,25 @@ class GenerateBlogPages
             ]),
         );
 
-        $pageData['entries'] = $entriesResult->asScalarArray(
-            new EntryPropertyCollection([
-                EntryProperty::blogPage,
-                EntryProperty::useShortHero,
-                EntryProperty::useCustomHero,
-                EntryProperty::heroDarkeningOverlayOpacity,
-                EntryProperty::heroImage,
-                EntryProperty::heroUpperCta,
-                EntryProperty::heroHeading,
-                EntryProperty::heroSubheading,
-                EntryProperty::heroParagraph,
-            ]),
-        );
-
-        $pageData['pageNumber'] = $pageNumber;
-
-        $pageData['totalPages'] = $totalPages;
-
-        $pageData['totalEntries'] = $totalEntries;
-
-        $pageData['totalOnThisPage'] = $entriesResult->count();
+        $pageData['blogEntriesData'] = [
+            'entries' => $entriesResult->asScalarArray(
+                new EntryPropertyCollection([
+                    EntryProperty::blogPage,
+                    EntryProperty::useShortHero,
+                    EntryProperty::useCustomHero,
+                    EntryProperty::heroDarkeningOverlayOpacity,
+                    EntryProperty::heroImage,
+                    EntryProperty::heroUpperCta,
+                    EntryProperty::heroHeading,
+                    EntryProperty::heroSubheading,
+                    EntryProperty::heroParagraph,
+                ]),
+            ),
+            'pageNumber' => $pageNumber,
+            'totalPages' => $totalPages,
+            'totalEntries' => $totalEntries,
+            'totalOnThisPage' => $entriesResult->count(),
+        ];
 
         $path = $page->path->value;
 

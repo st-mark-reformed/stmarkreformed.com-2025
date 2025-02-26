@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\BlogEntries\Entry;
 
+use App\Date\CreateFrontEndFormatsArray;
 use App\EmptyUuid;
 use App\Pages\Page\Page;
 use App\Pages\Page\PageData;
@@ -17,13 +18,17 @@ use App\Pages\Page\PageStatus;
 use App\Profiles\Profile\Profile;
 use DateTimeImmutable;
 use DateTimeInterface;
-use DateTimeZone;
 use Ramsey\Uuid\UuidInterface;
 use RuntimeException;
 use Spatie\Cloneable\Cloneable;
+use TS\Text\Truncation;
 
+use function array_filter;
+use function array_map;
+use function implode;
 use function json_encode;
 use function json_last_error_msg;
+use function strip_tags;
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
 
@@ -73,9 +78,13 @@ readonly class Entry
             'type' => $this->type->name,
             'data' => $this->data->value,
             'json' => $this->json->data,
-            'datePublished' => $this->datePublished?->setTimezone(
-                new DateTimeZone('US/Central'),
-            )->format(DateTimeInterface::ATOM),
+            'contentExcerpt' => $this->contentExcerpt(),
+            'datePublished' => $this->datePublished?->format(
+                DateTimeInterface::ATOM,
+            ),
+            'datePublishedFormats' => $this->datePublished === null ?
+                null :
+                CreateFrontEndFormatsArray::create($this->datePublished),
             'useShortHero' => $this->useShortHero,
             'useCustomHero' => $this->useCustomHero,
             'heroDarkeningOverlayOpacity' => $this->heroDarkeningOverlayOpacity,
@@ -84,6 +93,7 @@ readonly class Entry
             'heroHeading' => $this->heroHeading,
             'heroSubheading' => $this->heroSubheading,
             'heroParagraph' => $this->heroParagraph,
+            'href' => '/' . $this->path->value,
         ];
 
         $omit->map(
@@ -95,6 +105,28 @@ readonly class Entry
         );
 
         return $values;
+    }
+
+    public function contentExcerpt(): string
+    {
+        $content = strip_tags(match ($this->type) {
+            EntryType::entry => $this->data->value,
+            EntryType::entry_builder => implode(
+                ' ',
+                array_filter(
+                    array_map(
+                    /** @phpstan-ignore-next-line */
+                        static function (array $jsonBlock): string {
+                            return (string) ($jsonBlock['content'] ?? '');
+                        },
+                        $this->json->data,
+                    ),
+                    static fn (string $content) => $content !== '',
+                ),
+            ),
+        });
+
+        return (new Truncation(300))->truncate($content);
     }
 
     public function withAuthor(Profile|null $author): Entry

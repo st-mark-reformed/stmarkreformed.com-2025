@@ -43,8 +43,6 @@ const handler = NextAuth(NextAuthOptionsConfigFactory({
                     tokens,
                 );
 
-                console.log(profile);
-
                 return profile;
             },
         },

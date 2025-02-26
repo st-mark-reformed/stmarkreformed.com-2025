@@ -1,11 +1,8 @@
 import { Url } from './UrlType';
 import { MonthDayType } from './MonthDayType';
 import { EventType } from './EventType';
-
-export enum PageStatus {
-    published = 'published',
-    unpublished = 'unpublished',
-}
+import { BlogEntryBaseType } from './BlogEntryBaseType';
+import { PageStatus } from './PageStatus';
 
 export enum PageType {
     page = 'page',
@@ -47,5 +44,12 @@ export type PageBaseType = {
         monthString: string;
         dateHeading: string;
         monthEventsList: Array<EventType>;
+    };
+    blogEntriesData?: {
+        entries: Array<BlogEntryBaseType>;
+        pageNumber: number;
+        totalPages: number;
+        totalEntries: number;
+        totalOnThisPage: number;
     };
 };

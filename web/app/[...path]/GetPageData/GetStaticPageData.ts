@@ -1,5 +1,6 @@
 import getRedisClient from '../../cache/RedisClient';
-import { PageBaseType, PageStatus, PageType } from '../../types/PageType';
+import { PageBaseType, PageType } from '../../types/PageType';
+import { PageStatus } from '../../types/PageStatus';
 
 export async function GetStaticPageData (
     path: string,
