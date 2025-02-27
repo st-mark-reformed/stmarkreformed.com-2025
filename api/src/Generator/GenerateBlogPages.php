@@ -27,8 +27,7 @@ class GenerateBlogPages
     private array $paths = [];
 
     // TODO: Set appropriate amount of per page
-    // public const int PER_PAGE = 20;
-    private const int PER_PAGE = 2;
+    public const int PER_PAGE = 30;
 
     public function __construct(
         private readonly Redis $redis,
