@@ -11,6 +11,7 @@ use App\BlogEntries\PatchEntry\PatchEntryAction;
 use App\BlogEntries\PostNewEntry\PostNewEntryAction;
 use App\Calendar\GetCalendarSelectOptions;
 use App\ContactForm\PostContactForm;
+use App\Generator\PostRegenerateSiteData;
 use App\Globals\GetAllGlobalsAction;
 use App\Globals\PatchGlobal\PatchGlobalAction;
 use App\Healthcheck;
@@ -68,6 +69,7 @@ readonly class ApplyRoutes
         PostNewEntryAction::applyRoute($routes);
         GetBlogEntryPageAction::applyRoute($routes);
         PatchEntryAction::applyRoute($routes);
+        PostRegenerateSiteData::applyRoute($routes);
 
         $this->setUpAuthRoutes($routes);
     }
